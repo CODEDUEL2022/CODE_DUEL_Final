@@ -1,41 +1,22 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Button } from '../components/parts/Button';
 
-import { Button } from './Button';
-
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+// storyのmetadataをdefault export
 export default {
-  title: 'Example/Button',
-  component: Button,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  title: "Button",   // コンポーネントのタイトル(任意)
+  component: Button, // 実際に使用するコンポーネント（上でimportしたもの）
 } as ComponentMeta<typeof Button>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+/// 1. Storybookで描画するためのコンポーネントの雛形を用意しておく
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
-export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
-  primary: true,
-  label: 'Button',
-};
+// 2. bindを用いて雛形を元にしたコピーを作成
+// 名前付きエクスポートはデフォルトでストーリーオブジェクトを表す
+export const Default: ComponentStory<typeof Button> = Template.bind({});
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
+// 3. Propsに値を設定しない
+Default.args = {
+  text: "あああ",
 };
-
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
-};
-
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  label: 'Button',
-};
+Default.storyName = "デフォルト";
