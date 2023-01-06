@@ -13,6 +13,14 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 // 2. bindを用いて雛形を元にしたコピーを作成
 // 名前付きエクスポートはデフォルトでストーリーオブジェクトを表す
+export const Default: ComponentStory<typeof Button> = Template.bind({});
+
+Default.args = {
+  text: 'hoge',
+  handleClick: () => console.log('aaa'),
+};
+Default.storyName = 'デフォルト';
+
 export const PlayButton: ComponentStory<typeof Button> = Template.bind({});
 
 PlayButton.args = {
