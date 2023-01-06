@@ -15,7 +15,7 @@ import { WebView } from 'react-native-webview';
 const App = () => {
   return (
     <View style={{flex: 1}}>
-      <WebView source={{uri: 'https://github.com/CODEDUEL2022/CODE_DUEL_Final/issues/1'}}/>
+      <WebView source={{uri: 'https://code-duel.onrender.com/'}}/>
     </View>
   );
 };
