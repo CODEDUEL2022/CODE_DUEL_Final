@@ -1,10 +1,10 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Button } from '../components/parts/Button';
+import { Button } from '../components/parts/Button/Button';
 
 // storyのmetadataをdefault export
 export default {
-  title: "Button",   // コンポーネントのタイトル(任意)
+  title: 'Button', // コンポーネントのタイトル(任意)
   component: Button, // 実際に使用するコンポーネント（上でimportしたもの）
 } as ComponentMeta<typeof Button>;
 
@@ -13,10 +13,17 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
 // 2. bindを用いて雛形を元にしたコピーを作成
 // 名前付きエクスポートはデフォルトでストーリーオブジェクトを表す
-export const Default: ComponentStory<typeof Button> = Template.bind({});
+export const PlayButton: ComponentStory<typeof Button> = Template.bind({});
 
-// 3. Propsに値を設定しない
-Default.args = {
-  text: "あああ",
+PlayButton.args = {
+  text: 'PLAY',
+  handleClick: () => console.log('aaa'),
 };
-Default.storyName = "デフォルト";
+PlayButton.storyName = 'playボタン';
+
+export const CardList: ComponentStory<typeof Button> = Template.bind({});
+CardList.args = {
+  text: 'Card List',
+  handleClick: () => console.log('aaa'),
+};
+CardList.storyName = 'カード一覧';
