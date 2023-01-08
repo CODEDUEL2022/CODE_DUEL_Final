@@ -1,6 +1,6 @@
 # CODE_DUEL
 
-## project setup
+## setup frontend
 
 ### mobile
 [/mobileディレクトリ直下のREADME](https://github.com/CODEDUEL2022/CODE_DUEL_Final/blob/main/mobile/README.md)を参考にしてください
