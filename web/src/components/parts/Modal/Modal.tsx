@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Modal.module.scss';
 
 interface ModalProps {
   width: string;
@@ -7,9 +8,13 @@ interface ModalProps {
 
 export const Modal: React.FC<ModalProps> = (props) => {
   return (
-    <div className="modal" style={{ width: props.width }}>
-      <span className="close-btn">&times;</span>
-      <div className="modal-content">{props.children}</div>
+    <div className={styles.overlay}>
+      <div className={styles.animation}>
+        <div className={styles.modal} style={{ width: props.width }}>
+          <span className={styles.closeBtn}>&times;</span>
+          <div className={styles.modalContent}>{props.children}</div>
+        </div>
+      </div>
     </div>
   );
 };
