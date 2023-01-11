@@ -4,25 +4,25 @@
 <table>
     <tr>
         <td>API機能No</td>
-        <td></td>
+        <td>Match-In-001</td>
     </tr>
     <tr>
         <td>API名</td>
-        <td></td>
+        <td>SendAttackInfo</td>
     </tr>
     <tr>
         <td>更新日/更新者</td>
-        <td></td>
+        <td>2023-01-11/かわちゃん</td>
     </tr>
     <tr>
         <td>概要</td>
-        <td></td>
+        <td>攻撃した際、何を出したか、という情報を受け取るAPI。これを叩くだけで、攻撃・ターン進行・ドローなどの処理が行える。</td>
     </tr>
 </table>
 
 | 入力 | |
 | -- | -- |
-| アクセスURL |  |
+| アクセスURL | api/match/in/send_attack_info |
 
 <br/>
 
@@ -31,7 +31,8 @@
 
 | JSON_Key | 型 | サイズ | 必須 | 暗号化 | 検索条件 | 値の説明 |
 | -- | -- | -- | -- | -- | -- | -- |
-
+| card_id_list | list | | 〇 | | 完全一致 | 出したカードのidのリスト。[int] |
+| value | int | | 〇 | | | 攻撃力。火力。 |
 
 <br/>
 

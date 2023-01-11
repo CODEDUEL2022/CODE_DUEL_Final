@@ -1,28 +1,28 @@
-## API機能No
+## Match-Before-002
 
 <br />
 <table>
     <tr>
         <td>API機能No</td>
-        <td></td>
+        <td>Match-Before-002</td>
     </tr>
     <tr>
         <td>API名</td>
-        <td></td>
+        <td>RandomMatch</td>
     </tr>
     <tr>
         <td>更新日/更新者</td>
-        <td></td>
+        <td>2023-01-11/かわちゃん</td>
     </tr>
     <tr>
         <td>概要</td>
-        <td></td>
+        <td>現行の「Random Match」の為のAPI。</td>
     </tr>
 </table>
 
 | 入力 | |
 | -- | -- |
-| アクセスURL |  |
+| アクセスURL | api/match/before/random_match |
 
 <br/>
 
@@ -31,6 +31,7 @@
 
 | JSON_Key | 型 | サイズ | 必須 | 暗号化 | 検索条件 | 値の説明 |
 | -- | -- | -- | -- | -- | -- | -- |
+| player_id | int | | 〇 | | 完全一致 | ルームに参加する人のidを渡します。それを待機中リストに格納するイメージ |
 
 
 <br/>
@@ -42,6 +43,8 @@
 | status | int | | 〇 | 処理結果ステータス |
 | messages | list | | | エラーメッセージ群 |
 | result | list | | | フロントに渡す値の配列 |
+| - is_success | int | | 〇 | 正常に動いたか否かのフラグ boolenです。|
+| - ready_member | int | | | 何人待機しているか、人数を返す |
 
 
 <br/>

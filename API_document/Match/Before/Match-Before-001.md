@@ -1,28 +1,28 @@
-## API機能No
+## Match-Before-001
 
 <br />
 <table>
     <tr>
         <td>API機能No</td>
-        <td></td>
+        <td>Match-Before-001</td>
     </tr>
     <tr>
         <td>API名</td>
-        <td></td>
+        <td>CustomMatch</td>
     </tr>
     <tr>
         <td>更新日/更新者</td>
-        <td></td>
+        <td>2023-01-11/かわちゃん</td>
     </tr>
     <tr>
         <td>概要</td>
-        <td></td>
+        <td>ルーム作成の為のAPI。現行の「Custom Match」の為の機能にあたります。</td>
     </tr>
 </table>
 
 | 入力 | |
 | -- | -- |
-| アクセスURL |  |
+| アクセスURL | api/match/before/custom_match |
 
 <br/>
 
@@ -31,6 +31,8 @@
 
 | JSON_Key | 型 | サイズ | 必須 | 暗号化 | 検索条件 | 値の説明 |
 | -- | -- | -- | -- | -- | -- | -- |
+| user_id | int | | 〇 | 〇 | 完全一致 | ユーザーのidをローカルストレージに保存してるので、そこから取得して投げます |
+| game_id | str | | 〇 | | 完全一致 | ルームidです。ルーム作成・ルーム参加の為にこれに値を入れて送信します。 |
 
 
 <br/>
@@ -42,6 +44,10 @@
 | status | int | | 〇 | 処理結果ステータス |
 | messages | list | | | エラーメッセージ群 |
 | result | list | | | フロントに渡す値の配列 |
+| - is_success | int | | 〇 | ルーム作成が正常に完了したか否かのフラグ。boolenと言っても過言ではない |
+| - game_id | str | | 〇 | 作成したルームidを返します。 |
+| - is_full | int | | 〇 | ルームが満員か否かを返します。満員の場合は、「is_success」がfalseで、「is_full」がtrueになる感じです。 |
+
 
 
 <br/>
