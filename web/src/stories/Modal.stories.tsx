@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Modal } from '../components/parts/Modal/Modal';
 
@@ -11,12 +11,21 @@ const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />;
 
 export const Default: ComponentStory<typeof Modal> = Template.bind({});
 
+// const [isModalOpen, setIsModalOpen] = useState<Boolean>(true);
+let isModalOpen = true;
+
 Default.args = {
-  width: '500px',
+  isModalOpen: false,
+  width: '80%',
   children: (
     <div>
-      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      <div>タイトル</div>
+      <div>
+        テキストテキスト<span>テキスト</span>
+        テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+      </div>
     </div>
   ),
+  onClick: () => console.log('aaa'),
 };
 Default.storyName = 'デフォルト';
