@@ -1,7 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export const HomePage = () => {
-    return(
-        <div>ホームです</div>
-    )
-}
+  return <div>ホームです</div>;
+};
