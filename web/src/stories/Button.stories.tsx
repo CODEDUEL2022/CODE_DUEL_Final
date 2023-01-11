@@ -16,6 +16,7 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 export const Default: ComponentStory<typeof Button> = Template.bind({});
 
 Default.args = {
+  fontSize: '1.5em',
   text: 'hoge',
   handleClick: () => console.log('aaa'),
 };
@@ -24,6 +25,7 @@ Default.storyName = 'デフォルト';
 export const PlayButton: ComponentStory<typeof Button> = Template.bind({});
 
 PlayButton.args = {
+  fontSize: '1.5em',
   text: 'PLAY',
   handleClick: () => console.log('aaa'),
 };
@@ -31,6 +33,7 @@ PlayButton.storyName = 'playボタン';
 
 export const CardList: ComponentStory<typeof Button> = Template.bind({});
 CardList.args = {
+  fontSize: '1em',
   text: 'Card List',
   handleClick: () => console.log('aaa'),
 };

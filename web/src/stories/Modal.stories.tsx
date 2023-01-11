@@ -11,9 +11,6 @@ const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />;
 
 export const Default: ComponentStory<typeof Modal> = Template.bind({});
 
-// const [isModalOpen, setIsModalOpen] = useState<Boolean>(true);
-let isModalOpen = true;
-
 Default.args = {
   isModalOpen: false,
   width: '80%',
