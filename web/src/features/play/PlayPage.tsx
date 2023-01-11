@@ -14,17 +14,15 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { SortableContainer } from './SortableContainer';
-import { Item } from './Item';
+import { Card } from './Card';
 
 export const PlayPage = () => {
-  // ドラッグ&ドロップでソート可能なリスト
-  const [items, setItems] = useState<{
+  // カードに書き換える
+  const [cards, setCards] = useState<{
     [key: string]: string[];
   }>({
-    container1: ['A', 'B', 'C'],
-    container2: ['D', 'E', 'F'],
-    container3: ['G', 'H', 'I'],
-    container4: [],
+    container1: ['A', 'B', 'C', 'D', 'E', 'F'],
+    container2: [],
   });
 
   //リストのリソースid（リストの値）
@@ -40,11 +38,11 @@ export const PlayPage = () => {
 
   //各コンテナ取得関数
   const findContainer = (id: UniqueIdentifier) => {
-    if (id in items) {
+    if (id in cards) {
       return id;
     }
-    return Object.keys(items).find((key: string) =>
-      items[key].includes(id.toString())
+    return Object.keys(cards).find((key: string) =>
+      cards[key].includes(id.toString())
     );
   };
 
@@ -63,14 +61,14 @@ export const PlayPage = () => {
     const id = active.id.toString();
     //ドロップした場所にあったリソースのid
     const overId = over?.id;
-
+    // ドロップした場所が対象外だったら処理を終了
     if (!overId) return;
 
     // ドラッグ、ドロップ時のコンテナ取得
-    // container1,container2,container3,container4のいずれかを持つ
     const activeContainer = findContainer(id);
     const overContainer = findContainer(over?.id);
 
+    // コンテナを移動しているかの処理
     if (
       !activeContainer ||
       !overContainer ||
@@ -79,37 +77,43 @@ export const PlayPage = () => {
       return;
     }
 
-    setItems((prev) => {
-      // 移動元のコンテナの要素配列を取得
-      const activeItems = prev[activeContainer];
-      // 移動先のコンテナの要素配列を取得
-      const overItems = prev[overContainer];
+    setCards((beforeDropCards) => {
+      // 移動元,移動先のコンテナの要素配列を取得
+      const activeCards = beforeDropCards[activeContainer];
+      const overCards = beforeDropCards[overContainer];
 
       // 配列のインデックス取得
-      const activeIndex = activeItems.indexOf(id);
-      const overIndex = overItems.indexOf(overId.toString());
+      const activeIndex = activeCards.indexOf(id);
+      const overIndex = overCards.indexOf(overId.toString());
 
+      // まじでわからん
       let newIndex;
-      if (overId in prev) {
-        // We're at the root droppable of a container
-        newIndex = overItems.length + 1;
+      console.log(beforeDropCards);
+      console.log(overId);
+      if (overId in beforeDropCards) {
+        newIndex = overCards.length + 1;
       } else {
-        const isBelowLastItem = over && overIndex === overItems.length - 1;
-
-        const modifier = isBelowLastItem ? 1 : 0;
-
-        newIndex = overIndex >= 0 ? overIndex + modifier : overItems.length + 1;
+        const isBelowLastCard = over && overIndex === overCards.length - 1;
+        const modifier = isBelowLastCard ? 1 : 0;
+        newIndex = overIndex >= 0 ? overIndex + modifier : overCards.length + 1;
       }
 
       return {
-        ...prev,
+        ...beforeDropCards,
         [activeContainer]: [
-          ...prev[activeContainer].filter((item) => item !== active.id),
+          // 移動元の残ったカード
+          ...beforeDropCards[activeContainer].filter(
+            (card) => card !== active.id
+          ),
         ],
         [overContainer]: [
-          ...prev[overContainer].slice(0, newIndex),
-          items[activeContainer][activeIndex],
-          ...prev[overContainer].slice(newIndex, prev[overContainer].length),
+          // もとのcardの配列に新しいcardが入り込む
+          ...beforeDropCards[overContainer].slice(0, newIndex),
+          cards[activeContainer][activeIndex],
+          ...beforeDropCards[overContainer].slice(
+            newIndex,
+            beforeDropCards[overContainer].length
+          ),
         ],
       };
     });
@@ -117,16 +121,13 @@ export const PlayPage = () => {
 
   // ドラッグ終了時に発火する関数
   const handleDragEnd = (event: DragEndEvent) => {
+    // 処理上と同じなのでまとめれそうな部分 ----------------------------------
     const { active, over } = event;
-    //ドラッグしたリソースのid
     const id = active.id.toString();
-    //ドロップした場所にあったリソースのid
     const overId = over?.id;
 
     if (!overId) return;
 
-    // ドラッグ、ドロップ時のコンテナ取得
-    // container1,container2,container3,container4のいずれかを持つ
     const activeContainer = findContainer(id);
     const overContainer = findContainer(over?.id);
 
@@ -138,15 +139,15 @@ export const PlayPage = () => {
       return;
     }
 
-    // 配列のインデックス取得
-    const activeIndex = items[activeContainer].indexOf(id);
-    const overIndex = items[overContainer].indexOf(overId.toString());
+    const activeIndex = cards[activeContainer].indexOf(id);
+    const overIndex = cards[overContainer].indexOf(overId.toString());
+    // ------------------------------------------------------------------------
 
     if (activeIndex !== overIndex) {
-      setItems((items) => ({
-        ...items,
+      setCards((cards) => ({
+        ...cards,
         [overContainer]: arrayMove(
-          items[overContainer],
+          cards[overContainer],
           activeIndex,
           overIndex
         ),
@@ -156,7 +157,7 @@ export const PlayPage = () => {
   };
 
   return (
-    <div className="flex flex-row mx-auto">
+    <div>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
@@ -164,29 +165,17 @@ export const PlayPage = () => {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        {/* SortableContainer */}
         <SortableContainer
           id="container1"
-          items={items.container1}
+          cards={cards.container1}
           label="container1"
         />
         <SortableContainer
           id="container2"
           label="container2"
-          items={items.container2}
+          cards={cards.container2}
         />
-        <SortableContainer
-          id="container3"
-          label="container3"
-          items={items.container3}
-        />
-        <SortableContainer
-          id="container4"
-          label="container4"
-          items={items.container4}
-        />
-        {/* DragOverlay */}
-        <DragOverlay>{activeId ? <Item id={activeId} /> : null}</DragOverlay>
+        <DragOverlay>{activeId ? <Card id={activeId} /> : null}</DragOverlay>
       </DndContext>
     </div>
   );

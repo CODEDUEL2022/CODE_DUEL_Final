@@ -2,13 +2,13 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { UniqueIdentifier } from '@dnd-kit/core';
-import { Item } from './Item';
+import { Card } from './Card';
 
-interface SortableItemProps {
+interface SortableCardProps {
   id: UniqueIdentifier;
 }
 
-export const SortableItem: React.FC<SortableItemProps> = (props) => {
+export const SortableCard: React.FC<SortableCardProps> = (props) => {
   const { id } = props;
 
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -17,11 +17,11 @@ export const SortableItem: React.FC<SortableItemProps> = (props) => {
   return (
     <div
       ref={setNodeRef}
-      style={{ transform: CSS.Transform.toString(transform), transition }}
+      style={{ transform: CSS.Transform.toString(transform), transition }} // 滑らかにカードを動かす
       {...attributes}
       {...listeners}
     >
-      <Item id={id} />
+      <Card id={id} />
     </div>
   );
 };
