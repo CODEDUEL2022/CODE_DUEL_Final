@@ -9,5 +9,16 @@ interface CardProps {
 export const Card: React.FC<CardProps> = (props) => {
   const { id } = props;
 
-  return <div>{id}</div>;
+  return (
+    <div
+      style={{
+        width: '100px',
+        height: '200px',
+        backgroundColor: '#fff',
+        border: 'solid 1px #000',
+      }}
+    >
+      {id}
+    </div>
+  );
 };

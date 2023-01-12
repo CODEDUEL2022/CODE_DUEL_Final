@@ -20,8 +20,6 @@ export const SortableCard: React.FC<SortableCardProps> = (props) => {
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
-        width: '100px',
-        height: '100px',
       }} // 滑らかにカードを動かすためのアニメーション
       {...attributes}
       {...listeners}

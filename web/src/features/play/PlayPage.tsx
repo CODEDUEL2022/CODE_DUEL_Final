@@ -22,7 +22,7 @@ export const PlayPage = () => {
   const [cards, setCards] = useState<{
     [key: string]: string[];
   }>({
-    fieldCards: ['テスト'],
+    fieldCards: [],
     myCards: ['A', 'B', 'C', 'D', 'E', 'F'],
   });
 
@@ -166,11 +166,24 @@ export const PlayPage = () => {
     setActiveId(undefined);
   };
 
+  const fieldStyle = {
+    display: 'flex',
+    width: '60%',
+    height: '300px',
+    backgroundColor: '#144F61',
+  };
+
+  const myCardsStyle = {
+    display: 'flex',
+    width: '80%',
+    height: '300px',
+    backgroundColor: '#144F61',
+  };
+
   return (
     <div>
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCorners}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
@@ -179,8 +192,14 @@ export const PlayPage = () => {
           id="fieldCards"
           cards={cards.fieldCards}
           label="fieldCards"
+          style={fieldStyle}
         />
-        <SortableContainer id="myCards" label="myCards" cards={cards.myCards} />
+        <SortableContainer
+          id="myCards"
+          label="myCards"
+          cards={cards.myCards}
+          style={myCardsStyle}
+        />
         <DragOverlay>{activeId ? <Card id={activeId} /> : null}</DragOverlay>
       </DndContext>
     </div>
