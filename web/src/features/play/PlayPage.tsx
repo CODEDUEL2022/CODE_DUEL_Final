@@ -3,8 +3,9 @@ import {
   DndContext,
   DragOverlay,
   closestCorners,
-  KeyboardSensor,
   PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   UniqueIdentifier,
@@ -21,8 +22,8 @@ export const PlayPage = () => {
   const [cards, setCards] = useState<{
     [key: string]: string[];
   }>({
-    container1: ['A', 'B', 'C', 'D', 'E', 'F'],
-    container2: [],
+    fieldCards: ['テスト'],
+    myCards: ['A', 'B', 'C', 'D', 'E', 'F'],
   });
 
   //リストのリソースid（リストの値）
@@ -30,9 +31,18 @@ export const PlayPage = () => {
 
   // ドラッグの開始、移動、終了などにどのような入力を許可するかを決めるprops
   const sensors = useSensors(
+    // マウスだけでなくタッチにも対応する
     useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
     })
   );
 
@@ -166,15 +176,11 @@ export const PlayPage = () => {
         onDragEnd={handleDragEnd}
       >
         <SortableContainer
-          id="container1"
-          cards={cards.container1}
-          label="container1"
+          id="fieldCards"
+          cards={cards.fieldCards}
+          label="fieldCards"
         />
-        <SortableContainer
-          id="container2"
-          label="container2"
-          cards={cards.container2}
-        />
+        <SortableContainer id="myCards" label="myCards" cards={cards.myCards} />
         <DragOverlay>{activeId ? <Card id={activeId} /> : null}</DragOverlay>
       </DndContext>
     </div>

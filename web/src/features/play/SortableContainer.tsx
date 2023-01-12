@@ -16,10 +16,10 @@ export const SortableContainer: React.FC<SortableContainerProps> = (props) => {
     id,
   });
   return (
-    <div>
+    <div style={{ display: 'block' }}>
       <h3>{label}</h3>
       <SortableContext id={id} items={cards} strategy={rectSortingStrategy}>
-        <div ref={setNodeRef}>
+        <div ref={setNodeRef} style={{ display: 'flex' }}>
           {cards.map((id: string) => (
             <SortableCard key={id} id={id} />
           ))}

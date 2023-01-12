@@ -17,7 +17,12 @@ export const SortableCard: React.FC<SortableCardProps> = (props) => {
   return (
     <div
       ref={setNodeRef}
-      style={{ transform: CSS.Transform.toString(transform), transition }} // 滑らかにカードを動かす
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+        width: '100px',
+        height: '100px',
+      }} // 滑らかにカードを動かすためのアニメーション
       {...attributes}
       {...listeners}
     >
