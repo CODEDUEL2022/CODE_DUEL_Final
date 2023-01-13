@@ -2,7 +2,7 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { UniqueIdentifier } from '@dnd-kit/core';
-import { Card } from './Card';
+import { Card } from '../../../components/parts/Card/Card';
 
 interface SortableCardProps {
   id: UniqueIdentifier;

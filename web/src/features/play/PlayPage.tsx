@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   DndContext,
   DragOverlay,
-  closestCorners,
   PointerSensor,
   MouseSensor,
   TouchSensor,
@@ -13,9 +12,9 @@ import {
   DragOverEvent,
   DragEndEvent,
 } from '@dnd-kit/core';
-import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { SortableContainer } from './SortableContainer';
-import { Card } from './Card';
+import { arrayMove } from '@dnd-kit/sortable';
+import { SortableContainer } from './parts/SortableContainer';
+import { Card } from '../../components/parts/Card/Card';
 
 export const PlayPage = () => {
   // カードに書き換える
@@ -96,10 +95,8 @@ export const PlayPage = () => {
       const activeIndex = activeCards.indexOf(id);
       const overIndex = overCards.indexOf(overId.toString());
 
-      // まじでわからん
+      // 新しい配列に入ったときのindexを作成
       let newIndex;
-      console.log(beforeDropCards);
-      console.log(overId);
       if (overId in beforeDropCards) {
         newIndex = overCards.length + 1;
       } else {
@@ -177,7 +174,7 @@ export const PlayPage = () => {
     display: 'flex',
     width: '80%',
     height: '300px',
-    backgroundColor: '#144F61',
+    backgroundColor: '#000',
   };
 
   return (
@@ -191,12 +188,10 @@ export const PlayPage = () => {
         <SortableContainer
           id="fieldCards"
           cards={cards.fieldCards}
-          label="fieldCards"
           style={fieldStyle}
         />
         <SortableContainer
           id="myCards"
-          label="myCards"
           cards={cards.myCards}
           style={myCardsStyle}
         />
