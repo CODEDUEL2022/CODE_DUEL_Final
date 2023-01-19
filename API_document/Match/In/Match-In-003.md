@@ -1,28 +1,28 @@
-## Match-Before-002
+## API機能No
 
 <br />
 <table>
     <tr>
         <td>API機能No</td>
-        <td>Match-Before-002</td>
+        <td>Match-In-003</td>
     </tr>
     <tr>
         <td>API名</td>
-        <td>RandomMatch</td>
+        <td>SendDisconnect</td>
     </tr>
     <tr>
         <td>更新日/更新者</td>
-        <td>2023-01-11/かわちゃん</td>
+        <td>2023-01-19/かわちゃん</td>
     </tr>
     <tr>
         <td>概要</td>
-        <td>現行の「Random Match」の為のAPI。</td>
+        <td>切断した際にルームにいる人に送られるAPI。対戦相手を勝利にするか、CPU戦に移行するか、とかあったけど、現状実装できそうなのは「勝利にする」方。WebSocketを使うからアクセスURLは無い。何も送信しないし何も返さない。</td>
     </tr>
 </table>
 
 | 入力 | |
 | -- | -- |
-| アクセスURL | api/match/before/random_match |
+| アクセスURL | none |
 
 <br/>
 
@@ -31,7 +31,6 @@
 
 | JSON_Key | 型 | サイズ | 必須 | 暗号化 | 検索条件 | 値の説明 |
 | -- | -- | -- | -- | -- | -- | -- |
-| user_id | int | | 〇 | | 完全一致 | ルームに参加する人のidを渡します。それを待機中リストに格納するイメージ |
 
 
 <br/>
@@ -43,8 +42,6 @@
 | status | int | | 〇 | 処理結果ステータス |
 | messages | list | | | エラーメッセージ群 |
 | result | list | | | フロントに渡す値の配列 |
-| - is_success | int | | 〇 | 正常に動いたか否かのフラグ boolenです。|
-| - ready_member | int | | | 何人待機しているか、人数を返す |
 
 
 <br/>
