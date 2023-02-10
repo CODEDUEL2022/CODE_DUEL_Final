@@ -15,17 +15,36 @@ import {
 import { arrayMove } from '@dnd-kit/sortable';
 import { SortableContainer } from './parts/SortableContainer';
 import { Card } from '../../components/parts/Card/Card';
+import { CardType } from '../../libs/types/Card';
 
 export const PlayPage = () => {
-  // カードに書き換える
-  const [cards, setCards] = useState<{
-    [key: string]: string[];
+  const sampleCards: Array<CardType> = [
+    {
+      id: 1,
+      name: 'vue',
+      cost: 2,
+      enforce_os_id: 1,
+      img_src:
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1674454416/vue_logo.png',
+    },
+    {
+      id: 2,
+      name: 'React',
+      cost: 2,
+      enforce_os_id: 1,
+      img_src:
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1674453694/olympic_flag.jpg',
+    },
+  ];
+
+  const [containers, setContainers] = useState<{
+    [key: string]: Array<CardType>;
   }>({
     fieldCards: [],
-    myCards: ['A', 'B', 'C', 'D', 'E', 'F'],
+    myCards: sampleCards,
   });
 
-  //リストのリソースid（リストの値）
+  //コンテナのkeyまたはcardのid
   const [activeId, setActiveId] = useState<UniqueIdentifier>();
 
   // ドラッグの開始、移動、終了などにどのような入力を許可するかを決めるprops
@@ -47,19 +66,19 @@ export const PlayPage = () => {
 
   //各コンテナ取得関数
   const findContainer = (id: UniqueIdentifier) => {
-    if (id in cards) {
-      return id;
-    }
-    return Object.keys(cards).find((key: string) =>
-      cards[key].includes(id.toString())
-    );
+    if (id in containers) return id;
+    // コンテナのkeyを取得する
+    return Object.keys(containers).find((key: string) => {
+      const cardsIdsInContainer = containers[key].map((card) => card.id);
+      return cardsIdsInContainer.includes(id);
+    });
   };
 
   // ドラッグ開始時に発火する関数
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
     //ドラッグしたリソースのid
-    const id = active.id.toString();
+    const id = active.id;
     setActiveId(id);
   };
 
@@ -67,7 +86,7 @@ export const PlayPage = () => {
   const handleDragOver = (event: DragOverEvent) => {
     const { active, over } = event;
     //ドラッグしたリソースのid
-    const id = active.id.toString();
+    const id = active.id;
     //ドロップした場所にあったリソースのid
     const overId = over?.id;
     // ドロップした場所が対象外だったら処理を終了
@@ -75,7 +94,7 @@ export const PlayPage = () => {
 
     // ドラッグ、ドロップ時のコンテナ取得
     const activeContainer = findContainer(id);
-    const overContainer = findContainer(over?.id);
+    const overContainer = findContainer(overId);
 
     // コンテナを移動しているかの処理
     if (
@@ -86,14 +105,19 @@ export const PlayPage = () => {
       return;
     }
 
-    setCards((beforeDropCards) => {
+    setContainers((beforeDropCards) => {
       // 移動元,移動先のコンテナの要素配列を取得
       const activeCards = beforeDropCards[activeContainer];
       const overCards = beforeDropCards[overContainer];
+      console.log(activeCards);
+      console.log(overCards);
+
+      const activeCardsIds = activeCards.map((card) => card.id);
+      const overCardsIds = overCards.map((card) => card.id);
 
       // 配列のインデックス取得
-      const activeIndex = activeCards.indexOf(id);
-      const overIndex = overCards.indexOf(overId.toString());
+      const activeIndex = activeCardsIds.indexOf(id);
+      const overIndex = overCardsIds.indexOf(overId);
 
       // 新しい配列に入ったときのindexを作成
       let newIndex;
@@ -110,13 +134,13 @@ export const PlayPage = () => {
         [activeContainer]: [
           // 移動元の残ったカード
           ...beforeDropCards[activeContainer].filter(
-            (card) => card !== active.id
+            (card) => card.id !== active.id
           ),
         ],
         [overContainer]: [
           // もとのcardの配列に新しいcardが入り込む
           ...beforeDropCards[overContainer].slice(0, newIndex),
-          cards[activeContainer][activeIndex],
+          containers[activeContainer][activeIndex],
           ...beforeDropCards[overContainer].slice(
             newIndex,
             beforeDropCards[overContainer].length
@@ -130,7 +154,7 @@ export const PlayPage = () => {
   const handleDragEnd = (event: DragEndEvent) => {
     // 処理上と同じなのでまとめれそうな部分 ----------------------------------
     const { active, over } = event;
-    const id = active.id.toString();
+    const id = active.id;
     const overId = over?.id;
 
     if (!overId) return;
@@ -146,15 +170,18 @@ export const PlayPage = () => {
       return;
     }
 
-    const activeIndex = cards[activeContainer].indexOf(id);
-    const overIndex = cards[overContainer].indexOf(overId.toString());
+    const activeCards = containers[activeContainer].map((card) => card.id);
+    const overCards = containers[overContainer].map((card) => card.id);
+
+    const activeIndex = activeCards.indexOf(id);
+    const overIndex = overCards.indexOf(overId);
     // ------------------------------------------------------------------------
 
     if (activeIndex !== overIndex) {
-      setCards((cards) => ({
-        ...cards,
+      setContainers((containers) => ({
+        ...containers,
         [overContainer]: arrayMove(
-          cards[overContainer],
+          containers[overContainer],
           activeIndex,
           overIndex
         ),
@@ -162,6 +189,8 @@ export const PlayPage = () => {
     }
     setActiveId(undefined);
   };
+
+  console.log(activeId);
 
   const fieldStyle = {
     display: 'flex',
@@ -187,15 +216,29 @@ export const PlayPage = () => {
       >
         <SortableContainer
           id="fieldCards"
-          cards={cards.fieldCards}
+          cards={containers.fieldCards}
           style={fieldStyle}
         />
         <SortableContainer
           id="myCards"
-          cards={cards.myCards}
+          cards={containers.myCards}
           style={myCardsStyle}
         />
-        <DragOverlay>{activeId ? <Card id={activeId} /> : null}</DragOverlay>
+        <DragOverlay>
+          {activeId ? (
+            <Card
+              id={activeId}
+              card={{
+                id: 2,
+                name: 'React',
+                cost: 2,
+                enforce_os_id: 1,
+                img_src:
+                  'https://res.cloudinary.com/du3fnn01g/image/upload/v1674453694/olympic_flag.jpg',
+              }}
+            />
+          ) : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );

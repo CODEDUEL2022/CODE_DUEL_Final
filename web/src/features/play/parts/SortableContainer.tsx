@@ -5,10 +5,11 @@ import {
   SortableContext,
 } from '@dnd-kit/sortable';
 import { SortableCard } from './SortableCard';
+import { CardType } from '../../../libs/types/Card';
 
 interface SortableContainerProps {
   id: string;
-  cards: string[];
+  cards: Array<CardType>;
   style: any;
 }
 
@@ -26,8 +27,8 @@ export const SortableContainer: React.FC<SortableContainerProps> = (props) => {
         strategy={horizontalListSortingStrategy}
       >
         <div ref={setNodeRef} style={style}>
-          {cards.map((id: string) => (
-            <SortableCard key={id} id={id} />
+          {cards.map((card: CardType) => (
+            <SortableCard key={card.id} id={card.id} card={card} />
           ))}
         </div>
       </SortableContext>
