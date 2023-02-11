@@ -33,35 +33,28 @@ export const PlayPage = () => {
       name: 'React',
       cost: 2,
       enforce_os_id: 1,
-      img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1674453694/olympic_flag.jpg',
+      img_src: 'https://res.cloudinary.com/du3fnn01g/image/upload/v1674453694/olympic_flag.jpg',
     },
   ];
 
-  const [containers, setContainers] = useState<{
-    [key: string]: Array<CardType>;
-  }>({
+  const [containers, setContainers] = useState<{ [key: string]: Array<CardType> }>({
     fieldCards: [],
     myCards: sampleCards,
   });
-
   //ドラッグされているcardのid
-  const [activeId, setActiveId] = useState<UniqueIdentifier>();
+  const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
   const [activeCard, setActiveCard] = useState<CardType>();
 
   // ドラッグされているカード
   useEffect(() => {
-    if (activeId === undefined) return;
-    const activeFieldCard = containers['fieldCards'].find(
-      (card) => card.id === activeId
-    );
-    const activeMyCard = containers['myCards'].find(
-      (card) => card.id === activeId
-    );
+    if (activeCardId === undefined) return;
+
+    const activeFieldCard = containers['fieldCards'].find((card) => card.id === activeCardId);
+    const activeMyCard = containers['myCards'].find((card) => card.id === activeCardId);
     const draggingCard = activeFieldCard || activeMyCard;
 
     setActiveCard(draggingCard);
-  }, [activeId]);
+  }, [activeCardId]);
 
   // ドラッグの開始、移動、終了などにどのような入力を許可するか(マウス、タッチなど)を決めるprops
   const sensors = useSensors(
@@ -81,83 +74,66 @@ export const PlayPage = () => {
 
   //各コンテナ取得関数
   const findContainer = (id: UniqueIdentifier) => {
+    // idがコンテナのkeyの場合
     if (id in containers) return id;
-    // コンテナのkeyを取得する
+    // idがcardの場合、コンテナのkeyを取得する
     return Object.keys(containers).find((key: string) => {
       const cardsIdsInContainer = containers[key].map((card) => card.id);
       return cardsIdsInContainer.includes(id);
     });
   };
 
-  // ドラッグ開始時に発火する関数
+  // ドラッグ開始時に発火する関数。ドラッグしているcardのidを取得。
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
-    //ドラッグしたリソースのid
     const id = active.id;
-    setActiveId(id);
+    setActiveCardId(id);
   };
 
   //ドラッグ可能なアイテムがドロップ可能なコンテナの上に移動時に発火する関数
   const handleDragOver = (event: DragOverEvent) => {
     const { active, over } = event;
-    //ドラッグしたリソースのid
-    const id = active.id;
-    //ドロップした場所にあったリソースのid
+    const activeId = active.id;
     const overId = over?.id;
-    // ドロップした場所が対象外だったら処理を終了
     if (!overId) return;
 
-    // ドラッグ、ドロップ時のコンテナ取得
-    const activeContainer = findContainer(id);
+    const activeContainer = findContainer(activeId);
     const overContainer = findContainer(overId);
 
-    // コンテナを移動しているかの処理
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer === overContainer
-    ) {
-      return;
-    }
+    if (!activeContainer || !overContainer || activeContainer === overContainer) return;
 
-    setContainers((beforeDropCards) => {
+    setContainers((allContainers) => {
       // 移動元,移動先のコンテナの要素配列を取得
-      const activeCards = beforeDropCards[activeContainer];
-      const overCards = beforeDropCards[overContainer];
+      const activeContainerCards = allContainers[activeContainer];
+      const overContainerCards = allContainers[overContainer];
 
-      const activeCardsIds = activeCards.map((card) => card.id);
-      const overCardsIds = overCards.map((card) => card.id);
+      const activeContainerCardsIds = activeContainerCards.map((card) => card.id);
+      const overContainerCardsIds = overContainerCards.map((card) => card.id);
 
-      // 配列のインデックス取得
-      const activeIndex = activeCardsIds.indexOf(id);
-      const overIndex = overCardsIds.indexOf(overId);
+      const activeCardIndex = activeContainerCardsIds.indexOf(activeId);
+      const overCardIndex = overContainerCardsIds.indexOf(overId);
 
       // 新しい配列に入ったときのindexを作成
       let newIndex;
-      if (overId in beforeDropCards) {
-        newIndex = overCards.length + 1;
+      if (overId in allContainers) {
+        newIndex = overContainerCards.length + 1;
       } else {
-        const isBelowLastCard = over && overIndex === overCards.length - 1;
+        const isBelowLastCard = over && overCardIndex === overContainerCards.length - 1;
         const modifier = isBelowLastCard ? 1 : 0;
-        newIndex = overIndex >= 0 ? overIndex + modifier : overCards.length + 1;
+        newIndex = overCardIndex >= 0 ? overCardIndex + modifier : overContainerCards.length + 1;
       }
 
       return {
-        ...beforeDropCards,
+        ...allContainers,
         [activeContainer]: [
           // 移動元の残ったカード
-          ...beforeDropCards[activeContainer].filter(
-            (card) => card.id !== active.id
-          ),
+          ...allContainers[activeContainer].filter((card) => card.id !== activeId),
         ],
         [overContainer]: [
           // もとのcardの配列に新しいcardが入り込む
-          ...beforeDropCards[overContainer].slice(0, newIndex),
-          containers[activeContainer][activeIndex],
-          ...beforeDropCards[overContainer].slice(
-            newIndex,
-            beforeDropCards[overContainer].length
-          ),
+          ...allContainers[overContainer].slice(0, newIndex),
+          containers[activeContainer][activeCardIndex],
+          ...allContainers[overContainer].slice(newIndex, allContainers[overContainer].length),
         ],
       };
     });
@@ -165,42 +141,31 @@ export const PlayPage = () => {
 
   // ドラッグ終了時に発火する関数
   const handleDragEnd = (event: DragEndEvent) => {
-    // 処理上と同じなのでまとめれそうな部分 ----------------------------------
     const { active, over } = event;
-    const id = active.id;
+    const activeId = active.id;
     const overId = over?.id;
 
     if (!overId) return;
 
-    const activeContainer = findContainer(id);
+    const activeContainer = findContainer(activeId);
     const overContainer = findContainer(over?.id);
 
-    if (
-      !activeContainer ||
-      !overContainer ||
-      activeContainer !== overContainer
-    ) {
-      return;
-    }
+    if (!activeContainer || !overContainer || activeContainer !== overContainer) return;
 
-    const activeCards = containers[activeContainer].map((card) => card.id);
-    const overCards = containers[overContainer].map((card) => card.id);
+    const activeContainerCardsIds = containers[activeContainer].map((card) => card.id);
+    const overContainerCardsIds = containers[overContainer].map((card) => card.id);
 
-    const activeIndex = activeCards.indexOf(id);
-    const overIndex = overCards.indexOf(overId);
-    // ------------------------------------------------------------------------
+    const activeCardIndex = activeContainerCardsIds.indexOf(activeId);
+    const overCardIndex = overContainerCardsIds.indexOf(overId);
 
-    if (activeIndex !== overIndex) {
+    // フィールド情報を更新
+    if (activeCardIndex !== overCardIndex) {
       setContainers((containers) => ({
         ...containers,
-        [overContainer]: arrayMove(
-          containers[overContainer],
-          activeIndex,
-          overIndex
-        ),
+        [overContainer]: arrayMove(containers[overContainer], activeCardIndex, overCardIndex),
       }));
     }
-    setActiveId(undefined);
+    setActiveCardId(undefined);
     setActiveCard(undefined);
   };
 
@@ -227,18 +192,12 @@ export const PlayPage = () => {
         onDragEnd={handleDragEnd}
       >
         <SortableContainer
-          id="fieldCards"
+          containerId="fieldCards"
           cards={containers.fieldCards}
           style={fieldStyle}
         />
-        <SortableContainer
-          id="myCards"
-          cards={containers.myCards}
-          style={myCardsStyle}
-        />
-        <DragOverlay>
-          {activeId ? <Card id={activeId} card={activeCard} /> : null}
-        </DragOverlay>
+        <SortableContainer containerId="myCards" cards={containers.myCards} style={myCardsStyle} />
+        <DragOverlay>{activeCardId ? <Card card={activeCard} /> : null}</DragOverlay>
       </DndContext>
     </div>
   );

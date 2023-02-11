@@ -1,14 +1,12 @@
 import React from 'react';
-import { UniqueIdentifier } from '@dnd-kit/core';
 import { CardType } from '../../../libs/types/Card';
 
 interface CardProps {
-  id: UniqueIdentifier;
   card: CardType | undefined;
 }
 
 export const Card: React.FC<CardProps> = (props) => {
-  const { id, card } = props;
+  const { card } = props;
 
   return (
     <div
@@ -24,6 +22,7 @@ export const Card: React.FC<CardProps> = (props) => {
         <img
           src={card.img_src}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          loading="lazy"
         ></img>
       )}
     </div>
