@@ -11,9 +11,10 @@ export const Card: React.FC<CardProps> = (props) => {
   return (
     <div
       style={{
-        width: '100px',
+        width: '140px',
         height: '200px',
-        border: 'solid 1px #000',
+        borderRadius: '5px',
+        backgroundColor: '#fff',
       }}
     >
       {card === undefined ? (
@@ -21,7 +22,7 @@ export const Card: React.FC<CardProps> = (props) => {
       ) : (
         <img
           src={card.img_src}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
           loading="lazy"
         ></img>
       )}

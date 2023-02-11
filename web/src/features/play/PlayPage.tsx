@@ -26,14 +26,15 @@ export const PlayPage = () => {
       cost: 2,
       enforce_os_id: 1,
       img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1674808250/e8d355e8ea56f5b6d51de063ea87234a.jpg',
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672358/3cad3493e6b4c87c94b5610260a07e63.png',
     },
     {
       id: 2,
       name: 'React',
       cost: 2,
       enforce_os_id: 1,
-      img_src: 'https://res.cloudinary.com/du3fnn01g/image/upload/v1674453694/olympic_flag.jpg',
+      img_src:
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
     },
   ];
 
@@ -171,9 +172,10 @@ export const PlayPage = () => {
 
   const fieldStyle = {
     display: 'flex',
-    width: '60%',
+    width: '80%',
     height: '300px',
     backgroundColor: '#144F61',
+    alignItems: 'center',
   };
 
   const myCardsStyle = {
@@ -181,6 +183,7 @@ export const PlayPage = () => {
     width: '80%',
     height: '300px',
     backgroundColor: '#000',
+    alignItems: 'center',
   };
 
   return (
