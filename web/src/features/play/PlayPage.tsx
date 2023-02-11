@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -18,6 +18,7 @@ import { Card } from '../../components/parts/Card/Card';
 import { CardType } from '../../libs/types/Card';
 
 export const PlayPage = () => {
+  // TODO: バックから取得する
   const sampleCards: Array<CardType> = [
     {
       id: 1,
@@ -25,7 +26,7 @@ export const PlayPage = () => {
       cost: 2,
       enforce_os_id: 1,
       img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1674454416/vue_logo.png',
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1674808250/e8d355e8ea56f5b6d51de063ea87234a.jpg',
     },
     {
       id: 2,
@@ -44,12 +45,26 @@ export const PlayPage = () => {
     myCards: sampleCards,
   });
 
-  //コンテナのkeyまたはcardのid
+  //ドラッグされているcardのid
   const [activeId, setActiveId] = useState<UniqueIdentifier>();
+  const [activeCard, setActiveCard] = useState<CardType>();
 
-  // ドラッグの開始、移動、終了などにどのような入力を許可するかを決めるprops
+  // ドラッグされているカード
+  useEffect(() => {
+    if (activeId === undefined) return;
+    const activeFieldCard = containers['fieldCards'].find(
+      (card) => card.id === activeId
+    );
+    const activeMyCard = containers['myCards'].find(
+      (card) => card.id === activeId
+    );
+    const draggingCard = activeFieldCard || activeMyCard;
+
+    setActiveCard(draggingCard);
+  }, [activeId]);
+
+  // ドラッグの開始、移動、終了などにどのような入力を許可するか(マウス、タッチなど)を決めるprops
   const sensors = useSensors(
-    // マウスだけでなくタッチにも対応する
     useSensor(PointerSensor),
     useSensor(MouseSensor, {
       activationConstraint: {
@@ -109,8 +124,6 @@ export const PlayPage = () => {
       // 移動元,移動先のコンテナの要素配列を取得
       const activeCards = beforeDropCards[activeContainer];
       const overCards = beforeDropCards[overContainer];
-      console.log(activeCards);
-      console.log(overCards);
 
       const activeCardsIds = activeCards.map((card) => card.id);
       const overCardsIds = overCards.map((card) => card.id);
@@ -188,9 +201,8 @@ export const PlayPage = () => {
       }));
     }
     setActiveId(undefined);
+    setActiveCard(undefined);
   };
-
-  console.log(activeId);
 
   const fieldStyle = {
     display: 'flex',
@@ -225,19 +237,7 @@ export const PlayPage = () => {
           style={myCardsStyle}
         />
         <DragOverlay>
-          {activeId ? (
-            <Card
-              id={activeId}
-              card={{
-                id: 2,
-                name: 'React',
-                cost: 2,
-                enforce_os_id: 1,
-                img_src:
-                  'https://res.cloudinary.com/du3fnn01g/image/upload/v1674453694/olympic_flag.jpg',
-              }}
-            />
-          ) : null}
+          {activeId ? <Card id={activeId} card={activeCard} /> : null}
         </DragOverlay>
       </DndContext>
     </div>

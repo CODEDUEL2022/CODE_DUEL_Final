@@ -5,5 +5,5 @@ export interface CardType {
   name: String;
   cost: number;
   enforce_os_id: number;
-  img_src: String;
+  img_src: string;
 }
