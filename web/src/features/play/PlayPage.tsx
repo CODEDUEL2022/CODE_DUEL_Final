@@ -16,8 +16,13 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { SortableContainer } from './parts/SortableContainer';
 import { Card } from '../../components/parts/Card/Card';
 import { CardType } from '../../libs/types/Card';
+import Socket from '../../libs/socket/Socket';
 
 export const PlayPage = () => {
+  useEffect(() => {
+    Socket.setupSocketConnection();
+  }, []);
+
   // TODO: バックから取得する
   const sampleCards: Array<CardType> = [
     {
