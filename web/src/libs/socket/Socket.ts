@@ -20,9 +20,7 @@ class SocketIo {
   constructor() {}
 
   setupSocketConnection() {
-    this.socket = io(
-      'https://nl2nzrkpqe.execute-api.ap-northeast-1.amazonaws.com/CODE_DUEL_mock/@connections'
-    );
+    this.socket = io('http://localhost:3000/');
     console.log('Connecting Socket.io...');
   }
 
@@ -31,6 +29,7 @@ class SocketIo {
   }
 
   matching(player_id: number) {
+    console.log(player_id);
     this.socket?.emit('matching', player_id);
   }
 
