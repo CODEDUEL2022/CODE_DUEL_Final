@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 
 export const HomePage = () => {
   // TODO: バックから持ってくる
+  const user_id = Math.floor(Math.random() * 100000);
   const user = {
-    id: 111,
+    id: user_id,
     name: 'yusaku',
   };
   const dec = 2;
