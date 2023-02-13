@@ -10,26 +10,32 @@ const socketapi = {
   io: io,
 };
 
-const waitingPlayersIds = [];
+const waitingUsersIds = [];
 
 io.on("connection", function (socket) {
   console.log("connected to socket.io !!!");
 
   socket.on("enterWaitingRoom", (user_id) => {
-    waitingPlayersIds.push(user_id);
-    console.log(`${waitingPlayersIds.length} people is waiting...`);
+    waitingUsersIds.push(user_id);
+    console.log(`${waitingUsersIds.length} people is waiting...`);
 
-    const pushPlayersToRoom = (player1_id, player2_id) => {
+    const pushUsersToRoom = (user1_id, user2_id) => {
       const game_id = Math.random().toString(32).substring(2);
-      io.emit("pushPlayPage", game_id, player1_id, player2_id);
+      io.emit("pushPlayPage", game_id, user1_id, user2_id);
     };
 
-    if (waitingPlayersIds.length >= 2) {
-      waitingPlayersIds.splice(0, 2);
+    if (waitingUsersIds.length >= 2) {
+      waitingUsersIds.splice(0, 2);
       setTimeout(() => {
-        pushPlayersToRoom(waitingPlayersIds[0], waitingPlayersIds[1]);
+        pushUsersToRoom(waitingUsersIds[0], waitingUsersIds[1]);
       }, 1000);
     }
+  });
+
+  socket.on("quitWaitingRoom", (user_id) => {
+    const userIndex = waitingUsersIds.indexOf(user_id);
+    waitingUsersIds.splice(userIndex, 1);
+    console.log(`${waitingUsersIds.length} people is waiting...`);
   });
 });
 

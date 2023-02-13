@@ -2,7 +2,7 @@ import { io, Socket } from 'socket.io-client';
 import { CardType } from '../types/Card';
 
 interface ServerToClientEvents {
-  pushPlayPage: (game_id: String, player1_id: number, player2_id: number) => void; //FullRoom
+  pushPlayPage: (game_id: String, user1_id: number, user2_id: number) => void; //FullRoom
   updateField: (cardData: Array<CardType>, user_id: number) => void; //HPinfo
   gameStart: (user_name: String) => void; // gameStart
 }
@@ -37,9 +37,9 @@ class SocketIo {
     this.socket?.emit('quitWaitingRoom', user_id);
   }
 
-  pushPlayPage(callback: (game_id: String, player1_id: number, player2_id: number) => void) {
-    this.socket?.on('pushPlayPage', (game_id: String, player1_id: number, player2_id: number) => {
-      return callback(game_id, player1_id, player2_id);
+  pushPlayPage(callback: (game_id: String, user1_id: number, user2_id: number) => void) {
+    this.socket?.on('pushPlayPage', (game_id: String, user1_id: number, user2_id: number) => {
+      return callback(game_id, user1_id, user2_id);
     });
   }
 

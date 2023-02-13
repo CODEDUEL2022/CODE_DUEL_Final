@@ -28,7 +28,7 @@ export const HomePage = () => {
   return (
     <div>
       ホームです
-      <button onClick={() => startAutoMatching()}>オートマッチング</button>
+      <button onClick={startAutoMatching}>オートマッチング</button>
     </div>
   );
 };
