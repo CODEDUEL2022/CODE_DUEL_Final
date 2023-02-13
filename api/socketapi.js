@@ -10,8 +10,27 @@ const socketapi = {
   io: io,
 };
 
+const waitingPlayersIds = [];
+
 io.on("connection", function (socket) {
-  console.log("A user connected");
+  console.log("connected to socket.io !!!");
+
+  socket.on("enterWaitingRoom", (user_id) => {
+    waitingPlayersIds.push(user_id);
+    console.log(`${waitingPlayersIds.length} people is waiting...`);
+
+    const pushPlayersToRoom = (player1_id, player2_id) => {
+      const game_id = Math.random().toString(32).substring(2);
+      io.emit("pushPlayPage", game_id, player1_id, player2_id);
+    };
+
+    if (waitingPlayersIds.length >= 2) {
+      waitingPlayersIds.splice(0, 2);
+      setTimeout(() => {
+        pushPlayersToRoom(waitingPlayersIds[0], waitingPlayersIds[1]);
+      }, 1000);
+    }
+  });
 });
 
 module.exports = socketapi;

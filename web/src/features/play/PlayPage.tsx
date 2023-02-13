@@ -47,6 +47,7 @@ export const PlayPage = () => {
     fieldCards: [],
     myCards: sampleCards,
   });
+
   //ドラッグされているcardのid
   const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
   const [activeCard, setActiveCard] = useState<CardType>();

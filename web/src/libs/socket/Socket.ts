@@ -2,17 +2,17 @@ import { io, Socket } from 'socket.io-client';
 import { CardType } from '../types/Card';
 
 interface ServerToClientEvents {
-  pushPlayPage: (room_id: String, player1_id: number, player2_id: number) => void; //FullRoom
-  updateField: (card_data: Array<CardType>, player_id: number) => void; //HPinfo
-  gameStart: (player_name: String) => void; // gameStart
+  pushPlayPage: (game_id: String, player1_id: number, player2_id: number) => void; //FullRoom
+  updateField: (cardData: Array<CardType>, user_id: number) => void; //HPinfo
+  gameStart: (user_name: String) => void; // gameStart
 }
 
 interface ClientToServerEvents {
-  matching: (player_id: number) => void; //AutoMatchingPreLogin
-  quitWaitingRoom: (player_id: number) => void; // LeaveWaitingRoom
-  enterWaitingRoom: (room_id: String) => void; //login
-  joinRoom: (room_id: String, opponent_id: number) => void; // roomJoin
-  sendCard: (card_data: Array<CardType>, player_id: number) => void; //cardValue
+  enterWaitingRoom: (user_id: number) => void; //AutoMatchingPreLogin
+  quitWaitingRoom: (user_id: number) => void; // LeaveWaitingRoom
+  matchToFriend: (game_id: String) => void; //login
+  joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
+  sendCard: (cardData: Array<CardType>, user_id: number) => void; //cardValue
 }
 
 class SocketIo {
@@ -24,42 +24,42 @@ class SocketIo {
     console.log('Connecting Socket.io...');
   }
 
-  enterWaitingRoom(room_id: String) {
-    this.socket?.emit('enterWaitingRoom', room_id);
+  matchToFriend(game_id: String) {
+    this.socket?.emit('matchToFriend', game_id);
   }
 
-  matching(player_id: number) {
-    console.log(player_id);
-    this.socket?.emit('matching', player_id);
+  enterWaitingRoom(user_id: number) {
+    console.log(user_id);
+    this.socket?.emit('enterWaitingRoom', user_id);
   }
 
-  quitWaitingRoom(player_id: number) {
-    this.socket?.emit('quitWaitingRoom', player_id);
+  quitWaitingRoom(user_id: number) {
+    this.socket?.emit('quitWaitingRoom', user_id);
   }
 
-  pushPlayPage(callback: (room_id: String, player1_id: number, player2_id: number) => void) {
-    this.socket?.on('pushPlayPage', (room_id: String, player1_id: number, player2_id: number) => {
-      return callback(room_id, player1_id, player2_id);
+  pushPlayPage(callback: (game_id: String, player1_id: number, player2_id: number) => void) {
+    this.socket?.on('pushPlayPage', (game_id: String, player1_id: number, player2_id: number) => {
+      return callback(game_id, player1_id, player2_id);
     });
   }
 
-  joinRoom(room_id: String, opponent_id: number) {
-    this.socket?.emit('joinRoom', room_id, opponent_id);
+  joinRoom(game_id: String, opponent_id: number) {
+    this.socket?.emit('joinRoom', game_id, opponent_id);
   }
 
-  gameStart(callback: (player_name: String) => void) {
-    this.socket?.on('gameStart', (player_name: String) => {
-      return callback(player_name);
+  gameStart(callback: (user_name: String) => void) {
+    this.socket?.on('gameStart', (user_name: String) => {
+      return callback(user_name);
     });
   }
 
-  sendCard(card_data: Array<CardType>, player_id: number) {
-    this.socket?.emit('sendCard', card_data, player_id);
+  sendCard(cardData: Array<CardType>, user_id: number) {
+    this.socket?.emit('sendCard', cardData, user_id);
   }
 
-  updateField(callback: (card_data: Array<CardType>, player_id: number) => void) {
-    this.socket?.on('updateField', (card_data: Array<CardType>, player_id: number) => {
-      return callback(card_data, player_id);
+  updateField(callback: (cardData: Array<CardType>, user_id: number) => void) {
+    this.socket?.on('updateField', (cardData: Array<CardType>, user_id: number) => {
+      return callback(cardData, user_id);
     });
   }
 }
