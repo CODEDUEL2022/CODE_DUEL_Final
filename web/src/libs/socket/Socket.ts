@@ -2,7 +2,7 @@ import { io, Socket } from 'socket.io-client';
 import { CardType } from '../types/Card';
 
 interface ServerToClientEvents {
-  readyRandomMatch: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
+  successRandomMatching: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
   updateField: (cardData: Array<CardType>, user_id: number) => void; //HPinfo
   gameStart: (user1_name: String, user2_name: String) => void; // gameStart
 }
@@ -10,7 +10,7 @@ interface ServerToClientEvents {
 interface ClientToServerEvents {
   enterWaitingRoom: (user_id: number) => void; //AutoMatchingPreLogin
   exitWaitingRoom: (user_id: number) => void; // LeaveWaitingRoom
-  readyCustomMatch: (game_id: string, user_id: number) => void; //login
+  readyGameStart: (game_id: string, user_id: number) => void; //login
   joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
   sendCard: (cardData: Array<CardType>, user_id: number) => void; //cardValue
 }
@@ -24,8 +24,8 @@ class SocketIo {
     console.log('Connecting Socket.io...');
   }
 
-  readyCustomMatch(game_id: string, user_id: number) {
-    this.socket?.emit('readyCustomMatch', game_id, user_id);
+  readyGameStart(game_id: string, user_id: number) {
+    this.socket?.emit('readyGameStart', game_id, user_id);
   }
 
   enterWaitingRoom(user_id: number) {
@@ -37,10 +37,13 @@ class SocketIo {
     this.socket?.emit('exitWaitingRoom', user_id);
   }
 
-  readyRandomMatch(callback: (game_id: string, user1_id: number, user2_id: number) => void) {
-    this.socket?.on('readyRandomMatch', (game_id: string, user1_id: number, user2_id: number) => {
-      return callback(game_id, user1_id, user2_id);
-    });
+  successRandomMatching(callback: (game_id: string, user1_id: number, user2_id: number) => void) {
+    this.socket?.on(
+      'successRandomMatching',
+      (game_id: string, user1_id: number, user2_id: number) => {
+        return callback(game_id, user1_id, user2_id);
+      }
+    );
   }
 
   joinRoom(game_id: String, opponent_id: number) {

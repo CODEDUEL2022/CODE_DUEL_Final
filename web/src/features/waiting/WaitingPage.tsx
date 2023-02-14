@@ -20,18 +20,16 @@ export const WaitingPage = () => {
     router.push({ pathname: '/' });
   };
 
-  Socket.readyRandomMatch((game_id, user1_id, user2_id) => {
-    // TODO: /playerDataでバックにplayer情報を送信
-    console.log('readyrandom');
-    if (user_id === user1_id || user2_id) {
+  Socket.successRandomMatching((game_id, user1_id, user2_id) => {
+    const pushPlayPage = () => {
       router.push({
         pathname: '/play',
-        query: {
-          id: game_id,
-          user: user_id,
-        },
+        query: { id: game_id, user: user_id },
       });
-    }
+    };
+    // TODO: /playerDataでバックにplayer情報を送信
+    if (user_id === user1_id) pushPlayPage();
+    if (user_id === user2_id) setTimeout(pushPlayPage, 1000); // 同時にルームに入るのを防ぐ
   });
 
   return (

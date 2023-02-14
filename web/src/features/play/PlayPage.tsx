@@ -54,7 +54,7 @@ export const PlayPage = () => {
   const user_id = queryParams.get('user');
 
   useEffect(() => {
-    Socket.readyCustomMatch(game_id, user_id);
+    Socket.readyGameStart(game_id, user_id);
     console.log('enter room');
   }, []);
 

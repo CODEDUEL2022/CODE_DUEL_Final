@@ -32,12 +32,7 @@ io.on("connection", function (socket) {
       const user1_id = waitingUsersIds[0];
       const user2_id = waitingUsersIds[1];
 
-      const room = { id: game_id, users: [user1_id, user2_id] };
-
-      socket.join(game_id);
-      rooms.push(room);
-      console.log(rooms);
-      io.emit("readyRandomMatch", game_id, user1_id, user2_id);
+      io.emit("successRandomMatching", game_id, user1_id, user2_id);
 
       deleteWaitingUser(user1_id);
       deleteWaitingUser(user2_id);
@@ -46,7 +41,7 @@ io.on("connection", function (socket) {
 
   socket.on("exitWaitingRoom", (user_id) => deleteWaitingUser(user_id));
 
-  socket.on("readyCustomMatch", (game_id, user_id) => {
+  socket.on("readyGameStart", (game_id, user_id) => {
     const foundRoom = rooms.find((room) => room.id === game_id);
 
     if (!foundRoom) {
