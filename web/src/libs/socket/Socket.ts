@@ -4,7 +4,7 @@ import { CardType } from '../types/Card';
 interface ServerToClientEvents {
   readyRandomMatch: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
   updateField: (cardData: Array<CardType>, user_id: number) => void; //HPinfo
-  gameStart: (user_name: String) => void; // gameStart
+  gameStart: (user1_name: String, user2_name: String) => void; // gameStart
 }
 
 interface ClientToServerEvents {
@@ -47,9 +47,9 @@ class SocketIo {
     this.socket?.emit('joinRoom', game_id, opponent_id);
   }
 
-  gameStart(callback: (user_name: String) => void) {
-    this.socket?.on('gameStart', (user_name: String) => {
-      return callback(user_name);
+  gameStart(callback: (user1_name: String, user2_name: String) => void) {
+    this.socket?.on('gameStart', (user_name: String, user2_name: String) => {
+      return callback(user_name, user2_name);
     });
   }
 

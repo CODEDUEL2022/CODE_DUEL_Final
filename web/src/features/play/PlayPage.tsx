@@ -48,6 +48,20 @@ export const PlayPage = () => {
   const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
   const [activeCard, setActiveCard] = useState<CardType>();
 
+  // 状態管理したほうがいいかも
+  const queryParams = new URLSearchParams(window.location.search);
+  const game_id = queryParams.get('id');
+  const user_id = queryParams.get('user');
+
+  useEffect(() => {
+    Socket.readyCustomMatch(game_id, user_id);
+    console.log('enter room');
+  }, []);
+
+  Socket.gameStart((user1, user2) => {
+    alert(`game start! Players are ${user1}, ${user2}`);
+  });
+
   // ドラッグされているカード
   useEffect(() => {
     if (activeCardId === undefined) return;

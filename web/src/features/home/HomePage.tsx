@@ -26,7 +26,6 @@ export const HomePage = () => {
 
   const startCustomMatch = () => {
     Socket.setupSocketConnection();
-    Socket.readyCustomMatch(game_id, user_id);
     router.push({
       pathname: '/play',
       query: { id: game_id, user: user.id },

@@ -57,9 +57,11 @@ io.on("connection", function (socket) {
     } else if (foundRoom.users.length >= 2) {
       return console.log(`This room (${game_id}) is already full`);
     } else {
+      // 2人集まったらスタート
       socket.join(game_id);
       foundRoom.users.push(user_id);
       console.log(foundRoom);
+      io.to(game_id).emit("gameStart", ...foundRoom.users);
     }
   });
 });
