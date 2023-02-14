@@ -32,10 +32,7 @@ io.on("connection", function (socket) {
       const user1_id = waitingUsersIds[0];
       const user2_id = waitingUsersIds[1];
 
-      const room = {
-        id: game_id,
-        users: [user1_id, user2_id],
-      };
+      const room = { id: game_id, users: [user1_id, user2_id] };
 
       socket.join(game_id);
       rooms.push(room);
@@ -49,13 +46,21 @@ io.on("connection", function (socket) {
 
   socket.on("exitWaitingRoom", (user_id) => deleteWaitingUser(user_id));
 
-  socket.on("pushPlayPage", (game_id) => {
-    rooms[game_id] = rooms[game_id] === undefined ? 1 : rooms[game_id] + 1;
+  socket.on("readyCustomMatch", (game_id, user_id) => {
+    const foundRoom = rooms.find((room) => room.id === game_id);
 
-    console.log(rooms);
-    if (rooms[game_id] > 2) return console.log("This room is full.");
-    socket.join(game_id);
-    console.log(`room:${game_id} に入室しました。現在の人数: ${rooms[game_id]}`);
+    if (!foundRoom) {
+      const newRoom = { id: game_id, users: [user_id] };
+      socket.join(game_id);
+      rooms.push(newRoom);
+      console.log(newRoom);
+    } else if (foundRoom.users.length >= 2) {
+      return console.log(`This room (${game_id}) is already full`);
+    } else {
+      socket.join(game_id);
+      foundRoom.users.push(user_id);
+      console.log(foundRoom);
+    }
   });
 });
 

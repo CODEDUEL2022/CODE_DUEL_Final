@@ -10,7 +10,7 @@ interface ServerToClientEvents {
 interface ClientToServerEvents {
   enterWaitingRoom: (user_id: number) => void; //AutoMatchingPreLogin
   exitWaitingRoom: (user_id: number) => void; // LeaveWaitingRoom
-  pushPlayPage: (game_id: string) => void; //login
+  readyCustomMatch: (game_id: string, user_id: number) => void; //login
   joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
   sendCard: (cardData: Array<CardType>, user_id: number) => void; //cardValue
 }
@@ -24,8 +24,8 @@ class SocketIo {
     console.log('Connecting Socket.io...');
   }
 
-  pushPlayPage(game_id: string) {
-    this.socket?.emit('pushPlayPage', game_id);
+  readyCustomMatch(game_id: string, user_id: number) {
+    this.socket?.emit('readyCustomMatch', game_id, user_id);
   }
 
   enterWaitingRoom(user_id: number) {

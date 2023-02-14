@@ -11,17 +11,25 @@ export const HomePage = () => {
   };
   const dec = 2;
 
+  // TODO: 入力するようにする
+  const game_id = 'mockRoom';
+
   const router = useRouter();
 
   const startAutoMatching = () => {
     Socket.setupSocketConnection();
     router.push({
       pathname: '/waiting/',
-      query: {
-        id: user.id,
-        name: user.name,
-        dec: dec,
-      },
+      query: { id: user.id, name: user.name, dec: dec },
+    });
+  };
+
+  const startCustomMatch = () => {
+    Socket.setupSocketConnection();
+    Socket.readyCustomMatch(game_id, user_id);
+    router.push({
+      pathname: '/play',
+      query: { id: game_id, user: user.id },
     });
   };
 
@@ -29,6 +37,7 @@ export const HomePage = () => {
     <div>
       ホームです
       <button onClick={startAutoMatching}>オートマッチング</button>
+      <button onClick={startCustomMatch}>カスタムマッチ</button>
     </div>
   );
 };

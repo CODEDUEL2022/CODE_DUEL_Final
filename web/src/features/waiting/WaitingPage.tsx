@@ -27,8 +27,8 @@ export const WaitingPage = () => {
       router.push({
         pathname: '/play',
         query: {
-          room: game_id,
-          id: user_id,
+          id: game_id,
+          user: user_id,
         },
       });
     }
