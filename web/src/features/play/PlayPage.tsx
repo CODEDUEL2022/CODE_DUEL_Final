@@ -48,6 +48,8 @@ export const PlayPage = () => {
   const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
   const [activeCard, setActiveCard] = useState<CardType>();
 
+  const [myTurn, setMyTurn] = useState<boolean>(false);
+
   // 状態管理したほうがいいかも
   const queryParams = new URLSearchParams(window.location.search);
   const game_id = queryParams.get('id');
@@ -58,9 +60,16 @@ export const PlayPage = () => {
     console.log('enter room');
   }, []);
 
-  Socket.gameStart((user1, user2) => {
-    alert(`game start! Players are ${user1}, ${user2}`);
+  Socket.gameStart((user1_id, user2_id) => {
+    alert(`game start! Players are ${user1_id}, ${user2_id}`);
+    if (user_id === user1_id) setMyTurn(true);
+    if (user_id === user2_id) setMyTurn(false);
   });
+
+  const handleSendCards = () => {
+    if (!myTurn) return console.log('お前のターンじゃないぞ！！');
+    console.log('発動!!');
+  };
 
   // ドラッグされているカード
   useEffect(() => {
@@ -218,6 +227,8 @@ export const PlayPage = () => {
         <SortableContainer containerId="myCards" cards={containers.myCards} style={myCardsStyle} />
         <DragOverlay>{activeCardId ? <Card card={activeCard} /> : null}</DragOverlay>
       </DndContext>
+      <br />
+      <button onClick={handleSendCards}>カード発動！！！</button>
     </div>
   );
 };

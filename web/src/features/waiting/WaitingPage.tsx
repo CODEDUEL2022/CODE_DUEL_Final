@@ -28,8 +28,7 @@ export const WaitingPage = () => {
       });
     };
     // TODO: /playerDataでバックにplayer情報を送信
-    if (user_id === user1_id) pushPlayPage();
-    if (user_id === user2_id) setTimeout(pushPlayPage, 1000); // 同時にルームに入るのを防ぐ
+    if (user_id === user1_id || user2_id) pushPlayPage();
   });
 
   return (
