@@ -1,6 +1,6 @@
 import React from 'react';
-import Socket from '../../libs/socket/Socket';
 import { useRouter } from 'next/router';
+import Socket from '../../libs/socket/Socket';
 
 export const HomePage = () => {
   // TODO: バックから持ってくる
@@ -15,7 +15,6 @@ export const HomePage = () => {
 
   const startAutoMatching = () => {
     Socket.setupSocketConnection();
-    Socket.enterWaitingRoom(user.id);
     router.push({
       pathname: '/waiting/',
       query: {

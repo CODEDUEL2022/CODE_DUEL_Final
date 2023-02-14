@@ -25,10 +25,12 @@ io.on("connection", function (socket) {
   socket.on("enterWaitingRoom", (user_id) => {
     if (waitingUsersIds.includes(user_id)) return;
     waitingUsersIds.push(user_id);
-    console.log(`${waitingUsersIds.length} people is waiting...`);
+    console.log(`${waitingUsersIds.length} people are waiting...`);
 
-    const pushUsersToRoom = (user1_id, user2_id) => {
+    if (waitingUsersIds.length >= 2) {
       const game_id = Math.random().toString(32).substring(2);
+      const user1_id = waitingUsersIds[0];
+      const user2_id = waitingUsersIds[1];
 
       const room = {
         id: game_id,
@@ -39,19 +41,9 @@ io.on("connection", function (socket) {
       rooms.push(room);
       console.log(rooms);
       io.emit("readyRandomMatch", game_id, user1_id, user2_id);
-      // deleteWaitingUser(user1_id);
-      // deleteWaitingUser(user2_id);
-    };
 
-    if (waitingUsersIds.length >= 2) {
-      // let a = waitingUsersIds[0];
-      // let b = waitingUsersIds[1];
-      // waitingUsersIds.splice(0, 2);
-      setTimeout(() => {
-        console.log(waitingUsersIds);
-        pushUsersToRoom(a, b);
-      }, 1000);
-      pushUsersToRoom(waitingUsersIds[0], waitingUsersIds[1]);
+      deleteWaitingUser(user1_id);
+      deleteWaitingUser(user2_id);
     }
   });
 
@@ -63,9 +55,7 @@ io.on("connection", function (socket) {
     console.log(rooms);
     if (rooms[game_id] > 2) return console.log("This room is full.");
     socket.join(game_id);
-    console.log(
-      `room:${game_id} に入室しました。現在の人数: ${rooms[game_id]}`
-    );
+    console.log(`room:${game_id} に入室しました。現在の人数: ${rooms[game_id]}`);
   });
 });
 

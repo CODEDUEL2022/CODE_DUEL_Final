@@ -9,7 +9,7 @@ interface ServerToClientEvents {
 
 interface ClientToServerEvents {
   enterWaitingRoom: (user_id: number) => void; //AutoMatchingPreLogin
-  quitWaitingRoom: (user_id: number) => void; // LeaveWaitingRoom
+  exitWaitingRoom: (user_id: number) => void; // LeaveWaitingRoom
   pushPlayPage: (game_id: string) => void; //login
   joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
   sendCard: (cardData: Array<CardType>, user_id: number) => void; //cardValue
@@ -33,8 +33,8 @@ class SocketIo {
     this.socket?.emit('enterWaitingRoom', user_id);
   }
 
-  quitWaitingRoom(user_id: number) {
-    this.socket?.emit('quitWaitingRoom', user_id);
+  exitWaitingRoom(user_id: number) {
+    this.socket?.emit('exitWaitingRoom', user_id);
   }
 
   readyRandomMatch(callback: (game_id: string, user1_id: number, user2_id: number) => void) {
