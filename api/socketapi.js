@@ -59,6 +59,11 @@ io.on("connection", function (socket) {
       io.to(game_id).emit("gameStart", ...foundRoom.users);
     }
   });
+
+  socket.on("sendCards", (cardsData, user_id) => {
+    console.log(cardsData);
+    console.log(user_id);
+  });
 });
 
 module.exports = socketapi;

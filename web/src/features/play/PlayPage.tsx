@@ -68,7 +68,9 @@ export const PlayPage = () => {
 
   const handleSendCards = () => {
     if (!myTurn) return console.log('お前のターンじゃないぞ！！');
+    if (!containers['fieldCards']) return console.log('何も出されていないぞ!');
     console.log('発動!!');
+    Socket.sendCards(containers['fieldCards'], user_id);
   };
 
   // ドラッグされているカード

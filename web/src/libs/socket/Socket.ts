@@ -3,7 +3,7 @@ import { CardType } from '../types/Card';
 
 interface ServerToClientEvents {
   successRandomMatching: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
-  updateField: (cardData: Array<CardType>, user_id: number) => void; //HPinfo
+  updateField: (cardsData: Array<CardType>, user_id: number) => void; //HPinfo
   gameStart: (user1_name: String, user2_name: String) => void; // gameStart
 }
 
@@ -12,7 +12,7 @@ interface ClientToServerEvents {
   exitWaitingRoom: (user_id: number) => void; // LeaveWaitingRoom
   readyGameStart: (game_id: string, user_id: number) => void; //login
   joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
-  sendCard: (cardData: Array<CardType>, user_id: number) => void; //cardValue
+  sendCards: (cardsData: Array<CardType>, user_id: number) => void; //cardValue
 }
 
 class SocketIo {
@@ -56,13 +56,13 @@ class SocketIo {
     });
   }
 
-  sendCard(cardData: Array<CardType>, user_id: number) {
-    this.socket?.emit('sendCard', cardData, user_id);
+  sendCards(cardsData: Array<CardType>, user_id: number) {
+    this.socket?.emit('sendCards', cardsData, user_id);
   }
 
-  updateField(callback: (cardData: Array<CardType>, user_id: number) => void) {
-    this.socket?.on('updateField', (cardData: Array<CardType>, user_id: number) => {
-      return callback(cardData, user_id);
+  updateField(callback: (cardsData: Array<CardType>, user_id: number) => void) {
+    this.socket?.on('updateField', (cardsData: Array<CardType>, user_id: number) => {
+      return callback(cardsData, user_id);
     });
   }
 }
