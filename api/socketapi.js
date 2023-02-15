@@ -60,9 +60,12 @@ io.on("connection", function (socket) {
     }
   });
 
-  socket.on("sendCards", (cardsData, user_id) => {
+  socket.on("sendCards", (cardsData, playersData, user_id, game_id) => {
     console.log(cardsData);
+    console.dir(playersData);
     console.log(user_id);
+    // HPの計算はバックで行うようにする
+    io.to(game_id).emit("updateField", cardsData);
   });
 });
 

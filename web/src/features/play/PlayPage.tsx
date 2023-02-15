@@ -16,6 +16,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { SortableContainer } from './parts/SortableContainer';
 import { Card } from '../../components/parts/Card/Card';
 import { CardType } from '../../libs/types/Card';
+import { PlayerType } from '../../libs/types/Player';
 import Socket from '../../libs/socket/Socket';
 
 export const PlayPage = () => {
@@ -48,12 +49,25 @@ export const PlayPage = () => {
   const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
   const [activeCard, setActiveCard] = useState<CardType>();
 
-  const [myTurn, setMyTurn] = useState<boolean>(false);
-
   // 状態管理したほうがいいかも
   const queryParams = new URLSearchParams(window.location.search);
   const game_id = queryParams.get('id');
-  const user_id = queryParams.get('user');
+  const user_id = Number(queryParams.get('user'));
+
+  const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
+    myData: {
+      id: user_id,
+      name: 'yusaku',
+      hp: 200,
+      turn: false,
+    },
+    opponentsData: {
+      id: 0,
+      name: 'nakamura',
+      hp: 200,
+      turn: false,
+    },
+  });
 
   useEffect(() => {
     Socket.readyGameStart(game_id, user_id);
@@ -61,17 +75,41 @@ export const PlayPage = () => {
   }, []);
 
   Socket.gameStart((user1_id, user2_id) => {
-    alert(`game start! Players are ${user1_id}, ${user2_id}`);
-    if (user_id === user1_id) setMyTurn(true);
-    if (user_id === user2_id) setMyTurn(false);
+    // user1_idを先行にする、playersの情報をセット。
+    if (user_id === user1_id) {
+      setPlayersData((players) => ({
+        ...players,
+        myData: {
+          ...players.myData,
+          turn: true,
+        },
+        opponentsData: {
+          ...players.opponentsData,
+          id: user2_id,
+        },
+      }));
+    }
+    if (user_id === user2_id) {
+      setPlayersData((players) => ({
+        ...players,
+        opponentsData: {
+          ...players.opponentsData,
+          id: user1_id,
+        },
+      }));
+    }
   });
 
   const handleSendCards = () => {
-    if (!myTurn) return console.log('お前のターンじゃないぞ！！');
+    if (!playersData['myData'].turn) return console.log('お前のターンじゃないぞ！！');
+    // TODO: コンボから例外処理を書く。本来は発動可能なコンボを取得する。
     if (!containers['fieldCards']) return console.log('何も出されていないぞ!');
     console.log('発動!!');
-    Socket.sendCards(containers['fieldCards'], user_id);
+    // TODO: コンボを発動するようにする。
+    Socket.sendCards(containers['fieldCards'], playersData, user_id, game_id);
   };
+
+  Socket.updateField((cardsData, user_id) => {});
 
   // ドラッグされているカード
   useEffect(() => {
