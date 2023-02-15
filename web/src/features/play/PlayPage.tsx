@@ -71,7 +71,7 @@ export const PlayPage = () => {
   });
 
   useEffect(() => {
-    const user = { id: user_id, name: user_name };
+    const user = { id: user_id, name: user_name, hp: 200, turn: false };
     Socket.readyGameStart(game_id, user);
     console.log('enter room');
   }, []);
@@ -116,7 +116,20 @@ export const PlayPage = () => {
   Socket.updateField((cardsData, updatedPlayersData) => {
     console.dir(cardsData);
     console.dir(updatedPlayersData);
-    setPlayersData(updatedPlayersData);
+
+    const parsedPlayers = updatedPlayersData.reduce(
+      (acc: { [key: string]: PlayerType }, player) => {
+        if (player.id === user_id) {
+          acc['myData'] = player;
+        } else {
+          acc['opponentsData'] = player;
+        }
+        return acc;
+      },
+      {}
+    );
+
+    setPlayersData(parsedPlayers);
   });
 
   // ドラッグされているカード

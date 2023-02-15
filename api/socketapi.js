@@ -64,12 +64,15 @@ io.on("connection", function (socket) {
   });
 
   socket.on("sendCards", (cardsData, playersData, user_id, game_id) => {
-    console.log(cardsData);
-    console.dir(playersData);
-    console.log(user_id);
-
+    const updatedPlayersData = rooms[game_id].map((user) => {
+      if (user.id === playersData["myData"].id) return { ...user, turn: false };
+      if (user.id === playersData["opponentsData"].id) return { ...user, turn: true };
+    });
     // TODO: 発動されたコンボからHPの計算の処理を書く。
-    // io.to(game_id).emit("updateField", cardsData, playersData);
+    console.log("attacked! change turn.");
+    console.log(updatedPlayersData);
+    rooms[game_id] = updatedPlayersData;
+    io.to(game_id).emit("updateField", cardsData, updatedPlayersData);
   });
 });
 
