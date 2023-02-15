@@ -9,14 +9,15 @@ export const WaitingPage = () => {
   // 状態管理したほうがいいかも
   const queryParams = new URLSearchParams(window.location.search);
   const user_id = Number(queryParams.get('id'));
+  const user_name = queryParams.get('name');
 
   useEffect(() => {
-    Socket.enterWaitingRoom(user_id);
+    Socket.enterWaitingRoom(user_id, user_name);
     console.log('enter');
   }, []);
 
   const exitWaitingRoom = () => {
-    Socket.exitWaitingRoom(user_id);
+    Socket.exitWaitingRoom(user_id, user_name);
     router.push({ pathname: '/' });
   };
 
@@ -24,7 +25,7 @@ export const WaitingPage = () => {
     const pushPlayPage = () => {
       router.push({
         pathname: '/play',
-        query: { id: game_id, user: user_id },
+        query: { id: game_id, userid: user_id, name: user_name },
       });
     };
     // TODO: /playerDataでバックにplayer情報を送信

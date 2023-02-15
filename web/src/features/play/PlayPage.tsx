@@ -52,7 +52,8 @@ export const PlayPage = () => {
   // 状態管理したほうがいいかも
   const queryParams = new URLSearchParams(window.location.search);
   const game_id = queryParams.get('id');
-  const user_id = Number(queryParams.get('user'));
+  const user_id = Number(queryParams.get('userid'));
+  const user_name = queryParams.get('name');
 
   const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
     myData: {
@@ -70,13 +71,14 @@ export const PlayPage = () => {
   });
 
   useEffect(() => {
-    Socket.readyGameStart(game_id, user_id);
+    const user = { id: user_id, name: user_name };
+    Socket.readyGameStart(game_id, user);
     console.log('enter room');
   }, []);
 
-  Socket.gameStart((user1_id, user2_id) => {
+  Socket.gameStart((user1, user2) => {
     // user1_idを先行にする、playersの情報をセット。
-    if (user_id === user1_id) {
+    if (user_id === user1.id) {
       setPlayersData((players) => ({
         ...players,
         myData: {
@@ -85,16 +87,18 @@ export const PlayPage = () => {
         },
         opponentsData: {
           ...players.opponentsData,
-          id: user2_id,
+          id: user2.id,
+          name: user2.name,
         },
       }));
     }
-    if (user_id === user2_id) {
+    if (user_id === user2.id) {
       setPlayersData((players) => ({
         ...players,
         opponentsData: {
           ...players.opponentsData,
-          id: user1_id,
+          id: user1.id,
+          name: user1.name,
         },
       }));
     }
@@ -109,7 +113,11 @@ export const PlayPage = () => {
     Socket.sendCards(containers['fieldCards'], playersData, user_id, game_id);
   };
 
-  Socket.updateField((cardsData, user_id) => {});
+  Socket.updateField((cardsData, updatedPlayersData) => {
+    console.dir(cardsData);
+    console.dir(updatedPlayersData);
+    setPlayersData(updatedPlayersData);
+  });
 
   // ドラッグされているカード
   useEffect(() => {

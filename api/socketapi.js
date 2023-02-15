@@ -10,53 +10,56 @@ const socketapi = {
   io: io,
 };
 
-const waitingUsersIds = [];
-const rooms = [];
+const waitingUsers = [];
+const rooms = {};
 
 const deleteWaitingUser = (user_id) => {
-  const userIndex = waitingUsersIds.indexOf(user_id);
-  waitingUsersIds.splice(userIndex, 1);
-  console.log(`${waitingUsersIds.length} people are waiting...`);
+  const userIndex = waitingUsers.findIndex((user) => user.id === user_id);
+  waitingUsers.splice(userIndex, 1);
+  console.log(`${waitingUsers.length} people are waiting...`);
 };
 
 io.on("connection", function (socket) {
   console.log("connected to socket.io !!!");
 
-  socket.on("enterWaitingRoom", (user_id) => {
-    if (waitingUsersIds.includes(user_id)) return;
-    waitingUsersIds.push(user_id);
-    console.log(`${waitingUsersIds.length} people are waiting...`);
+  socket.on("enterWaitingRoom", (user_id, user_name) => {
+    if (waitingUsers.find((user) => user.id === user_id) !== undefined)
+      return console.log("もういるよ");
 
-    if (waitingUsersIds.length >= 2) {
+    const newUser = { id: user_id, name: user_name, hp: 200, turn: false };
+    waitingUsers.push(newUser);
+    console.log(`${waitingUsers.length} people are waiting...`);
+
+    if (waitingUsers.length >= 2) {
       const game_id = Math.random().toString(32).substring(2);
-      const user1_id = waitingUsersIds[0];
-      const user2_id = waitingUsersIds[1];
+      const user1 = waitingUsers[0];
+      const user2 = waitingUsers[1];
 
-      io.emit("successRandomMatching", game_id, user1_id, user2_id);
+      io.emit("successRandomMatching", game_id, user1.id, user2.id);
 
-      deleteWaitingUser(user1_id);
-      deleteWaitingUser(user2_id);
+      deleteWaitingUser(user1.id);
+      deleteWaitingUser(user2.id);
     }
   });
 
   socket.on("exitWaitingRoom", (user_id) => deleteWaitingUser(user_id));
 
-  socket.on("readyGameStart", (game_id, user_id) => {
-    const foundRoom = rooms.find((room) => room.id === game_id);
+  socket.on("readyGameStart", (game_id, user) => {
+    const key = Object.keys(rooms).find((room_id) => room_id === game_id);
 
-    if (!foundRoom) {
-      const newRoom = { id: game_id, users: [user_id] };
+    if (!key) {
+      const newRoomUsers = [user];
       socket.join(game_id);
-      rooms.push(newRoom);
-      console.log(newRoom);
-    } else if (foundRoom.users.length >= 2) {
+      rooms[game_id] = newRoomUsers;
+      console.log(rooms);
+    } else if (rooms[key].length >= 2) {
       return console.log(`This room (${game_id}) is already full`);
     } else {
       // 2人集まったらスタート
       socket.join(game_id);
-      foundRoom.users.push(user_id);
-      console.log(foundRoom);
-      io.to(game_id).emit("gameStart", ...foundRoom.users);
+      rooms[key].push(user);
+      console.log(rooms);
+      io.to(game_id).emit("gameStart", ...rooms[key]);
     }
   });
 
@@ -64,8 +67,9 @@ io.on("connection", function (socket) {
     console.log(cardsData);
     console.dir(playersData);
     console.log(user_id);
-    // HPの計算はバックで行うようにする
-    io.to(game_id).emit("updateField", cardsData);
+
+    // TODO: 発動されたコンボからHPの計算の処理を書く。
+    // io.to(game_id).emit("updateField", cardsData, playersData);
   });
 });
 
