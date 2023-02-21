@@ -3,7 +3,7 @@
 const db = require("../models/index");
 
 module.exports = {
-    read: async(req, res, next) => {
+    read: async(req, res) => {
         try{
             const result = await db.Task.findAll();
             res.send(result);
@@ -11,7 +11,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    create: async(req, res, next) => {
+    create: async(req, res) => {
         try{
             const result = await db.Task.create({
                 name: req.body.name,
@@ -22,7 +22,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    update: async(req, res, next) => {
+    update: async(req, res) => {
         try{
             const result = await db.Task.update(
                 {
@@ -40,7 +40,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    delete: async(req, res, next) => {
+    delete: async(req, res) => {
         try{
             const result = await db.Task.destroy({
                 where: {
@@ -54,7 +54,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    sendAttackInfo: async(req, res, next) => {
+    sendAttackInfo: async(req, res) => {
         try{
             
             res.send(result);

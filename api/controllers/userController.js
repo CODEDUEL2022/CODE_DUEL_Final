@@ -3,7 +3,7 @@
 const db = require("../models/index");
 
 module.exports = {
-    read: async(req, res, next) => {
+    read: async(req, res) => {
         try{
             const result = await db.Task.findAll();
             res.send(result);
@@ -11,7 +11,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    create: async(req, res, next) => {
+    create: async(req, res) => {
         try{
             const result = await db.Task.create({
                 name: req.body.name,
@@ -22,7 +22,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    update: async(req, res, next) => {
+    update: async(req, res) => {
         try{
             const result = await db.Task.update(
                 {
@@ -40,7 +40,7 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    delete: async(req, res, next) => {
+    delete: async(req, res) => {
         try{
             const result = await db.Task.destroy({
                 where: {
@@ -54,26 +54,25 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    searchUser: async(req, res, next) => {
+    Login: async(req, res) => {
         try{
             const user_name = req.body.user.name;
             const user_password = req.body.user.password;
-
-            const is_success = await db.Task.find({
+            const is_success = await db.Task.findOne({
                 where: {
                     name: user_name,
-                    password: user_password
                 }
+            }).then(user => {
+                const user_id = user.id;
+                const user_level = user.level;
+                const result = [is_success, user_id,user_level]
+                res.send(result);
             });
-            //おそらく、is_successには、プレイヤーの情報全てが入ったリストが帰ってくる。
-            //それから不要な情報を削ぎ落して、フロントエンドに送信すればOK
-            const result = [is_success, user_id,user_level]
-            res.send(result);
         }catch(err){
             res.status(500).send(err);
         }
     },
-    createUser: async(req, res, next) => {
+    createUser: async(req, res) => {
         try{
             const user_name = req.body.user.name;
             const user_password = req.body.user.password;
@@ -88,20 +87,65 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    getUserInfo: async(req, res, next) => {
+    getUserInfo: async(req, res) => {
         try{
+            const user_name = req.body.user.name;
+            const user_password = req.body.user.password;
+            const is_success = await db.Task.findOne({
+                where: {
+                    name: user_name,
+                }
+            }).then(user => {
+                const user_id = user.id;
+                const user_level = user.level;
+                const result = [user_id,user_level]
+                res.send(result);
+            });
             
-            res.send(result);
         }catch(err){
             res.status(500).send(err);
         }
     },
-    deleteUser: async(req, res, next) => {
+    deleteUser: async(req, res) => {
         try{
-            
-            res.send(result);
+            await db.Task.findOne({
+                where: {
+                    name: user_name,
+                }
+            }).then(user => {
+                user.destroy();
+                res.send("success");
+            });
+
         }catch(err){
             res.status(500).send(err);
         }
+    },
+    testUserCreate: async(req, res) => {
+        try{
+            const user_name = "user";
+            const user_password = "password";
+
+            const result = await db.Task.create({
+                name: user_name,
+                password: user_password
+            });
+            
+            res.send(result);
+            const is_success = await db.Task.findOne({
+                where: {
+                    name: user_name,
+                }
+            }).then(user => {console.log(user.id)});
+
+        }catch(err){
+            res.status(500).send(err);
+        }
+        // const rows = await db.Task.findAll();
+        // rows.forEach(row => {
+        //     const id = row.id
+        //     const name = row.name
+        //     console.log(`${id}: ${name}`)
+        //  })
     },
 }
