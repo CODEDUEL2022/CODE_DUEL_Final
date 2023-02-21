@@ -114,7 +114,9 @@ module.exports = {
                 }
             }).then(user => {
                 user.destroy();
-                res.send("success");
+                const is_success = true;
+                const result = [is_success];
+                res.send(result);
             });
 
         }catch(err){
