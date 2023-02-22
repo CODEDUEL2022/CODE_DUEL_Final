@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       Player.belongsToMany(models.Card, {
         through: "Hands",
       });
+      Player.belongsToMany(models.State, {
+        through: "PlayerStates",
+      });
     }
   }
   Player.init(

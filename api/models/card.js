@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Card.belongsTo(models.os, {
+      Card.belongsTo(models.Os, {
         foreignKey: "OsId",
         targetKey: "id",
       });
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       Card.belongsToMany(models.Type, {
         through: "CardsTypes",
       });
-      Card.belongsToMany(models.player, {
+      Card.belongsToMany(models.Player, {
         through: "Hands",
       });
     }

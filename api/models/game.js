@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Game.hasOne(models.Os, {
+      Game.belongsTo(models.Os, {
         foreignKey: "OsId",
         targetKey: "id",
       });
