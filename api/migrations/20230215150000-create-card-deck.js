@@ -2,7 +2,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     // Product belongsToMany Tag
-    return queryInterface.createTable("cards_decks", {
+    return queryInterface.createTable("CardDecks", {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -11,11 +11,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      card_id: {
+      CardId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
-      deck_id: {
+      DeckId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
@@ -24,6 +24,6 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     // remove table
-    return queryInterface.dropTable("cards_decks");
+    return queryInterface.dropTable("CardDecks");
   },
 };

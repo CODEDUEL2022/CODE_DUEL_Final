@@ -2,36 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("playing_users", {
+    await queryInterface.createTable("Players", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "users",
+            tableName: "Users",
             key: "id",
           },
         },
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      game_id: {
+      GameId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "games",
+            tableName: "Games",
             key: "id",
           },
         },
         onDelete: "cascade",
         onUpdate: "cascade",
       },
-      skill_point: {
+      skillPoint: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -45,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("playing_users");
+    await queryInterface.dropTable("Players");
   },
 };

@@ -9,7 +9,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return queryInterface.createTable("combo_bonus", {
+    return queryInterface.createTable("CardTypes", {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -18,11 +18,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      combo_id: {
+      CardId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
-      bonus_type_id: {
+      TypeId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
       },
@@ -36,5 +36,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    return queryInterface.dropTable("CardTypes");
   },
 };

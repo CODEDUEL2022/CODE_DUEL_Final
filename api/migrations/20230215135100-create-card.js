@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("cards", {
+    await queryInterface.createTable("Cards", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,16 +15,16 @@ module.exports = {
       cost: {
         type: Sequelize.INTEGER,
       },
-      enforce_os_id: {
+      OsId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: "os",
+            tableName: "Os",
             key: "id",
           },
         },
       },
-      file_path: {
+      filePath: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -38,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("cards");
+    await queryInterface.dropTable("Cards");
   },
 };
