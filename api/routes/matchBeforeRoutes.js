@@ -1,14 +1,24 @@
 const router = require("express").Router(),
 matchBeforeController = require("../controllers/matchBeforeController");
 
-router.get("/", matchBeforeController.read);
-router.post("/", matchBeforeController.create);
-router.put("/:id", matchBeforeController.update);
-router.delete("/:id", matchBeforeController.delete);
+router.get("/", function(req, res){
+    matchBeforeController.read(req, res)
+});
+router.put("/:id", function(req, res){
+    matchBeforeController.update(req, res)
+});
 
-router.post("/custom_match", matchBeforeController.customMatch);
-router.post("/random_match", matchBeforeController.randomMatch);
-router.post("/delete_room", matchBeforeController.deleteRoom);
-router.post("/leave_user", matchBeforeController.leaveUser);
+router.post("/custom_match", function(req, res){
+    matchBeforeController.customMatch(req, res)
+});
+router.get("/random_match", function(req, res){
+    matchBeforeController.randomMatch(req, res)
+});
+router.post("/delete_room", function(req, res){
+    matchBeforeController.deleteRoom(req, res)
+});
+router.post("/leave_user", function(req, res){
+    matchBeforeController.leaveUser(req, res)
+});
 
 module.exports = router;
