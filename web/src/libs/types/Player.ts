@@ -3,4 +3,5 @@ export interface PlayerType {
   name: String;
   hp: Number;
   turn: boolean;
+  game_id: String;
 }

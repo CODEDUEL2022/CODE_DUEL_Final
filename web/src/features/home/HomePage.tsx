@@ -1,35 +1,37 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Socket from '../../libs/socket/Socket';
+import { UserContext } from '../../libs/store/PlayerContext';
+import { GameIdContext } from '../../libs/store/PlayerContext';
 
 export const HomePage = () => {
-  // TODO: バックから持ってくる
-  const user_id = Math.floor(Math.random() * 100000);
-  const user = {
-    id: user_id,
-    name: 'yusaku',
-  };
-  const dec = 2;
+  const { setUserInfo } = useContext(UserContext);
+  const { setGameId } = useContext(GameIdContext);
 
-  // TODO: 入力するようにする
-  const game_id = 'mockRoom';
+  useEffect(() => {
+    // TODO: ログイン時、バックから取得する
+    const user_id = Math.floor(Math.random() * 100000);
+    const user = {
+      id: user_id,
+      name: 'yusaku',
+    };
+    const dec = 2;
+
+    setUserInfo(user);
+  }, []);
 
   const router = useRouter();
 
   const startAutoMatching = () => {
     Socket.setupSocketConnection();
-    router.push({
-      pathname: '/waiting/',
-      query: { id: user.id, name: user.name, dec: dec },
-    });
+    router.push('/waiting/');
   };
 
   const startCustomMatch = () => {
+    const game_id = 'mockRoom';
+    setGameId(game_id);
     Socket.setupSocketConnection();
-    router.push({
-      pathname: '/play',
-      query: { id: game_id, user: user.id },
-    });
+    router.push('/play');
   };
 
   return (
