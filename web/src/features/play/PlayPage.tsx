@@ -120,24 +120,24 @@ export const PlayPage = () => {
     Socket.sendCards(containers['fieldCards'], playersData, gameId);
   };
 
-  Socket.updateField((cardsData, updatedPlayersData) => {
-    console.dir(cardsData);
-    console.dir(updatedPlayersData);
+  useEffect(() => {
+    // 参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
+    Socket.updateField((cardsData, updatedPlayersData) => {
+      console.dir(cardsData);
+      console.dir(updatedPlayersData);
 
-    const parsedPlayers = updatedPlayersData.reduce(
-      (acc: { [key: string]: PlayerType }, player) => {
-        if (player.id === userInfo?.id) {
-          acc['myData'] = player;
-        } else {
-          acc['opponentsData'] = player;
-        }
-        return acc;
-      },
-      {}
-    );
-
-    setPlayersData(parsedPlayers);
-  });
+      setPlayersData(() =>
+        updatedPlayersData.reduce((acc: { [key: string]: PlayerType }, player) => {
+          if (player.id === userInfo?.id) {
+            acc['myData'] = player;
+          } else {
+            acc['opponentsData'] = player;
+          }
+          return acc;
+        }, {})
+      );
+    });
+  }, []);
 
   // ドラッグされているカード
   useEffect(() => {
