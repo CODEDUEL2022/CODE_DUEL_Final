@@ -56,8 +56,8 @@ export const PlayPage = () => {
 
   const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
     myData: {
-      id: userInfo.id,
-      name: 'yusaku',
+      id: userInfo?.id,
+      name: userInfo?.name,
       hp: 200,
       turn: false,
       game_id: gameId,
@@ -72,14 +72,20 @@ export const PlayPage = () => {
   });
 
   useEffect(() => {
-    const user = { id: userInfo.id, name: userInfo.name, hp: 200, turn: false };
-    Socket.readyGameStart(gameId, user);
+    const player = {
+      id: userInfo?.id,
+      name: userInfo?.name,
+      hp: 200,
+      turn: false,
+      game_id: gameId,
+    };
+    Socket.readyGameStart(player);
     console.log('enter room');
   }, []);
 
   Socket.gameStart((user1, user2) => {
     // user1_idを先行にする、playersの情報をセット。
-    if (userInfo.id === user1.id) {
+    if (userInfo?.id === user1.id) {
       setPlayersData((players) => ({
         ...players,
         myData: {
@@ -93,7 +99,7 @@ export const PlayPage = () => {
         },
       }));
     }
-    if (userInfo.id === user2.id) {
+    if (userInfo?.id === user2.id) {
       setPlayersData((players) => ({
         ...players,
         opponentsData: {
@@ -111,7 +117,7 @@ export const PlayPage = () => {
     if (!containers['fieldCards']) return console.log('何も出されていないぞ!');
     console.log('発動!!');
     // TODO: コンボを発動するようにする。
-    Socket.sendCards(containers['fieldCards'], playersData, userInfo.id, gameId);
+    Socket.sendCards(containers['fieldCards'], playersData, gameId);
   };
 
   Socket.updateField((cardsData, updatedPlayersData) => {
@@ -120,7 +126,7 @@ export const PlayPage = () => {
 
     const parsedPlayers = updatedPlayersData.reduce(
       (acc: { [key: string]: PlayerType }, player) => {
-        if (player.id === userInfo.id) {
+        if (player.id === userInfo?.id) {
           acc['myData'] = player;
         } else {
           acc['opponentsData'] = player;

@@ -9,15 +9,14 @@ interface ServerToClientEvents {
 }
 
 interface ClientToServerEvents {
-  enterWaitingRoom: (user_id: number, user_name: String) => void; //AutoMatchingPreLogin
-  exitWaitingRoom: (user_id: number, user_name: String) => void; // LeaveWaitingRoom
-  readyGameStart: (game_id: string, user: PlayerType) => void; //login
+  enterWaitingRoom: (user_id: Number | undefined, user_name: String | undefined) => void; //AutoMatchingPreLogin
+  exitWaitingRoom: (user_id: Number | undefined, user_name: String | undefined) => void; // LeaveWaitingRoom
+  readyGameStart: (user: PlayerType) => void; //login
   joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
   sendCards: (
     cardsData: Array<CardType>,
     playersData: { [key: string]: PlayerType },
-    user_id: number,
-    game_id: string
+    game_id: String | undefined
   ) => void; //cardValue
 }
 
@@ -30,16 +29,16 @@ class SocketIo {
     console.log('Connecting Socket.io...');
   }
 
-  readyGameStart(game_id: string, user: PlayerType) {
-    this.socket?.emit('readyGameStart', game_id, user);
+  readyGameStart(user: PlayerType) {
+    this.socket?.emit('readyGameStart', user);
   }
 
-  enterWaitingRoom(user_id: number, user_name: String) {
+  enterWaitingRoom(user_id: Number | undefined, user_name: String | undefined) {
     console.log(user_id);
     this.socket?.emit('enterWaitingRoom', user_id, user_name);
   }
 
-  exitWaitingRoom(user_id: number, user_name: String) {
+  exitWaitingRoom(user_id: Number | undefined, user_name: String | undefined) {
     this.socket?.emit('exitWaitingRoom', user_id, user_name);
   }
 
@@ -65,10 +64,9 @@ class SocketIo {
   sendCards(
     cardsData: Array<CardType>,
     playersData: { [key: string]: PlayerType },
-    user_id: number,
-    game_id: string
+    game_id: String | undefined
   ) {
-    this.socket?.emit('sendCards', cardsData, playersData, user_id, game_id);
+    this.socket?.emit('sendCards', cardsData, playersData, game_id);
   }
 
   updateField(callback: (cardsData: Array<CardType>, playersData: Array<PlayerType>) => void) {

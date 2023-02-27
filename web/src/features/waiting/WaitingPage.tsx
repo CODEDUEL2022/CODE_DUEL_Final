@@ -10,18 +10,13 @@ export const WaitingPage = () => {
   const { userInfo } = useContext(UserContext);
   const { gameId, setGameId } = useContext(GameIdContext);
 
-  // 状態管理したほうがいいかも
-  const queryParams = new URLSearchParams(window.location.search);
-  const user_id = Number(queryParams.get('id'));
-  const user_name = queryParams.get('name');
-
   useEffect(() => {
-    Socket.enterWaitingRoom(userInfo.id, userInfo.name);
+    Socket.enterWaitingRoom(userInfo?.id, userInfo?.name);
     console.log('enter');
   }, []);
 
   const exitWaitingRoom = () => {
-    Socket.exitWaitingRoom(userInfo.id, userInfo.name);
+    Socket.exitWaitingRoom(userInfo?.id, userInfo?.name);
     router.push({ pathname: '/' });
   };
 
@@ -31,7 +26,7 @@ export const WaitingPage = () => {
       router.push('/play');
     };
     // TODO: /playerDataでバックにplayer情報を送信
-    if (user_id === user1_id || user2_id) pushPlayPage();
+    if (userInfo?.id === user1_id || user2_id) pushPlayPage();
   });
 
   return (

@@ -44,26 +44,26 @@ io.on("connection", function (socket) {
 
   socket.on("exitWaitingRoom", (user_id) => deleteWaitingUser(user_id));
 
-  socket.on("readyGameStart", (game_id, user) => {
-    const key = Object.keys(rooms).find((room_id) => room_id === game_id);
+  socket.on("readyGameStart", (player) => {
+    const key = Object.keys(rooms).find((room_id) => room_id === player.game_id);
 
     if (!key) {
-      const newRoomUsers = [user];
-      socket.join(game_id);
-      rooms[game_id] = newRoomUsers;
+      const newRoomUsers = [player];
+      socket.join(player.game_id);
+      rooms[player.game_id] = newRoomUsers;
       console.log(rooms);
     } else if (rooms[key].length >= 2) {
-      return console.log(`This room (${game_id}) is already full`);
+      return console.log(`This room (${player.game_id}) is already full`);
     } else {
       // 2人集まったらスタート
-      socket.join(game_id);
-      rooms[key].push(user);
+      socket.join(player.game_id);
+      rooms[key].push(player);
       console.log(rooms);
-      io.to(game_id).emit("gameStart", ...rooms[key]);
+      io.to(player.game_id).emit("gameStart", ...rooms[key]);
     }
   });
 
-  socket.on("sendCards", (cardsData, playersData, user_id, game_id) => {
+  socket.on("sendCards", (cardsData, playersData, game_id) => {
     const updatedPlayersData = rooms[game_id].map((user) => {
       if (user.id === playersData["myData"].id) return { ...user, turn: false };
       if (user.id === playersData["opponentsData"].id) return { ...user, turn: true };
