@@ -3,6 +3,7 @@ services:
   db:
     # 起動するイメージを指定
     image: mysql:8.0.23
+    platform: linux/amd64
 
     # 環境変数を設定
     environment:

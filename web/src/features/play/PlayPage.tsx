@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -16,8 +16,15 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { SortableContainer } from './parts/SortableContainer';
 import { Card } from '../../components/parts/Card/Card';
 import { CardType } from '../../libs/types/Card';
+import { PlayerType } from '../../libs/types/Player';
+import Socket from '../../libs/socket/Socket';
+import { UserContext } from '../../libs/store/PlayerContext';
+import { GameIdContext } from '../../libs/store/PlayerContext';
 
 export const PlayPage = () => {
+  const { userInfo } = useContext(UserContext);
+  const { gameId } = useContext(GameIdContext);
+
   // TODO: バックから取得する
   const sampleCards: Array<CardType> = [
     {
@@ -42,9 +49,95 @@ export const PlayPage = () => {
     fieldCards: [],
     myCards: sampleCards,
   });
+
   //ドラッグされているcardのid
   const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
   const [activeCard, setActiveCard] = useState<CardType>();
+
+  const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
+    myData: {
+      id: userInfo?.id,
+      name: userInfo?.name,
+      hp: 200,
+      turn: false,
+      game_id: gameId,
+    },
+    opponentsData: {
+      id: 0,
+      name: 'nakamura',
+      hp: 200,
+      turn: false,
+      game_id: gameId,
+    },
+  });
+
+  useEffect(() => {
+    const player = {
+      id: userInfo?.id,
+      name: userInfo?.name,
+      hp: 200,
+      turn: false,
+      game_id: gameId,
+    };
+    Socket.readyGameStart(player);
+    console.log('enter room');
+  }, []);
+
+  Socket.gameStart((user1, user2) => {
+    // user1_idを先行にする、playersの情報をセット。
+    if (userInfo?.id === user1.id) {
+      setPlayersData((players) => ({
+        ...players,
+        myData: {
+          ...players.myData,
+          turn: true,
+        },
+        opponentsData: {
+          ...players.opponentsData,
+          id: user2.id,
+          name: user2.name,
+        },
+      }));
+    }
+    if (userInfo?.id === user2.id) {
+      setPlayersData((players) => ({
+        ...players,
+        opponentsData: {
+          ...players.opponentsData,
+          id: user1.id,
+          name: user1.name,
+        },
+      }));
+    }
+  });
+
+  const handleSendCards = () => {
+    if (!playersData['myData'].turn) return console.log('お前のターンじゃないぞ！！');
+    // TODO: コンボから例外処理を書く。本来は発動可能なコンボを取得する。
+    if (!containers['fieldCards']) return console.log('何も出されていないぞ!');
+    console.log('発動!!');
+    // TODO: コンボを発動するようにする。
+    Socket.sendCards(containers['fieldCards'], playersData, gameId);
+  };
+
+  useEffect(() => {
+    // 参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
+    Socket.updateField((cardsData, updatedPlayersData) => {
+      console.dir(cardsData);
+      console.dir(updatedPlayersData);
+
+      setPlayersData(() =>
+        updatedPlayersData.reduce((acc: { [key: string]: PlayerType }, player) => {
+          if (player.id === userInfo?.id) {
+            acc['myData'] = player;
+          } else {
+            acc['opponentsData'] = player;
+          }
+          return acc;
+        }, {})
+      );
+    });
+  }, []);
 
   // ドラッグされているカード
   useEffect(() => {
@@ -202,6 +295,8 @@ export const PlayPage = () => {
         <SortableContainer containerId="myCards" cards={containers.myCards} style={myCardsStyle} />
         <DragOverlay>{activeCardId ? <Card card={activeCard} /> : null}</DragOverlay>
       </DndContext>
+      <br />
+      <button onClick={handleSendCards}>カード発動！！！</button>
     </div>
   );
 };
