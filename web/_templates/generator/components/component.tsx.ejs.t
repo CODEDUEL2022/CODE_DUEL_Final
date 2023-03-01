@@ -1,5 +1,5 @@
 ---
-to: src/components/parts/<%= name %>/<%= name %>.html
+to: src/components/parts/<%= name %>/<%= name %>.tsx
 ---
 
 import React from 'react';
@@ -8,7 +8,7 @@ interface <%= camelizedName %>Props {
 
 }
 
-export const Button: React.FC<<%= camelizedName %>Props> = (props) => {
+export const <%= camelizedName %>: React.FC<<%= camelizedName %>Props> = (props) => {
   const {} = props;
 
   return (

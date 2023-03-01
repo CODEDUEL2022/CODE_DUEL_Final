@@ -5,11 +5,11 @@ to: src/components/parts/<%= name %>/<%= name %>.stories.tsx
 
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import <%= camelizedName %>Template from './<%= name %>.html';
+import { <%= camelizedName %> } from './<%= name %>';
 
 export default {
-    title: '<%= camelizedName %>s',
-    component: '<%= camelizedName %>s'
+    title: '<%= camelizedName %>',
+    component: <%= camelizedName %>,
 } as ComponentMeta<typeof <%= camelizedName %>>
 
 const Template: ComponentStory<typeof <%= camelizedName %>> = (args) => <<%= camelizedName %> {...args} />;
