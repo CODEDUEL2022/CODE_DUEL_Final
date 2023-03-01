@@ -4,7 +4,7 @@ import Socket from '../../libs/socket/Socket';
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
 
-export const HomePage = () => {
+export const TopPage = () => {
   const { setUserInfo } = useContext(UserContext);
   const { setGameId } = useContext(GameIdContext);
 
@@ -37,8 +37,8 @@ export const HomePage = () => {
   return (
     <div>
       ホームです
-      <button onClick={startAutoMatching}>ログイン</button>
-      <button onClick={startCustomMatch}>サインアップ</button>
+      <button onClick={startAutoMatching}>オートマッチング</button>
+      <button onClick={startCustomMatch}>カスタムマッチ</button>
     </div>
   );
 };
