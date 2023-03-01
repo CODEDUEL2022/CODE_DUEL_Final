@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Button } from '../components/parts/Button/Button';
+import { Button } from './Button';
 
 // storyのmetadataをdefault export
 export default {
