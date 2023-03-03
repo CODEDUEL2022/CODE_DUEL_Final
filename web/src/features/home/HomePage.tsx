@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Socket from '../../libs/socket/Socket';
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
+import { SubButton } from '../../components/parts/SubButton/SubButton';
 
 export const HomePage = () => {
   const { setUserInfo } = useContext(UserContext);
@@ -39,6 +40,7 @@ export const HomePage = () => {
       ホームです
       <button onClick={startAutoMatching}>ログイン</button>
       <button onClick={startCustomMatch}>サインアップ</button>
+      <SubButton></SubButton>
     </div>
   );
 };
