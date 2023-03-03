@@ -20,6 +20,7 @@ import { PlayerType } from '../../libs/types/Player';
 import Socket from '../../libs/socket/Socket';
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
+import { ModalHeaders } from './templates/ModalHeaders';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -297,6 +298,7 @@ export const PlayPage = () => {
       </DndContext>
       <br />
       <button onClick={handleSendCards}>カード発動！！！</button>
+      <ModalHeaders></ModalHeaders>
     </div>
   );
 };
