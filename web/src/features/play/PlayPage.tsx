@@ -22,6 +22,7 @@ import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
 import { ModalHeaders } from './templates/ModalHeaders';
 import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
+import { MainButton } from '../../components/parts/Button/MainButton';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -298,7 +299,21 @@ export const PlayPage = () => {
         <DragOverlay>{activeCardId ? <Card card={activeCard} /> : null}</DragOverlay>
       </DndContext>
       <br />
-      <button onClick={handleSendCards}>カード発動！！！</button>
+      <MainButton handleClick={handleSendCards}>
+        <div
+          style={{
+            width: '50px',
+            height: '30px',
+            fontSize: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textTransform: 'none',
+          }}
+        >
+          Go
+        </div>
+      </MainButton>
       <br />
       <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
       <br />
