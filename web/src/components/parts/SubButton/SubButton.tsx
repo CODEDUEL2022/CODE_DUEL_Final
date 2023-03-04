@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ArwesThemeProvider, Button, Text } from '@arwes/core';
 
 interface SubButtonProps {
-  text: string;
+  children: ReactNode;
   onClick: () => void;
 }
 
 export const SubButton: React.FC<SubButtonProps> = (props) => {
-  const { text, onClick } = props;
+  const { children, onClick } = props;
+
+  const themeSettings = {
+    palette: {
+      primary: { main: '#fff' },
+    },
+  };
 
   return (
     <div>
-      <ArwesThemeProvider>
-        <Button palette="primary" onClick={onClick}>
-          <Text>{text}</Text>
+      <ArwesThemeProvider themeSettings={themeSettings}>
+        <Button onClick={onClick} style={{ width: '130px' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>{children}</div>
         </Button>
       </ArwesThemeProvider>
     </div>
