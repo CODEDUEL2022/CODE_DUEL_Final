@@ -21,6 +21,7 @@ import Socket from '../../libs/socket/Socket';
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
 import { ModalHeaders } from './templates/ModalHeaders';
+import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -298,6 +299,10 @@ export const PlayPage = () => {
       </DndContext>
       <br />
       <button onClick={handleSendCards}>カード発動！！！</button>
+      <br />
+      <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
+      <br />
+      <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
       <ModalHeaders></ModalHeaders>
     </div>
   );

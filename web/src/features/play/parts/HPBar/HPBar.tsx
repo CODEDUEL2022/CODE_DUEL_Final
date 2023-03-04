@@ -1,33 +1,16 @@
 import React from 'react';
-import { ArwesThemeProvider, LoadingBars } from '@arwes/core';
-import { StylesBaseline } from '@arwes/core';
-
-let themeSettings = {};
-
-const palette = {
-  primary: { main: '#fff' },
-};
-themeSettings = { palette };
-
+import { LoadingBars } from '@arwes/core';
 interface HPBarProps {
-  HP: number;
+  hp: Number;
 }
 
 export const HPBar: React.FC<HPBarProps> = (props) => {
-  const { HP } = props;
+  const { hp } = props;
 
-  const maxHP = 200;
-  const HPPercentage = (HP / maxHP) * 100;
+  const maxHp = 200;
+  const hpPercentage = (hp / maxHp) * 100;
 
   return (
-    <ArwesThemeProvider themeSettings={themeSettings}>
-      <StylesBaseline
-        styles={{
-          'html, body': { color: '#fff' },
-          'code, pre': { color: '#fff' },
-        }}
-      ></StylesBaseline>
-      <LoadingBars animator={{ animate: false }} progress={HPPercentage} determinate></LoadingBars>
-    </ArwesThemeProvider>
+    <LoadingBars animator={{ animate: false }} progress={hpPercentage} determinate></LoadingBars>
   );
 };
