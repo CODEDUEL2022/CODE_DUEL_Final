@@ -20,8 +20,15 @@ export const HPBar: React.FC<HPBarProps> = (props) => {
   const hpPercentage = (hp / maxHp) * 100;
 
   return (
-    <ArwesThemeProvider themeSettings={themeSettings}>
-      <LoadingBars animator={{ animate: false }} progress={hpPercentage} determinate></LoadingBars>
-    </ArwesThemeProvider>
+    <>
+      {/* @ts-ignore */}
+      <ArwesThemeProvider themeSettings={themeSettings}>
+        <LoadingBars
+          animator={{ animate: false }}
+          progress={hpPercentage}
+          determinate
+        ></LoadingBars>
+      </ArwesThemeProvider>
+    </>
   );
 };

@@ -13,10 +13,9 @@ export const Default: ComponentStory<typeof Modal> = Template.bind({});
 
 Default.args = {
   isModalOpen: false,
-  width: '80%',
   children: (
     <div>
-      <div>タイトル</div>
+      <h1>タイトル</h1>
       <div>
         テキストテキスト<span>テキスト</span>
         テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト

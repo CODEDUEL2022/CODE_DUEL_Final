@@ -1,33 +1,66 @@
-import React, { useState } from 'react';
-import styles from './Modal.module.scss';
+import React from 'react';
+import { ArwesThemeProvider, FrameCorners } from '@arwes/core';
 
 interface ModalProps {
   isModalOpen: Boolean;
-  width: string;
   children: React.ReactNode;
   onClick: () => void;
 }
 
+const themeSettings = {
+  palette: {
+    primary: { main: '#00fff2' },
+  },
+  space: 6,
+  shadow: { blur: 4 },
+};
+
 export const Modal: React.FC<ModalProps> = (props) => {
-  const { isModalOpen, width, children, onClick } = props;
+  const { isModalOpen, children, onClick } = props;
   if (isModalOpen === false) return null;
 
-  // 親コンポーネントで以下を管理
-  // const [isModalOpen, setIsModalOpen] = useState<Boolean>(true);
-  // const closeModal = () => {
-  //   isModalOpen && setIsModalOpen(false);
-  // };
-
   return (
-    <div className={styles.overlay} onClick={onClick}>
-      <div className={styles.animation}>
-        <div className={styles.modal} style={{ width: width }}>
-          <span className={styles.closeBtn} onClick={onClick}>
-            &times;
-          </span>
-          <div className={styles.modalContent}>{children}</div>
-        </div>
+    <>
+      <div className="overlay" onClick={onClick}>
+        {/* @ts-ignore */}
+        <ArwesThemeProvider themeSettings={themeSettings}>
+          {/* @ts-ignore */}
+          <FrameCorners style={{ width: '80%', maxHeight: '80vh' }} cornerLength={40}>
+            <span className="closeButton" onClick={onClick}>
+              &times;
+            </span>
+            <div className="modalContainer">{children}</div>
+          </FrameCorners>
+        </ArwesThemeProvider>
       </div>
-    </div>
+      <style jsx>{`
+        .overlay {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100vh;
+          background-color: rgba(0, 0, 0, 0.6);
+          z-index: 100;
+        }
+        .closeButton {
+          display: block;
+          padding-right: 6px;
+          cursor: pointer;
+          text-align: right;
+          z-index: 10;
+          color: #fff;
+        }
+
+        .modalContainer {
+          width: 90%;
+          margin: 0 auto;
+        }
+      `}</style>
+    </>
   );
 };

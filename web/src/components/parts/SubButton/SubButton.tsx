@@ -17,7 +17,9 @@ export const SubButton: React.FC<SubButtonProps> = (props) => {
 
   return (
     <div>
+      {/* @ts-ignore */}
       <ArwesThemeProvider themeSettings={themeSettings}>
+        {/* @ts-ignore */}
         <Button onClick={onClick} style={{ width: '130px' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>{children}</div>
         </Button>

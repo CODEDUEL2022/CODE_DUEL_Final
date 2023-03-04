@@ -282,7 +282,7 @@ export const PlayPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#000' }}>
       <DndContext
         sensors={sensors}
         onDragStart={handleDragStart}
