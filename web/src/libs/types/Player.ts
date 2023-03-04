@@ -1,7 +1,7 @@
 export interface PlayerType {
-  id: Number | undefined;
-  name: String | undefined;
-  hp: Number;
+  id: number | undefined;
+  name: string | undefined;
+  hp: number;
   turn: boolean;
-  game_id: String | undefined;
+  game_id: string | undefined;
 }

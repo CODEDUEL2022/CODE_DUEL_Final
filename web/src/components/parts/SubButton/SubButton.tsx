@@ -2,7 +2,7 @@ import React from 'react';
 import { ArwesThemeProvider, Button, Text } from '@arwes/core';
 
 interface SubButtonProps {
-  text: String;
+  text: string;
   onClick: () => void;
 }
 

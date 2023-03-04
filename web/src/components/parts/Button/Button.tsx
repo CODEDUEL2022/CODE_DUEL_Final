@@ -3,7 +3,7 @@ import styles from './Button.module.scss';
 
 interface ButtonProps {
   fontSize: string;
-  text: String;
+  text: string;
   handleClick: () => void;
 }
 

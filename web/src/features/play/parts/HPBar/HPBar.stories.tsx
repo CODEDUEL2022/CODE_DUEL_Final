@@ -13,6 +13,7 @@ export const Default: ComponentStory<typeof HPBar> = Template.bind({});
 
 Default.args = {
   hp: 200,
+  color: '#35efaa',
 };
 Default.storyName = 'デフォルト';
 
@@ -20,5 +21,6 @@ export const Damaged: ComponentStory<typeof HPBar> = Template.bind({});
 
 Damaged.args = {
   hp: 100,
+  color: '#35efaa',
 };
 Damaged.storyName = 'HP100';

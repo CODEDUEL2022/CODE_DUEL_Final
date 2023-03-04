@@ -12,14 +12,14 @@ export const UserContext = createContext(
 
 export const GameIdContext = createContext(
   {} as {
-    gameId: String | undefined;
-    setGameId: React.Dispatch<React.SetStateAction<String | undefined>>;
+    gameId: string | undefined;
+    setGameId: React.Dispatch<React.SetStateAction<string | undefined>>;
   }
 );
 
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [userInfo, setUserInfo] = useState<UserType | undefined>(undefined);
-  const [gameId, setGameId] = useState<String | undefined>(undefined);
+  const [gameId, setGameId] = useState<string | undefined>(undefined);
 
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>

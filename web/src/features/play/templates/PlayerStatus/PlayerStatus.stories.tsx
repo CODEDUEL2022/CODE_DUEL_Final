@@ -19,7 +19,7 @@ Default.args = {
     turn: false,
     game_id: 'hogehoge',
   },
-  color: '#fff',
+  color: '#35efaa',
 };
 Default.storyName = 'デフォルト';
 
