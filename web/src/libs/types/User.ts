@@ -1,4 +1,4 @@
 export interface UserType {
-  id: Number;
-  name: String;
+  id: number;
+  name: string;
 }

@@ -9,14 +9,14 @@ interface ServerToClientEvents {
 }
 
 interface ClientToServerEvents {
-  enterWaitingRoom: (user_id: Number | undefined, user_name: String | undefined) => void; //AutoMatchingPreLogin
-  exitWaitingRoom: (user_id: Number | undefined, user_name: String | undefined) => void; // LeaveWaitingRoom
+  enterWaitingRoom: (user_id: number | undefined, user_name: string | undefined) => void; //AutoMatchingPreLogin
+  exitWaitingRoom: (user_id: number | undefined, user_name: string | undefined) => void; // LeaveWaitingRoom
   readyGameStart: (user: PlayerType) => void; //login
-  joinRoom: (game_id: String, opponent_id: number) => void; // roomJoin
+  joinRoom: (game_id: string, opponent_id: number) => void; // roomJoin
   sendCards: (
     cardsData: Array<CardType>,
     playersData: { [key: string]: PlayerType },
-    game_id: String | undefined
+    game_id: string | undefined
   ) => void; //cardValue
 }
 
@@ -33,12 +33,12 @@ class SocketIo {
     this.socket?.emit('readyGameStart', user);
   }
 
-  enterWaitingRoom(user_id: Number | undefined, user_name: String | undefined) {
+  enterWaitingRoom(user_id: number | undefined, user_name: string | undefined) {
     console.log(user_id);
     this.socket?.emit('enterWaitingRoom', user_id, user_name);
   }
 
-  exitWaitingRoom(user_id: Number | undefined, user_name: String | undefined) {
+  exitWaitingRoom(user_id: number | undefined, user_name: string | undefined) {
     this.socket?.emit('exitWaitingRoom', user_id, user_name);
   }
 
@@ -51,7 +51,7 @@ class SocketIo {
     );
   }
 
-  joinRoom(game_id: String, opponent_id: number) {
+  joinRoom(game_id: string, opponent_id: number) {
     this.socket?.emit('joinRoom', game_id, opponent_id);
   }
 
@@ -64,7 +64,7 @@ class SocketIo {
   sendCards(
     cardsData: Array<CardType>,
     playersData: { [key: string]: PlayerType },
-    game_id: String | undefined
+    game_id: string | undefined
   ) {
     this.socket?.emit('sendCards', cardsData, playersData, game_id);
   }
