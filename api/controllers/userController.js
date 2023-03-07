@@ -1,5 +1,6 @@
 "use strict";
 
+const { UUID } = require("sequelize");
 const db = require("../models/index");
 
 module.exports = {
@@ -13,9 +14,9 @@ module.exports = {
     },
     create: async(req, res) => {
         try{
-            const result = await db.Task.create({
-                name: req.body.name,
-                done: false
+            
+            const result = await db.User.create({
+                name: req.body.name
             });
             res.send(result);
         }catch(err){
@@ -24,10 +25,9 @@ module.exports = {
     },
     update: async(req, res) => {
         try{
-            const result = await db.Task.update(
+            const result = await db.User.update(
                 {
-                    name: req.body.name,
-                    done: req.body.done
+                    name: req.body.name
                 },
                 {
                     where: {
@@ -58,16 +58,26 @@ module.exports = {
         try{
             const user_name = req.body.user.name;
             const user_password = req.body.user.password;
-            const is_success = await db.Task.findOne({
+            let user_id = 0;
+            let user_level = 0;
+            let user_exp = 0;
+            const is_success = await db.User.findOne({
                 where: {
                     name: user_name,
                 }
             }).then(user => {
-                const user_id = user.id;
-                const user_level = user.level;
-                const result = [is_success, user_id,user_level]
-                res.send(result);
+                user_id = user.id;
             });
+            await db.Level.findOne({
+                where:{
+                    user_id: user_id
+                }
+            }).then(user => {
+                    user_level = user.level;
+                    user_exp = user.exp;
+            })
+            const result = [is_success, user_id,user_level,user_exp]
+            res.send(result); 
         }catch(err){
             res.status(500).send(err);
         }
@@ -76,13 +86,20 @@ module.exports = {
         try{
             const user_name = req.body.user.name;
             const user_password = req.body.user.password;
-
-            const result = await db.Task.create({
-                name: user_name,
-                password: user_password
-            });
-            
-            res.send(result);
+            await db.User.count({
+                where:{
+                    name: user_name
+                }
+            }).then(count => {
+                if(count > 0){
+                    res.send("既に同じ名前のユーザーが存在します")
+                }else{
+                    const result = db.User.create({
+                        name: user_name
+                    });
+                    res.send(result);
+                }
+            })
         }catch(err){
             res.status(500).send(err);
         }
@@ -91,16 +108,27 @@ module.exports = {
         try{
             const user_name = req.body.user.name;
             const user_password = req.body.user.password;
-            const is_success = await db.Task.findOne({
+            let user_id = 0;
+            let user_exp = 0;
+            let user_level = 0;
+
+            const is_success = await db.User.findOne({
                 where: {
                     name: user_name,
                 }
             }).then(user => {
-                const user_id = user.id;
-                const user_level = user.level;
-                const result = [user_id,user_level]
-                res.send(result);
+                user_id = user.id;
             });
+            await db.Level.findOne({
+                where:{
+                    id: user_id
+                }
+            }).then(user => {
+                user_exp = user.exp;
+                user_level = user.level;
+            })
+            const result = [user_id, [user_exp, user_level]]
+            res.send(result);
             
         }catch(err){
             res.status(500).send(err);
@@ -108,7 +136,7 @@ module.exports = {
     },
     deleteUser: async(req, res) => {
         try{
-            await db.Task.findOne({
+            await db.User.findOne({
                 where: {
                     name: user_name,
                 }
