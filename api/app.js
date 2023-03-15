@@ -13,7 +13,15 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const authentication = require('./authentication.js')
 const app = express();
 const cors = require('cors')
-app.use(cors())
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,8 +45,6 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-  console.log(user.id)
-  console.log(user.name)
   done(null, { id: user.id, name: user.name });
 });
 
