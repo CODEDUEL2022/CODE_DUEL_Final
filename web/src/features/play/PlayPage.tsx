@@ -268,7 +268,7 @@ export const PlayPage = () => {
 
   const fieldStyle = {
     display: 'flex',
-    width: '80%',
+    width: '500px',
     height: '300px',
     backgroundColor: '#144F61',
     alignItems: 'center',
@@ -283,42 +283,70 @@ export const PlayPage = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#000' }}>
-      <DndContext
-        sensors={sensors}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContainer
-          containerId="fieldCards"
-          cards={containers.fieldCards}
-          style={fieldStyle}
-        />
-        <SortableContainer containerId="myCards" cards={containers.myCards} style={myCardsStyle} />
-        <DragOverlay>{activeCardId ? <Card card={activeCard} /> : null}</DragOverlay>
-      </DndContext>
-      <br />
-      <MainButton handleClick={handleSendCards}>
-        <div
-          style={{
-            width: '50px',
-            height: '30px',
-            fontSize: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textTransform: 'none',
-          }}
-        >
-          Go
+    <>
+      <div className="main">
+        <div className="left">
+          <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
+          <ModalHeaders></ModalHeaders>
         </div>
-      </MainButton>
-      <br />
-      <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
-      <br />
-      <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
-      <ModalHeaders></ModalHeaders>
-    </div>
+        <div className="center">
+          <DndContext
+            sensors={sensors}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContainer
+              containerId="fieldCards"
+              cards={containers.fieldCards}
+              style={fieldStyle}
+            />
+            <SortableContainer
+              containerId="myCards"
+              cards={containers.myCards}
+              style={myCardsStyle}
+            />
+            <DragOverlay>{activeCardId ? <Card card={activeCard} /> : null}</DragOverlay>
+          </DndContext>
+        </div>
+        <div>
+          <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>
+          <MainButton handleClick={handleSendCards}>
+            <div
+              style={{
+                width: '50px',
+                height: '30px',
+                fontSize: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textTransform: 'none',
+              }}
+            >
+              Go
+            </div>
+          </MainButton>
+        </div>
+      </div>
+      <style jsx>{`
+        .main {
+          display: flex;
+          background-color: #000;
+          justify-content: center;
+        }
+        .left {
+          width: 15%;
+        }
+        .center {
+          width: 70%;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .left {
+          width: 15%;
+        }
+      `}</style>
+    </>
   );
 };
