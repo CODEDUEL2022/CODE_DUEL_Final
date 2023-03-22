@@ -134,8 +134,11 @@ export const PlayPage = () => {
     <>
       <div className="main">
         <div className="left">
-          <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
-          <ModalHeaders></ModalHeaders>
+          <div>ターン情報</div>
+          <div>
+            <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
+            <ModalHeaders></ModalHeaders>
+          </div>
         </div>
         <div className="center">
           <CardContainers
@@ -147,22 +150,10 @@ export const PlayPage = () => {
             setActiveCard={setActiveCard}
           ></CardContainers>
         </div>
-        <div>
+        <div className="right">
           <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>
           <MainButton handleClick={handleSendCards}>
-            <div
-              style={{
-                width: '50px',
-                height: '30px',
-                fontSize: '20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textTransform: 'none',
-              }}
-            >
-              Go
-            </div>
+            <div className="inner-button">Go</div>
           </MainButton>
         </div>
       </div>
@@ -171,18 +162,36 @@ export const PlayPage = () => {
           display: flex;
           background-color: #000;
           justify-content: center;
+          padding: 24px;
         }
         .left {
-          width: 15%;
+          width: 20%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
         }
         .center {
-          width: 70%;
+          width: 60%;
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
         }
-        .left {
-          width: 15%;
+        .right {
+          width: 20%;
+          display: flex;
+          flex-direction: column;
+          align-items: end;
+          justify-content: space-between;
+        }
+        .inner-button {
+          width: 3em;
+          height: 1.5em;
+          font-size: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-transform: none;
         }
       `}</style>
     </>

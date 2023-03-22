@@ -167,7 +167,7 @@ export const CardContainers: React.FC<ModalHeadersProps> = (props) => {
   const myCardsStyle = {
     display: 'flex',
     width: '80%',
-    height: '300px',
+    height: '200px',
     backgroundColor: '#000',
     alignItems: 'center',
   };
