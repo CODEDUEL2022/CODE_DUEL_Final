@@ -9,6 +9,7 @@ import { ModalHeaders } from './templates/ModalHeaders';
 import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
 import { MainButton } from '../../components/parts/Button/MainButton';
 import { CardContainers } from './providers/CardContainers';
+import { FieldInfo } from './parts/FieldInfo/FieldInfo';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -134,7 +135,7 @@ export const PlayPage = () => {
     <>
       <div className="main">
         <div className="left">
-          <div>ターン情報</div>
+          <FieldInfo></FieldInfo>
           <div>
             <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
             <ModalHeaders></ModalHeaders>
@@ -160,7 +161,7 @@ export const PlayPage = () => {
       <style jsx>{`
         .main {
           display: flex;
-          background-color: #000;
+          background-color: rgb(2, 5, 8, 100%);
           justify-content: center;
           padding: 24px;
         }
@@ -184,6 +185,7 @@ export const PlayPage = () => {
           align-items: end;
           justify-content: space-between;
         }
+
         .inner-button {
           width: 3em;
           height: 1.5em;
