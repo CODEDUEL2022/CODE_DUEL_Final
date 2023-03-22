@@ -155,10 +155,13 @@ export const CardContainers: React.FC<ModalHeadersProps> = (props) => {
 
   const fieldStyle = {
     display: 'flex',
-    width: '500px',
-    height: '300px',
-    backgroundColor: '#144F61',
+    width: '80%',
+    height: '150px',
+    backgroundColor: 'rgb(211, 255, 253, 20%)',
+    justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: '50%',
+    border: '1px solid rgb(128, 255, 0, 100%)',
   };
 
   const myCardsStyle = {

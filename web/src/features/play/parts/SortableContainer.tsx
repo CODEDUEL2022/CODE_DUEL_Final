@@ -15,14 +15,12 @@ export const SortableContainer: React.FC<SortableContainerProps> = (props) => {
 
   const { setNodeRef } = useDroppable({ id: containerId });
   return (
-    <div style={{ display: 'block' }}>
-      <SortableContext id={containerId} items={cards} strategy={horizontalListSortingStrategy}>
-        <div ref={setNodeRef} style={style}>
-          {cards.map((card: CardType) => (
-            <SortableCard key={card.id} card={card} />
-          ))}
-        </div>
-      </SortableContext>
-    </div>
+    <SortableContext id={containerId} items={cards} strategy={horizontalListSortingStrategy}>
+      <div ref={setNodeRef} style={style}>
+        {cards.map((card: CardType) => (
+          <SortableCard key={card.id} card={card} />
+        ))}
+      </div>
+    </SortableContext>
   );
 };

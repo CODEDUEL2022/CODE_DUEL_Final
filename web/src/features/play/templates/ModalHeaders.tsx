@@ -13,20 +13,16 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
 
   const openCardListModal = function () {
     isOpenCardListModal || setIsOpenCardListModal(true);
-    console.log('yey');
   };
   const closeCardListModal = function () {
     isOpenCardListModal && setIsOpenCardListModal(false);
-    console.log('yey');
   };
 
   const openHowToPlayModal = function () {
     isOpenHowToPlayModal || setIsOpenHowToPlayModal(true);
-    console.log('yeeeeee!!!');
   };
   const closeHowToPlayModal = function () {
     isOpenHowToPlayModal && setIsOpenHowToPlayModal(false);
-    console.log('yeeeeee!!!');
   };
 
   return (
