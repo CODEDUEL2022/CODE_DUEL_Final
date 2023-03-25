@@ -12,6 +12,8 @@ import { CardContainers } from './providers/CardContainers';
 import { FieldInfo } from './parts/FieldInfo/FieldInfo';
 import { Card } from '../../components/parts/Card/Card';
 import { FieldCards } from './templates/FieldCards';
+import { ComboProviders } from './providers/ComboProviders';
+import { ComboType } from '../../libs/types/Combo';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -61,15 +63,31 @@ export const PlayPage = () => {
     },
   ];
 
-  // 親でどういう値を持つ?
-  // useStateを更新する関数を渡すことにはなることは確定
-  // useStateには、どれが選択されているかの情報
-  // selectedCards: [id]みたいにする？そのままapiに送れてよさそう
   const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
   const selectCard = function (id: number) {
     if (selectedCardsId?.indexOf(id) === -1) return setSelectedCardsId([...selectedCardsId, id]);
     return setSelectedCardsId(selectedCardsId?.filter((cardId) => cardId !== id));
   };
+
+  // selectedCardsIdに対してuseEffectしてcomboAPI叩く。返ってきた値のモック。
+  const sampleCombo = [
+    {
+      name: 'hoge',
+      combo: [1, 2, 3],
+    },
+    {
+      name: 'huga',
+      combo: [1, 3],
+    },
+    {
+      name: 'piyo',
+      combo: [1, 6],
+    },
+    {
+      name: 'humu',
+      combo: [1, 4, 8],
+    },
+  ];
 
   const [containers, setContainers] = useState<{ [key: string]: Array<CardType> }>({
     fieldCards: [],
@@ -178,15 +196,11 @@ export const PlayPage = () => {
           </div>
         </div>
         <div className="center">
-          {/* <CardContainers
-            containers={containers}
-            setContainers={setContainers}
-            activeCardId={activeCardId}
-            setActiveCardId={setActiveCardId}
-            activeCard={activeCard}
-            setActiveCard={setActiveCard}
-          ></CardContainers> */}
-          <FieldCards cards={sampleCards} handleClick={selectCard}></FieldCards>
+          <ComboProviders
+            handleClick={selectCard}
+            cards={sampleCards}
+            combos={sampleCombo}
+          ></ComboProviders>
         </div>
         <div className="right">
           <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>

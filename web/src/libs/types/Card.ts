@@ -1,7 +1,5 @@
-import { UniqueIdentifier } from '@dnd-kit/core';
-
 export interface CardType {
-  id: UniqueIdentifier;
+  id: number;
   name: string;
   cost: number;
   enforce_os_id: number;
