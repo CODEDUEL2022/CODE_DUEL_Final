@@ -61,6 +61,16 @@ export const PlayPage = () => {
     },
   ];
 
+  // 親でどういう値を持つ?
+  // useStateを更新する関数を渡すことにはなることは確定
+  // useStateには、どれが選択されているかの情報
+  // selectedCards: [id]みたいにする？そのままapiに送れてよさそう
+  const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
+  const selectCard = function (id: number) {
+    if (selectedCardsId?.indexOf(id) === -1) return setSelectedCardsId([...selectedCardsId, id]);
+    return setSelectedCardsId(selectedCardsId?.filter((cardId) => cardId !== id));
+  };
+
   const [containers, setContainers] = useState<{ [key: string]: Array<CardType> }>({
     fieldCards: [],
     myCards: sampleCards,
@@ -176,7 +186,7 @@ export const PlayPage = () => {
             activeCard={activeCard}
             setActiveCard={setActiveCard}
           ></CardContainers> */}
-          <FieldCards cards={sampleCards}></FieldCards>
+          <FieldCards cards={sampleCards} handleClick={selectCard}></FieldCards>
         </div>
         <div className="right">
           <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>

@@ -4,16 +4,17 @@ import { FieldCard } from '../parts/FieldCard';
 
 interface CardProps {
   cards: Array<CardType> | undefined;
+  handleClick: (id: number) => void;
 }
 
 export const FieldCards: React.FC<CardProps> = (props) => {
-  const { cards } = props;
+  const { cards, handleClick } = props;
 
   return (
     <>
       <div className="card-container">
         {cards?.map((card) => (
-          <FieldCard card={card}></FieldCard>
+          <FieldCard card={card} isActive={false} onClick={handleClick}></FieldCard>
         ))}
       </div>
       <style jsx>{`
