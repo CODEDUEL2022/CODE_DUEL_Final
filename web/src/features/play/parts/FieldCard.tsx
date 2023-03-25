@@ -13,6 +13,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handleClick = () => {
+    if (!isActive) return;
     isSelected ? setIsSelected(false) : setIsSelected(true);
     onClick(card.id);
   };
