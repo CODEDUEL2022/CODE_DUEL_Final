@@ -10,6 +10,8 @@ import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
 import { MainButton } from '../../components/parts/Button/MainButton';
 import { CardContainers } from './providers/CardContainers';
 import { FieldInfo } from './parts/FieldInfo/FieldInfo';
+import { Card } from '../../components/parts/Card/Card';
+import { FieldCards } from './templates/FieldCards';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -23,10 +25,34 @@ export const PlayPage = () => {
       cost: 2,
       enforce_os_id: 1,
       img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672358/3cad3493e6b4c87c94b5610260a07e63.png',
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
     },
     {
       id: 2,
+      name: 'React',
+      cost: 2,
+      enforce_os_id: 1,
+      img_src:
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672358/3cad3493e6b4c87c94b5610260a07e63.png',
+    },
+    {
+      id: 3,
+      name: 'React',
+      cost: 2,
+      enforce_os_id: 1,
+      img_src:
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+    },
+    {
+      id: 4,
+      name: 'React',
+      cost: 2,
+      enforce_os_id: 1,
+      img_src:
+        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+    },
+    {
+      id: 5,
       name: 'React',
       cost: 2,
       enforce_os_id: 1,
@@ -142,14 +168,15 @@ export const PlayPage = () => {
           </div>
         </div>
         <div className="center">
-          <CardContainers
+          {/* <CardContainers
             containers={containers}
             setContainers={setContainers}
             activeCardId={activeCardId}
             setActiveCardId={setActiveCardId}
             activeCard={activeCard}
             setActiveCard={setActiveCard}
-          ></CardContainers>
+          ></CardContainers> */}
+          <FieldCards cards={sampleCards}></FieldCards>
         </div>
         <div className="right">
           <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>
