@@ -13,29 +13,23 @@ export const ComboProviders: React.FC<ComboProvidersProps> = (props) => {
   const { combos, cards, handleClick } = props;
 
   const cardsId = cards.map((card) => card.id);
+  let ableUseCardIds = cardsId;
+  let filteredCombos: Array<ComboType>;
 
-  // 実際に手持ちで可能なコンボがどれかを取得する関数
-  function filterCombo(cardsId: Array<number>, ableCombos: Array<ComboType>) {
-    const filteredCombos = ableCombos.filter((combo) =>
-      combo.combo.every((card) => cardsId.includes(card))
-    );
-    return filteredCombos;
+  if (combos.length !== 0) {
+    console.log('aaa');
+    // 実際に手持ちで可能なコンボがどれかを取得する関数
+    filteredCombos = combos.filter((combo) => combo.combo.every((card) => cardsId.includes(card)));
+
+    // 発動することのできるカードをコンボ情報から取得
+    const flatComboIds = filteredCombos.flatMap((combo) => combo.combo);
+    const tmp = new Set(flatComboIds);
+    ableUseCardIds = Array.from(tmp);
   }
-  const filteredCombos = filterCombo(cardsId, combos);
-
-  const getComboCardIds = function (ableCombos: Array<ComboType>) {
-    const flatCombos = ableCombos.flatMap((combo) => combo.combo);
-    const uniqueSet = new Set(flatCombos);
-    const uniqueArray = Array.from(uniqueSet);
-    return uniqueArray;
-  };
-
-  const ableUseCardIds = getComboCardIds(filteredCombos);
-  console.log(ableUseCardIds);
 
   return (
     <>
-      <div style={{ color: '#fff' }}>{filteredCombos[0].combo}</div>
+      <div style={{ color: '#fff' }}></div>
       <FieldCards
         cards={cards}
         handleClick={handleClick}

@@ -115,7 +115,7 @@ export const PlayPage = () => {
     },
   });
 
-  // 入手つ情報をうけとる
+  // 入室情報をうけとる
   useEffect(() => {
     const player = {
       id: userInfo?.id,
