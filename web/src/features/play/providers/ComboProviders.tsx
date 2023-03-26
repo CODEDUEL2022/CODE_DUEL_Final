@@ -21,14 +21,19 @@ export const ComboProviders: React.FC<ComboProvidersProps> = (props) => {
     // 実際に手持ちで可能なコンボがどれかを取得する関数
     filteredCombos = combos.filter((combo) => combo.combo.every((card) => cardsId.includes(card)));
 
-    // 発動することのできるカードをコンボ情報から取得
+    // 選択することのできるカードをコンボ情報から取得
     const flatComboIds = filteredCombos.flatMap((combo) => combo.combo);
     const tmp = new Set(flatComboIds);
-    ableUseCardIds = Array.from(tmp);
+    const ableComboIds = Array.from(tmp);
 
     // 自分が選択しているカードと同じカードを消さないといけない。
+    const selectedCardsIds = cards
+      .filter((card) => card.isSelected === true)
+      .map((card) => card.id);
+    ableUseCardIds = ableComboIds.filter((id) => !selectedCardsIds.includes(id));
 
     // 1, 2, 3のコンボができるからといって、選択中の1, 2が出せるとは限らないのでその制御もいる
+    // これは発動ボタンを押せるかどうかの制御
   }
 
   return (
@@ -39,12 +44,6 @@ export const ComboProviders: React.FC<ComboProvidersProps> = (props) => {
         handleClick={handleClick}
         ableUseCardIds={ableUseCardIds}
       ></FieldCards>
-      <style jsx>{`
-        .card-container {
-          display: flex;
-          gap: 10px;
-        }
-      `}</style>
     </>
   );
 };

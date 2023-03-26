@@ -12,17 +12,16 @@ export const FieldCard: React.FC<CardProps> = (props) => {
   const { card, isActive, onClick } = props;
 
   const handleClick = () => {
-    if (!isActive) return;
+    if (!card.isSelected && !isActive) return;
     onClick(card.id);
   };
-
-  console.log(card.isSelected);
 
   return (
     <>
       <div className="overlay" onClick={handleClick}>
         <Card card={card} />
-        {!isActive && <div className="blur"></div>}
+        {/* card.isSelected がfalseかつ isActiveがfalseなら表示 */}
+        {!card.isSelected && !isActive && <div className="blur"></div>}
       </div>
       <style jsx>{`
         .overlay {
