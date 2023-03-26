@@ -72,6 +72,7 @@ export const PlayPage = () => {
 
   const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
   const selectCard = function (id: number) {
+    judgeIsAbleSend();
     const updatedMyCards = myCards.map((card) => {
       if (card.id === id) {
         card.isSelected = !card.isSelected;
@@ -106,10 +107,6 @@ export const PlayPage = () => {
     fieldCards: [],
     myCards: sampleCards,
   });
-
-  //ドラッグされているcardのid
-  const [activeCardId, setActiveCardId] = useState<UniqueIdentifier>();
-  const [activeCard, setActiveCard] = useState<CardType>();
 
   const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
     myData: {
@@ -168,6 +165,25 @@ export const PlayPage = () => {
       }));
     }
   });
+
+  // 発動ボタンを押せるかどうかの判定
+  const judgeIsAbleSend = function () {
+    const selectedCardsIds = myCards
+      .filter((card) => card.isSelected === true)
+      .map((card) => card.id);
+
+    if (selectedCardsIds.length === 1) return true;
+
+    const tmpCombos = sampleCombo.map((combo) => combo.combo);
+    const result = tmpCombos.some((combo) => {
+      return (
+        combo.length === selectedCardsIds.length &&
+        combo.every((value, index) => value === selectedCardsIds[index])
+      );
+    });
+
+    return result;
+  };
 
   const handleSendCards = () => {
     if (!playersData['myData'].turn) return console.log('お前のターンじゃないぞ！！');
