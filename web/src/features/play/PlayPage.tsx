@@ -215,6 +215,7 @@ export const PlayPage = () => {
           background-color: rgb(2, 5, 8, 100%);
           justify-content: center;
           padding: 24px;
+          height: calc(100vh - 48px);
         }
         .left {
           width: 20%;

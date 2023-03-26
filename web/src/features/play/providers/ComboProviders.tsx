@@ -2,6 +2,7 @@ import React from 'react';
 import { CardType } from '../../../libs/types/Card';
 import { FieldCards } from '../templates/FieldCards';
 import { ComboType } from '../../../libs/types/Combo';
+import { Terminal } from '../parts/Terminal/Terminal';
 
 interface ComboProvidersProps {
   combos: Array<ComboType>;
@@ -28,7 +29,7 @@ export const ComboProviders: React.FC<ComboProvidersProps> = (props) => {
 
   return (
     <>
-      <div style={{ color: '#fff' }}></div>
+      <Terminal combos={combos}></Terminal>
       <FieldCards
         cards={cards}
         handleClick={handleClick}

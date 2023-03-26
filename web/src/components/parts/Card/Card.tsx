@@ -12,7 +12,7 @@ export const Card: React.FC<CardProps> = (props) => {
     <div
       style={{
         width: '100px',
-        height: '130px',
+        height: '120px',
         borderRadius: '5px',
         backgroundColor: '#fff',
       }}

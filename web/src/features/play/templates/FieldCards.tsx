@@ -27,21 +27,22 @@ export const FieldCards: React.FC<CardProps> = (props) => {
       <style jsx>{`
         .card-container {
           display: flex;
+          padding: 20px;
         }
         .card:nth-child(1) {
-          transform: rotate(-30deg) translate(40px, 70px);
+          transform: rotate(-20deg) translate(40px, 45px);
         }
         .card:nth-child(2) {
-          transform: rotate(-15deg) translate(30px, 20px);
+          transform: rotate(-10deg) translate(20px, 12px);
         }
         .card:nth-child(3) {
           transform: rotate(0deg);
         }
         .card:nth-child(4) {
-          transform: rotate(15deg) translate(-30px, 20px);
+          transform: rotate(10deg) translate(-20px, 12px);
         }
         .card:nth-child(5) {
-          transform: rotate(30deg) translate(-40px, 70px);
+          transform: rotate(20deg) translate(-40px, 45px);
         }
       `}</style>
     </>

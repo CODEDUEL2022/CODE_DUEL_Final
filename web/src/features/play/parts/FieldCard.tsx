@@ -29,7 +29,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
           position: relative;
           transition: transform 0.2s ease;
           transform: ${isSelected ? 'translateY(-10px)' : ''};
-          height: 130px;
+          height: 120px;
         }
 
         .blur {
@@ -39,6 +39,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
           right: 0;
           bottom: 0;
           background-color: rgb(0, 0, 0, 30%);
+          border-radius: 5px;
         }
       `}</style>
     </>
