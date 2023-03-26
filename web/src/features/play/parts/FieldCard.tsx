@@ -10,13 +10,13 @@ interface CardProps {
 
 export const FieldCard: React.FC<CardProps> = (props) => {
   const { card, isActive, onClick } = props;
-  const [isSelected, setIsSelected] = useState(false);
 
   const handleClick = () => {
     if (!isActive) return;
-    isSelected ? setIsSelected(false) : setIsSelected(true);
     onClick(card.id);
   };
+
+  console.log(card.isSelected);
 
   return (
     <>
@@ -28,7 +28,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
         .overlay {
           position: relative;
           transition: transform 0.2s ease;
-          transform: ${isSelected ? 'translateY(-10px)' : ''};
+          transform: ${card.isSelected ? 'translateY(-10px)' : ''};
           height: 120px;
         }
 

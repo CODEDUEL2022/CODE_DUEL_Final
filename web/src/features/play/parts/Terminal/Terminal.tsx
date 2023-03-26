@@ -25,7 +25,7 @@ export const Terminal: React.FC<TerminalProps> = (props) => {
           padding: 15px;
           color: #fff;
           width: 80%;
-          height: 160px;
+          height: 140px;
           overflow: scroll;
           text-shadow: 0 0 5px #d3fffd;
         }

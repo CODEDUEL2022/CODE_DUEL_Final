@@ -28,6 +28,7 @@ export const PlayPage = () => {
       enforce_os_id: 1,
       img_src:
         'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      isSelected: false,
     },
     {
       id: 2,
@@ -36,6 +37,7 @@ export const PlayPage = () => {
       enforce_os_id: 1,
       img_src:
         'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672358/3cad3493e6b4c87c94b5610260a07e63.png',
+      isSelected: false,
     },
     {
       id: 3,
@@ -44,6 +46,7 @@ export const PlayPage = () => {
       enforce_os_id: 1,
       img_src:
         'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      isSelected: false,
     },
     {
       id: 4,
@@ -52,6 +55,7 @@ export const PlayPage = () => {
       enforce_os_id: 1,
       img_src:
         'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      isSelected: false,
     },
     {
       id: 5,
@@ -60,13 +64,22 @@ export const PlayPage = () => {
       enforce_os_id: 1,
       img_src:
         'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      isSelected: false,
     },
   ];
 
+  const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
+
   const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
   const selectCard = function (id: number) {
-    if (selectedCardsId?.indexOf(id) === -1) return setSelectedCardsId([...selectedCardsId, id]);
-    return setSelectedCardsId(selectedCardsId?.filter((cardId) => cardId !== id));
+    const updatedMyCards = myCards.map((card) => {
+      if (card.id === id) {
+        card.isSelected = !card.isSelected;
+        return card;
+      }
+      return card;
+    });
+    setMyCards(updatedMyCards);
   };
 
   // selectedCardsIdに対してuseEffectしてcomboAPI叩く。返ってきた値のモック。
@@ -159,8 +172,17 @@ export const PlayPage = () => {
   const handleSendCards = () => {
     if (!playersData['myData'].turn) return console.log('お前のターンじゃないぞ！！');
     // TODO: コンボから例外処理を書く。本来は発動可能なコンボを取得する。
-    if (!containers['fieldCards']) return console.log('何も出されていないぞ!');
+    if (selectedCardsId.length === 0) return console.log('何も出されていないぞ!');
+    if (sampleCombo.length === 0) return console.log('そんなコンボはないぞ');
     console.log('発動!!');
+
+    // カードが一枚の時、idからcardsを参照して出す
+
+    // カードが複数枚のとき、コンボを参照して出す。
+    // ここ難しいね。
+    // いやでも選択できている時点で大丈夫なのか。
+    // そんなことはない。発動できるかどうかはまた別。
+
     // TODO: コンボを発動するようにする。
     Socket.sendCards(containers['fieldCards'], playersData, gameId);
   };
@@ -198,7 +220,7 @@ export const PlayPage = () => {
         <div className="center">
           <ComboProviders
             handleClick={selectCard}
-            cards={sampleCards}
+            cards={myCards}
             combos={sampleCombo}
           ></ComboProviders>
         </div>
@@ -212,7 +234,7 @@ export const PlayPage = () => {
       <style jsx>{`
         .main {
           display: flex;
-          background-color: rgb(2, 5, 8, 100%);
+          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
           justify-content: center;
           padding: 24px;
           height: calc(100vh - 48px);

@@ -25,6 +25,10 @@ export const ComboProviders: React.FC<ComboProvidersProps> = (props) => {
     const flatComboIds = filteredCombos.flatMap((combo) => combo.combo);
     const tmp = new Set(flatComboIds);
     ableUseCardIds = Array.from(tmp);
+
+    // 自分が選択しているカードと同じカードを消さないといけない。
+
+    // 1, 2, 3のコンボができるからといって、選択中の1, 2が出せるとは限らないのでその制御もいる
   }
 
   return (
