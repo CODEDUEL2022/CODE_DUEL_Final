@@ -1,6 +1,6 @@
 # CODE_DUEL
 
-## project setup
+## setup frontend
 
 ### mobile
 

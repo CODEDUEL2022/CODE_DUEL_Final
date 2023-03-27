@@ -18,20 +18,23 @@ export const Default: ComponentStory<typeof MainButton> = Template.bind({});
 Default.args = {
   children: <div>あああ</div>,
   handleClick: () => console.log('aaa'),
+  able: true,
 };
 Default.storyName = 'デフォルト';
 
 export const PlayButton: ComponentStory<typeof MainButton> = Template.bind({});
 
 PlayButton.args = {
-  children: <div>あああ</div>,
+  children: <div>Go</div>,
   handleClick: () => console.log('aaa'),
+  able: true,
 };
-PlayButton.storyName = 'playボタン';
+PlayButton.storyName = '発動ボタン';
 
 export const CardList: ComponentStory<typeof MainButton> = Template.bind({});
 CardList.args = {
   children: <div>あああ</div>,
   handleClick: () => console.log('aaa'),
+  able: false,
 };
-CardList.storyName = 'カード一覧';
+CardList.storyName = '押せないボタン';
