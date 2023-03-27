@@ -14,7 +14,16 @@ export const Terminal: React.FC<TerminalProps> = (props) => {
         {combos.map((combo) => (
           <>
             <div>&gt; action : {combo.name}</div>
-            <div>&gt; combo : {combo.combo}</div>
+            <div>
+              &gt; combo : &#91;
+              {combo.combo.map((num) => (
+                <span>
+                  {num}
+                  &#044;
+                </span>
+              ))}
+              &#93;
+            </div>
             <br />
           </>
         ))}

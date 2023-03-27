@@ -11,5 +11,16 @@ const Template: ComponentStory<typeof Terminal> = (args) => <Terminal {...args} 
 
 export const Default: ComponentStory<typeof Terminal> = Template.bind({});
 
-Default.args = {};
+Default.args = {
+  combos: [
+    {
+      name: 'Script brother',
+      combo: [1, 2, 3],
+    },
+    {
+      name: 'P_combo',
+      combo: [1, 2, 3],
+    },
+  ],
+};
 Default.storyName = 'デフォルト';
