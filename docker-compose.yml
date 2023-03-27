@@ -1,0 +1,69 @@
+version: "3"
+services:
+  db:
+    # 起動するイメージを指定
+    image: mysql:8.0.23
+    platform: linux/amd64
+
+    # 環境変数を設定
+    environment:
+      - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+
+    # ホスト側のポート:コンテナのポート
+    ports:
+      - "3306:3306"
+
+    # ボリュームバインド
+    volumes:
+      - ./db/conf:/etc/mysql/conf.d/:ro
+      - mysqldata:/var/lib/mysql
+      - ./db/logs:/var/log/mysql
+
+    #使用するネットワーク
+    networks:
+      - backend
+
+  api:
+    image: node:14.16.0-buster
+    environment:
+      - MYSQL_SERVER=db
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_NAME}
+      - TZ=${TZ}
+      - CHOKIDAR_USEPOLLING=true
+
+    #コンテナを起動させ続けるよう設定
+    tty: true
+
+    ports:
+      - "3000:3000"
+
+    # ソースコードを格納するフォルダをマウント
+    #（ホスト側の./apiをコンテナの/appにマウント）
+    volumes:
+      - ./api:/app
+
+    # 起動時のカレントフォルダを指定
+    working_dir: /app
+
+    # 起動後に実行するコマンドを指定
+    command: npm run dev
+
+    networks:
+      - backend
+
+    #依存関係（apiコンテナより先にdbコンテナが起動するように設定）
+    depends_on:
+      - db
+
+networks:
+  backend:
+
+volumes:
+  mysqldata:

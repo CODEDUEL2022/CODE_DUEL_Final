@@ -1,11 +1,12 @@
 .button {
   margin: 5rem;
   width: fit-content;
-  padding: 0.75rem 3rem;
+  padding: 0.75rem 2rem;
   position: relative;
   border: 4px solid #d3fffd;
   background-color: #0e3145;
   box-shadow: 0px 0px 20px #d3fffd;
+  text-align: center;
   cursor: pointer;
   &:hover {
     cursor: pointer;
@@ -42,7 +43,7 @@
   span {
     position: relative;
     z-index: 1;
-    font-size: 28px;
+    color: #fff;
     letter-spacing: 0.15em;
     @keyframes neon {
       0% {
