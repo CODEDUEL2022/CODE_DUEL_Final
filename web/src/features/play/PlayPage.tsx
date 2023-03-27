@@ -95,7 +95,7 @@ export const PlayPage = () => {
     },
     {
       name: 'piyo',
-      combo: [1, 6],
+      combo: [1, 4],
     },
     {
       name: 'humu',
@@ -172,8 +172,11 @@ export const PlayPage = () => {
       .filter((card) => card.isSelected === true)
       .map((card) => card.id);
 
+    if (selectedCardsIds.length === 0) return false;
     if (selectedCardsIds.length === 1) return true;
 
+    // someをfindに変えればコンボ情報が得られる
+    // けど、こいつは配列だけが返ってくる。
     const tmpCombos = sampleCombo.map((combo) => combo.combo);
     const result = tmpCombos.some((combo) => {
       return (
@@ -242,7 +245,7 @@ export const PlayPage = () => {
         </div>
         <div className="right">
           <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>
-          <MainButton handleClick={handleSendCards}>
+          <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
             <div className="inner-button">Go</div>
           </MainButton>
         </div>
