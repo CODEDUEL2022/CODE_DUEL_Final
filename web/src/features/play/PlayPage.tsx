@@ -230,7 +230,7 @@ export const PlayPage = () => {
     <>
       <div className="main">
         <div className="left">
-          <FieldInfo></FieldInfo>
+          <FieldInfo round={3}></FieldInfo>
           <div>
             <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
             <ModalHeaders></ModalHeaders>
