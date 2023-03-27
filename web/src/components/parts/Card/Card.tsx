@@ -11,8 +11,8 @@ export const Card: React.FC<CardProps> = (props) => {
   return (
     <div
       style={{
-        width: '140px',
-        height: '200px',
+        width: '100px',
+        height: '120px',
         borderRadius: '5px',
         backgroundColor: '#fff',
       }}
