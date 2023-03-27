@@ -1,19 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { UniqueIdentifier } from '@dnd-kit/core';
+import Socket from '../../libs/socket/Socket';
+
 import { CardType } from '../../libs/types/Card';
 import { PlayerType } from '../../libs/types/Player';
-import Socket from '../../libs/socket/Socket';
+
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
+
 import { ModalHeaders } from './templates/ModalHeaders';
 import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
 import { MainButton } from '../../components/parts/Button/MainButton';
-import { CardContainers } from './providers/CardContainers';
 import { FieldInfo } from './parts/FieldInfo/FieldInfo';
-import { Card } from '../../components/parts/Card/Card';
-import { FieldCards } from './templates/FieldCards';
 import { ComboProviders } from './providers/ComboProviders';
-import { ComboType } from '../../libs/types/Combo';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -67,22 +65,6 @@ export const PlayPage = () => {
       isSelected: false,
     },
   ];
-
-  const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
-
-  const [selectedCardsId, setSelectedCardsId] = useState<number[]>([]);
-  const selectCard = function (id: number) {
-    judgeIsAbleSend();
-    const updatedMyCards = myCards.map((card) => {
-      if (card.id === id) {
-        card.isSelected = !card.isSelected;
-        return card;
-      }
-      return card;
-    });
-    setMyCards(updatedMyCards);
-  };
-
   // selectedCardsIdに対してuseEffectしてcomboAPI叩く。返ってきた値のモック。
   const sampleCombo = [
     {
@@ -102,12 +84,6 @@ export const PlayPage = () => {
       combo: [1, 4, 8],
     },
   ];
-
-  const [containers, setContainers] = useState<{ [key: string]: Array<CardType> }>({
-    fieldCards: [],
-    myCards: sampleCards,
-  });
-
   const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
     myData: {
       id: userInfo?.id,
@@ -124,6 +100,40 @@ export const PlayPage = () => {
       game_id: gameId,
     },
   });
+
+  const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
+
+  const selectCard = function (id: number) {
+    judgeIsAbleSend();
+    const updatedMyCards = myCards.map((card) => {
+      if (card.id === id) {
+        card.isSelected = !card.isSelected;
+        return card;
+      }
+      return card;
+    });
+    setMyCards(updatedMyCards);
+  };
+
+  const judgeIsAbleSend = function () {
+    if (!playersData['myData'].turn) return false;
+    const selectedCardsIds = myCards
+      .filter((card) => card.isSelected === true)
+      .map((card) => card.id);
+
+    if (selectedCardsIds.length === 0) return false;
+    if (selectedCardsIds.length === 1) return true;
+
+    const tmpCombos = sampleCombo.map((combo) => combo.combo);
+    const result = tmpCombos.some((combo) => {
+      return (
+        combo.length === selectedCardsIds.length &&
+        combo.every((value, index) => value === selectedCardsIds[index])
+      );
+    });
+
+    return result;
+  };
 
   // 入室情報をうけとる
   useEffect(() => {
@@ -166,44 +176,12 @@ export const PlayPage = () => {
     }
   });
 
-  // 発動ボタンを押せるかどうかの判定
-  const judgeIsAbleSend = function () {
-    const selectedCardsIds = myCards
-      .filter((card) => card.isSelected === true)
-      .map((card) => card.id);
-
-    if (selectedCardsIds.length === 0) return false;
-    if (selectedCardsIds.length === 1) return true;
-
-    // someをfindに変えればコンボ情報が得られる
-    // けど、こいつは配列だけが返ってくる。
-    const tmpCombos = sampleCombo.map((combo) => combo.combo);
-    const result = tmpCombos.some((combo) => {
-      return (
-        combo.length === selectedCardsIds.length &&
-        combo.every((value, index) => value === selectedCardsIds[index])
-      );
-    });
-
-    return result;
-  };
-
   const handleSendCards = () => {
-    if (!playersData['myData'].turn) return console.log('お前のターンじゃないぞ！！');
-    // TODO: コンボから例外処理を書く。本来は発動可能なコンボを取得する。
-    if (selectedCardsId.length === 0) return console.log('何も出されていないぞ!');
-    if (sampleCombo.length === 0) return console.log('そんなコンボはないぞ');
-    console.log('発動!!');
-
-    // カードが一枚の時、idからcardsを参照して出す
-
-    // カードが複数枚のとき、コンボを参照して出す。
-    // ここ難しいね。
-    // いやでも選択できている時点で大丈夫なのか。
-    // そんなことはない。発動できるかどうかはまた別。
-
+    if (!judgeIsAbleSend()) return;
+    const selectedCards = myCards.filter((card) => card.isSelected === true).map((card) => card);
     // TODO: コンボを発動するようにする。
-    Socket.sendCards(containers['fieldCards'], playersData, gameId);
+    // どのような値を送るかは要相談
+    Socket.sendCards(selectedCards, playersData, gameId);
   };
 
   // 攻撃情報を受け取る
