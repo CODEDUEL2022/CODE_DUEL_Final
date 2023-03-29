@@ -81,7 +81,6 @@ export const PlayPage = () => {
       id: 1,
       name: 'hoge',
       combo: [1, 2, 3],
-      images: ['url', 'url', 'url'],
       names: ['vue', 'react', 'angular'],
       value: 60,
       action_type: 'attack',
@@ -92,7 +91,6 @@ export const PlayPage = () => {
       id: 2,
       name: 'huga',
       combo: [1, 3],
-      images: ['url', 'url'],
       names: ['vue', 'react'],
       value: 60,
       action_type: 'attack',
@@ -103,7 +101,6 @@ export const PlayPage = () => {
       id: 3,
       name: 'piyo',
       combo: [1, 4],
-      images: ['url', 'url'],
       names: ['vue', 'react'],
       value: 60,
       action_type: 'attack',
@@ -114,7 +111,6 @@ export const PlayPage = () => {
       id: 4,
       name: 'humu',
       combo: [1, 4, 8],
-      images: ['url', 'url', 'url'],
       names: ['vue', 'react', 'angular'],
       value: 60,
       action_type: 'attack',
@@ -220,9 +216,18 @@ export const PlayPage = () => {
   const handleSendCards = () => {
     if (!judgeIsAbleSend()) return;
     const selectedCards = myCards.filter((card) => card.is_selected === true).map((card) => card);
-    // TODO: コンボを発動するようにする。
-    // どのような値を送るかは要相談
-    Socket.sendCards(selectedCards, playersData, gameId);
+    const tmpIds = selectedCards.map((card) => card.id);
+    const selectedCardsIds = tmpIds.sort((a, b) => a - b); // 降順に並び替え
+
+    const filteredCombos = sampleCombo.filter((combo) => {
+      return (
+        combo.combo.length === selectedCardsIds.length &&
+        combo.combo.every((id) => selectedCardsIds.includes(id))
+      );
+    });
+    const selectedCombo = filteredCombos[0];
+
+    Socket.sendCards(selectedCombo, selectedCards, playersData, gameId);
   };
 
   // 攻撃情報を受け取る

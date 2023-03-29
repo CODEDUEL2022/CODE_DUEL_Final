@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import { CardType } from '../types/Card';
 import { PlayerType } from '../types/Player';
+import { ComboType } from '../types/Combo';
 
 interface ServerToClientEvents {
   successRandomMatching: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
@@ -14,7 +15,8 @@ interface ClientToServerEvents {
   readyGameStart: (user: PlayerType) => void; //login
   joinRoom: (game_id: string, opponent_id: number) => void; // roomJoin
   sendCards: (
-    cardsData: Array<CardType>,
+    combo: ComboType,
+    cards: Array<CardType>,
     playersData: { [key: string]: PlayerType },
     game_id: string | undefined
   ) => void; //cardValue
@@ -62,11 +64,12 @@ class SocketIo {
   }
 
   sendCards(
-    cardsData: Array<CardType>,
+    combo: ComboType,
+    cards: Array<CardType>,
     playersData: { [key: string]: PlayerType },
     game_id: string | undefined
   ) {
-    this.socket?.emit('sendCards', cardsData, playersData, game_id);
+    this.socket?.emit('sendCards', combo, cards, playersData, game_id);
   }
 
   updateField(callback: (cardsData: Array<CardType>, playersData: Array<PlayerType>) => void) {
