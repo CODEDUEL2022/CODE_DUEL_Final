@@ -12,7 +12,7 @@ export const TopPage = () => {
   useEffect(() => {
     // TODO: ログイン時、バックから取得する
     axios
-      .get('http://localhost:3000/api/user/create_user')
+      .get('http://localhost:3000/api/user/create_user', { withCredentials: true })
       .then((res) => {
         console.log(res);
       })
@@ -42,9 +42,11 @@ export const TopPage = () => {
   };
 
   const testFunc = () => {
-    axios.get('http://localhost:3000/test/user/create_user').then((res) => {
-      console.log(res);
-    });
+    axios
+      .get('http://localhost:3000/test/user/create_user', { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+      });
   };
   return (
     <div>
