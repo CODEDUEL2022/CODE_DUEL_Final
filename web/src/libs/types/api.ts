@@ -85,3 +85,5 @@ export type ReqLeaveUserType = {
 export type ResLeaveUserType = {
   is_success: Boolean;
 };
+
+// /test
