@@ -4,13 +4,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const session = require('express-session');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const authentication = require('./authentication.js')
 const app = express();
 const cors = require('cors')
 app.use(express.json());
@@ -25,50 +22,14 @@ app.use(
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(passport.initialize());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: "hoge",
-  resave: false,
-  saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-  done(null, { id: user.id, name: user.name });
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, { id: user.id, name: user.name });
-});
-
-passport.use(new GoogleStrategy({
-        clientID: process.env.CLIANT_ID,
-        clientSecret: process.env.CLIANT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/callback"
-    }, function(accessToken, refreshToken, profile, done){
-      if(profile){
-        return done(null, { id:profile.id, name:profile.displayName });
-      }else{
-        return done(null, null);
-      }
-    }
-));
-
-function isAuthenticated(req, res, next){
-  if (req.isAuthenticated()) {  // 認証済
-      return next();
-  }
-  else {  // 認証されていない
-      console.log(req.isAuthenticated())
-      res.redirect('/auth/google');  // ログイン画面に遷移
-  }
-}
+require("./passport")(app);
+const isAuthenticated = require("./authentication")
 
 
 app.get('/auth/google', passport.authenticate('google', {
@@ -83,7 +44,8 @@ app.get('/success', function(req, res){
   res.send("ログインに成功")
 })
 
-app.get('/test', isAuthenticated, function(req, res) {
+app.get('/test', isAuthenticated.isAuthenticated, function(req, res) {
+  //ここをフロントから踏んでほしい
   res.send("ここに来れてるってことはログイン情報が保存されてるよ")
 })
 
@@ -96,8 +58,8 @@ app.get('/auth/google/callback',
 })
 
 
-app.use('/', isAuthenticated, indexRouter);
-app.use('/users', isAuthenticated, usersRouter);
+app.use('/', isAuthenticated.isAuthenticated, indexRouter);
+app.use('/users', isAuthenticated.isAuthenticated, usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

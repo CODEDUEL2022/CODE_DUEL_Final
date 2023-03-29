@@ -15,7 +15,7 @@ router.delete("/:id/delete", function(req, res){
 });
 
 router.post("/login", function(req, res){
-    userController.Login(req,res)
+    userController.login(req,res)
 });
 router.post("/create_user", function(req, res){
     userController.createUser(req,res)
