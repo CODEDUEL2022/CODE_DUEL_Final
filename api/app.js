@@ -45,6 +45,7 @@ app.get('/success', function(req, res){
 })
 
 app.get('/test', isAuthenticated.isAuthenticated, function(req, res) {
+  //ここをフロントから踏んでほしい
   res.send("ここに来れてるってことはログイン情報が保存されてるよ")
 })
 
