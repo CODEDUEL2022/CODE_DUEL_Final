@@ -32,7 +32,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require("./passport")(app);
-const isAuthenticated = require("./authentication")
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {  // 認証済
+    console.log("認証されました")
+    return next();
+}
+else {  // 認証されていない
+    console.log(req.isAuthenticated())
+    res.redirect('/auth/google');  // ログイン画面に遷移
+}
+}
 
 
 app.get('/auth/google', passport.authenticate('google', {
@@ -40,8 +49,8 @@ app.get('/auth/google', passport.authenticate('google', {
   })
 );
 
-app.get('/api/test', isAuthenticated.isAuthenticated, function(req, res) {
-  res.send("ログイン情報は保存されています。")
+app.get('/api/test', isAuthenticated, function(req, res) {
+  res.send(req.cookies)
 })
 
 app.get('/auth/google/callback', 
@@ -60,7 +69,7 @@ app.get('/auth/google/callback',
 
 
 app.use('/api', indexRouter);
-app.use('/users', isAuthenticated.isAuthenticated, usersRouter);
+app.use('/users', isAuthenticated, usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

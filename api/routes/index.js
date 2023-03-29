@@ -1,4 +1,6 @@
+const cookieParser = require('cookie-parser');
 const express = require('express');
+
 const router = express.Router();
 const userController = require("../controllers/userController");
 const isAuthenticated = require("../authentication");
@@ -6,9 +8,9 @@ const isAuthenticated = require("../authentication");
 router.post("/user/login", function(req, res){
   userController.login(req,res)
 });
-router.get("/user/create_user", function(req, res, next){
+router.post("/user/create_user", function(req, res, next){
   //これが動かないです。
-  console.log(req.cookies)
+  // console.log("成功：" + req.cookies)
   userController.createUser(req,res)
 });
 router.post("/user/get_user_info", function(req, res){

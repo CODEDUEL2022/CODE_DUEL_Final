@@ -23,7 +23,7 @@ module.exports = function (app) {
         try {
             console.log(user)
         //   const userInfo = userController.findUser(user.id)
-        //   done(null, { id: userInfo.id, name: userInfo.name });
+            done(null, { id: user.id, name: user.name });
         } catch (error) {
           done(error, null);
         }
