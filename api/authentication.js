@@ -4,6 +4,6 @@ exports.isAuthenticated = function(req, res, next){
     }
     else {  // 認証されていない
         console.log(req.isAuthenticated())
-        res.redirect('/login');  // ログイン画面に遷移
+        res.redirect('/success');  // ログイン画面に遷移
     }
 }
