@@ -83,27 +83,27 @@ module.exports = {
     },
     createUser: async(req, res) => {
         try{
-            console.log("cookie情報"+req.cookies)
             const user_id = req.cookies.id;
             const user_name = req.cookies.name;
-            // await db.User.count({
-            //     where:{
-            //         name: user_name
-            //     }
-            // }).then(count => {
-            //     console.log(count)
-            //     // if(count > 0){
-            //     //     res.send("既に同じ名前のユーザーが存在します")
-            //     //     this.login(req, res)
-            //     // }else{
-            //     //     const result = db.User.create({
-            //     //         name: user_name,
-            //     //         id: user_id
-            //     //     });
-            //     //     res.send(result);
-            //     // }
-            // })
-            res.send("aa")
+            console.log(user_id)
+            db.Task.count({
+                where:{
+                    name: user_name
+                }
+            }).then(dataCount => {
+                res.send(dataCount)
+            })
+                // if(count > 0){
+                //     res.send("既に同じ名前のユーザーが存在します")
+                //     this.login(req, res)
+                // }else{
+                //     const result = db.User.create({
+                //         name: user_name,
+                //         id: user_id
+                //     });
+                //     res.send(result);
+                // }
+
         }catch(err){
             res.status(500).send(err);
         }
