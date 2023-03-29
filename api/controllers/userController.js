@@ -54,10 +54,9 @@ module.exports = {
             res.status(500).send(err);
         }
     },
-    Login: async(req, res) => {
+    login: async(req, res) => {
         try{
             const user_name = req.body.user.name;
-            const user_password = req.body.user.password;
             let user_id = 0;
             let user_level = 0;
             let user_exp = 0;
@@ -84,8 +83,8 @@ module.exports = {
     },
     createUser: async(req, res) => {
         try{
+            const user_id = req.body.user.id;
             const user_name = req.body.user.name;
-            const user_password = req.body.user.password;
             await db.User.count({
                 where:{
                     name: user_name
@@ -93,9 +92,11 @@ module.exports = {
             }).then(count => {
                 if(count > 0){
                     res.send("既に同じ名前のユーザーが存在します")
+                    this.login(req, res)
                 }else{
                     const result = db.User.create({
-                        name: user_name
+                        name: user_name,
+                        id: user_id
                     });
                     res.send(result);
                 }
@@ -104,10 +105,10 @@ module.exports = {
             res.status(500).send(err);
         }
     },
+    
     getUserInfo: async(req, res) => {
         try{
             const user_name = req.body.user.name;
-            const user_password = req.body.user.password;
             let user_id = 0;
             let user_exp = 0;
             let user_level = 0;
@@ -147,6 +148,20 @@ module.exports = {
                 res.send(result);
             });
 
+        }catch(err){
+            res.status(500).send(err);
+        }
+    },
+    findUser: async (id) => {
+        try{
+            const id = id;
+            const user = await db.User.findOne({
+                where: {
+                    id: id
+                }
+            })
+            console.log(user)
+            return user
         }catch(err){
             res.status(500).send(err);
         }

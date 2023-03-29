@@ -1,4 +1,4 @@
-function isAuthenticated(req, res, next){
+exports.isAuthenticated = function(req, res, next){
     if (req.isAuthenticated()) {  // 認証済
         return next();
     }
@@ -6,4 +6,4 @@ function isAuthenticated(req, res, next){
         console.log(req.isAuthenticated())
         res.redirect('/login');  // ログイン画面に遷移
     }
-  }
+}
