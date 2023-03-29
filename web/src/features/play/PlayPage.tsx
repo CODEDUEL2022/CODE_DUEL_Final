@@ -231,19 +231,24 @@ export const PlayPage = () => {
       console.log(combo);
       console.log(cardsData);
 
-      if (updatedPlayersData[0].id === userInfo?.id) {
-        return setPlayersData((players) => ({
-          ...players,
-          myData: updatedPlayersData[0],
-          opponentsData: updatedPlayersData[1],
-        }));
-      }
+      setIsAnimation(true);
 
-      setPlayersData((players) => ({
-        ...players,
-        myData: updatedPlayersData[1],
-        opponentsData: updatedPlayersData[0],
-      }));
+      setTimeout(() => {
+        setIsAnimation(false);
+        if (updatedPlayersData[0].id === userInfo?.id) {
+          return setPlayersData((players) => ({
+            ...players,
+            myData: updatedPlayersData[0],
+            opponentsData: updatedPlayersData[1],
+          }));
+        }
+
+        setPlayersData((players) => ({
+          ...players,
+          myData: updatedPlayersData[1],
+          opponentsData: updatedPlayersData[0],
+        }));
+      }, 2000);
     });
   }, []);
 
