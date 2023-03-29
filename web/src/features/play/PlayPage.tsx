@@ -12,6 +12,7 @@ import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
 import { MainButton } from '../../components/parts/Button/MainButton';
 import { FieldInfo } from './parts/FieldInfo/FieldInfo';
 import { ComboProviders } from './providers/ComboProviders';
+import { Animation } from './parts/Animation/Animation';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -118,7 +119,24 @@ export const PlayPage = () => {
       cost: 4,
     },
   ];
-  const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({});
+  const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
+    myData: {
+      id: userInfo?.id,
+      name: userInfo?.name,
+      hp: 200,
+      sp: 5,
+      turn: false,
+      game_id: gameId,
+    },
+    opponentsData: {
+      id: 0,
+      name: 'nakamura',
+      hp: 200,
+      sp: 5,
+      turn: false,
+      game_id: gameId,
+    },
+  });
 
   const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
   const [roundCount, setRoundCount] = useState<number>(0);
@@ -166,25 +184,16 @@ export const PlayPage = () => {
       game_id: gameId,
     };
     Socket.readyGameStart(player);
-    console.log('enter room');
   }, []);
 
   Socket.gameStart((round, user1, user2) => {
     setRoundCount(round);
-    // user1_idを先行にする、playersの情報をセット。
+    // socketから送られてきたplayersの情報をセット。
     if (userInfo?.id === user1.id) {
-      setPlayersData((players) => ({
-        ...players,
-        myData: { ...user1 },
-        opponentsData: { ...user2 },
-      }));
+      setPlayersData((players) => ({ ...players, myData: user1, opponentsData: user2 }));
     }
     if (userInfo?.id === user2.id) {
-      setPlayersData((players) => ({
-        ...players,
-        myData: { ...user2 },
-        opponentsData: { ...user1 },
-      }));
+      setPlayersData((players) => ({ ...players, myData: user2, opponentsData: user1 }));
     }
   });
 
@@ -211,11 +220,16 @@ export const PlayPage = () => {
     Socket.sendCards(selectedCombo, selectedCards, playersData, gameId);
   };
 
+  const [isAnimation, setIsAnimation] = useState<boolean>(false);
+
   // 攻撃情報を受け取る
   useEffect(() => {
     // socket.onを受け取るときの参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
     Socket.updateField((round, combo, cardsData, updatedPlayersData) => {
       setRoundCount(round);
+
+      console.log(combo);
+      console.log(cardsData);
 
       if (updatedPlayersData[0].id === userInfo?.id) {
         return setPlayersData((players) => ({
@@ -236,6 +250,7 @@ export const PlayPage = () => {
   return (
     <>
       <div className="main">
+        <Animation isShow={isAnimation}></Animation>
         <div className="left">
           <FieldInfo round={roundCount}></FieldInfo>
           <div>
