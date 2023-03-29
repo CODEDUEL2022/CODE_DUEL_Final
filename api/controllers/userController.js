@@ -83,9 +83,9 @@ module.exports = {
     },
     createUser: async(req, res) => {
         try{
-            console.log("cookie情報"+req.cookie)
-            const user_id = req.cookie.id;
-            const user_name = req.cookie.name;
+            console.log("cookie情報"+req.cookies)
+            const user_id = req.cookies.id;
+            const user_name = req.cookies.name;
             // await db.User.count({
             //     where:{
             //         name: user_name

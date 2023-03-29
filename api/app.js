@@ -41,7 +41,7 @@ app.get('/auth/google', passport.authenticate('google', {
 );
 
 app.get('/api/test', isAuthenticated.isAuthenticated, function(req, res) {
-  res.send("ここに来れてるってことはログイン情報が保存されてるよ")
+  res.send("ログイン情報は保存されています。")
 })
 
 app.get('/auth/google/callback', 
@@ -49,7 +49,6 @@ app.get('/auth/google/callback',
       session: true
     }),
     function(req, res){
-      console.log(req.user)
       res.cookie("id", req.user.id, {
         httpOnly: true
       })
@@ -60,7 +59,7 @@ app.get('/auth/google/callback',
 })
 
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 app.use('/users', isAuthenticated.isAuthenticated, usersRouter);
 
 // catch 404 and forward to error handler
