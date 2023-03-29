@@ -118,24 +118,7 @@ export const PlayPage = () => {
       cost: 4,
     },
   ];
-  const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
-    myData: {
-      id: userInfo?.id,
-      name: userInfo?.name,
-      hp: 200,
-      sp: 5,
-      turn: false,
-      game_id: gameId,
-    },
-    opponentsData: {
-      id: 0,
-      name: 'nakamura',
-      hp: 200,
-      sp: 5,
-      turn: false,
-      game_id: gameId,
-    },
-  });
+  const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({});
 
   const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
   const [roundCount, setRoundCount] = useState<number>(0);
@@ -207,6 +190,7 @@ export const PlayPage = () => {
 
   const handleSendCards = () => {
     if (!judgeIsAbleSend()) return;
+
     const selectedCards = myCards.filter((card) => card.is_selected === true).map((card) => card);
     const tmpIds = selectedCards.map((card) => card.id);
     setMyCards(myCards.filter((card) => !tmpIds.includes(card.id)));
@@ -229,7 +213,7 @@ export const PlayPage = () => {
 
   // 攻撃情報を受け取る
   useEffect(() => {
-    // 参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
+    // socket.onを受け取るときの参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
     Socket.updateField((round, combo, cardsData, updatedPlayersData) => {
       setRoundCount(round);
 
