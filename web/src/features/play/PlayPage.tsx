@@ -217,6 +217,12 @@ export const PlayPage = () => {
     if (!judgeIsAbleSend()) return;
     const selectedCards = myCards.filter((card) => card.is_selected === true).map((card) => card);
     const tmpIds = selectedCards.map((card) => card.id);
+    setMyCards(myCards.filter((card) => !tmpIds.includes(card.id)));
+
+    if (selectedCards.length === 1) {
+      return Socket.sendCards(null, selectedCards, playersData, gameId);
+    }
+
     const selectedCardsIds = tmpIds.sort((a, b) => a - b); // 降順に並び替え
 
     const filteredCombos = sampleCombo.filter((combo) => {
@@ -233,7 +239,7 @@ export const PlayPage = () => {
   // 攻撃情報を受け取る
   useEffect(() => {
     // 参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
-    Socket.updateField((cardsData, updatedPlayersData) => {
+    Socket.updateField((combo, cardsData, updatedPlayersData) => {
       console.dir(cardsData);
       console.dir(updatedPlayersData);
 
