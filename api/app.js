@@ -14,7 +14,6 @@ const authentication = require('./authentication.js')
 const app = express();
 const cors = require('cors')
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: true,
