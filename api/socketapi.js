@@ -69,28 +69,35 @@ io.on("connection", function (socket) {
 
     if (!key) {
       const newRoomUsers = [player];
-      socket.join(player.game_id);
-      rooms[player.game_id] = newRoomUsers;
+      rooms[player.game_id] = {
+        round: 1,
+        players: newRoomUsers,
+      };
       console.log(rooms);
+
+      socket.join(player.game_id);
     } else if (rooms[key].length >= 2) {
       return console.log(`This room (${player.game_id}) is already full`);
     } else {
       // 2人集まったらスタート
-      socket.join(player.game_id);
-      rooms[key].push(player);
+      const newPlayer = { ...player, turn: true };
+      rooms[key].players.push(newPlayer);
       console.log(rooms);
-      io.to(player.game_id).emit("gameStart", ...rooms[key]);
+
+      socket.join(player.game_id);
+      io.to(player.game_id).emit("gameStart", rooms[key].round, ...rooms[key].players);
     }
   });
 
   socket.on("sendCards", (combo, cards, playersData, game_id) => {
     console.log("attacked! change turn.");
+    rooms[game_id].round += 1;
 
     // カード一枚出しの場合の処理
     if (combo === null) {
       const sendedCard = cards[0];
 
-      const updatedPlayersData = rooms[game_id].map((user) => {
+      const updatedPlayersData = rooms[game_id].players.map((user) => {
         if (user.id === playersData["myData"].id) {
           return {
             ...user,
@@ -107,11 +114,15 @@ io.on("connection", function (socket) {
             hp: calculateOpponentHp(user.hp, sendedCard.action_type, sendedCard.value),
           };
       });
-      return io.to(game_id).emit("updateField", null, cards, updatedPlayersData);
+      rooms[game_id].players = updatedPlayersData;
+      console.log(rooms);
+      return io
+        .to(game_id)
+        .emit("updateField", rooms[game_id].round, null, cards, updatedPlayersData);
     }
 
     // コンボの場合の処理
-    const updatedPlayersData = rooms[game_id].map((user) => {
+    const updatedPlayersData = rooms[game_id].players.map((user) => {
       if (user.id === playersData["myData"].id) {
         return {
           ...user,
@@ -130,8 +141,9 @@ io.on("connection", function (socket) {
       }
     });
 
-    rooms[game_id] = updatedPlayersData;
-    io.to(game_id).emit("updateField", combo, cards, updatedPlayersData);
+    rooms[game_id].players = updatedPlayersData;
+    console.log(rooms);
+    io.to(game_id).emit("updateField", rooms[game_id].round, combo, cards, updatedPlayersData);
   });
 });
 

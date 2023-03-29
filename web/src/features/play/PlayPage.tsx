@@ -138,6 +138,7 @@ export const PlayPage = () => {
   });
 
   const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
+  const [roundCount, setRoundCount] = useState<number>(0);
 
   const selectCard = function (id: number) {
     judgeIsAbleSend();
@@ -185,30 +186,21 @@ export const PlayPage = () => {
     console.log('enter room');
   }, []);
 
-  Socket.gameStart((user1, user2) => {
+  Socket.gameStart((round, user1, user2) => {
+    setRoundCount(round);
     // user1_idを先行にする、playersの情報をセット。
     if (userInfo?.id === user1.id) {
       setPlayersData((players) => ({
         ...players,
-        myData: {
-          ...players.myData,
-          turn: true,
-        },
-        opponentsData: {
-          ...players.opponentsData,
-          id: user2.id,
-          name: user2.name,
-        },
+        myData: { ...user1 },
+        opponentsData: { ...user2 },
       }));
     }
     if (userInfo?.id === user2.id) {
       setPlayersData((players) => ({
         ...players,
-        opponentsData: {
-          ...players.opponentsData,
-          id: user1.id,
-          name: user1.name,
-        },
+        myData: { ...user2 },
+        opponentsData: { ...user1 },
       }));
     }
   });
@@ -219,9 +211,8 @@ export const PlayPage = () => {
     const tmpIds = selectedCards.map((card) => card.id);
     setMyCards(myCards.filter((card) => !tmpIds.includes(card.id)));
 
-    if (selectedCards.length === 1) {
+    if (selectedCards.length === 1)
       return Socket.sendCards(null, selectedCards, playersData, gameId);
-    }
 
     const selectedCardsIds = tmpIds.sort((a, b) => a - b); // 降順に並び替え
 
@@ -239,20 +230,22 @@ export const PlayPage = () => {
   // 攻撃情報を受け取る
   useEffect(() => {
     // 参考:https://tomiko0404.hatenablog.com/entry/2021/11/04/useState-rendering-problem
-    Socket.updateField((combo, cardsData, updatedPlayersData) => {
-      console.dir(cardsData);
-      console.dir(updatedPlayersData);
+    Socket.updateField((round, combo, cardsData, updatedPlayersData) => {
+      setRoundCount(round);
 
-      setPlayersData(() =>
-        updatedPlayersData.reduce((acc: { [key: string]: PlayerType }, player) => {
-          if (player.id === userInfo?.id) {
-            acc['myData'] = player;
-          } else {
-            acc['opponentsData'] = player;
-          }
-          return acc;
-        }, {})
-      );
+      if (updatedPlayersData[0].id === userInfo?.id) {
+        return setPlayersData((players) => ({
+          ...players,
+          myData: updatedPlayersData[0],
+          opponentsData: updatedPlayersData[1],
+        }));
+      }
+
+      setPlayersData((players) => ({
+        ...players,
+        myData: updatedPlayersData[1],
+        opponentsData: updatedPlayersData[0],
+      }));
     });
   }, []);
 
@@ -260,7 +253,7 @@ export const PlayPage = () => {
     <>
       <div className="main">
         <div className="left">
-          <FieldInfo round={3}></FieldInfo>
+          <FieldInfo round={roundCount}></FieldInfo>
           <div>
             <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
             <ModalHeaders></ModalHeaders>
@@ -274,7 +267,7 @@ export const PlayPage = () => {
           ></ComboProviders>
         </div>
         <div className="right">
-          <PlayerStatus playerData={playersData.myData} color="#FF9900"></PlayerStatus>
+          <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
           <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
             <div className="inner-button">Go</div>
           </MainButton>

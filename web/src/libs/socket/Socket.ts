@@ -6,11 +6,12 @@ import { ComboType } from '../types/Combo';
 interface ServerToClientEvents {
   successRandomMatching: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
   updateField: (
+    round: number,
     combo: ComboType | null,
     cardsData: Array<CardType>,
     playersData: Array<PlayerType>
   ) => void; //HPinfo
-  gameStart: (user1: PlayerType, user: PlayerType) => void; // gameStart
+  gameStart: (round: number, user1: PlayerType, user2: PlayerType) => void; // gameStart
 }
 
 interface ClientToServerEvents {
@@ -61,9 +62,9 @@ class SocketIo {
     this.socket?.emit('joinRoom', game_id, opponent_id);
   }
 
-  gameStart(callback: (user1: PlayerType, user: PlayerType) => void) {
-    this.socket?.on('gameStart', (user1: PlayerType, user2: PlayerType) => {
-      return callback(user1, user2);
+  gameStart(callback: (round: number, user1: PlayerType, user2: PlayerType) => void) {
+    this.socket?.on('gameStart', (round: number, user1: PlayerType, user2: PlayerType) => {
+      return callback(round, user1, user2);
     });
   }
 
@@ -78,6 +79,7 @@ class SocketIo {
 
   updateField(
     callback: (
+      round: number,
       combo: ComboType | null,
       cardsData: Array<CardType>,
       playersData: Array<PlayerType>
@@ -85,8 +87,13 @@ class SocketIo {
   ) {
     this.socket?.on(
       'updateField',
-      (combo: ComboType | null, cardsData: Array<CardType>, playersData: Array<PlayerType>) => {
-        return callback(combo, cardsData, playersData);
+      (
+        round: number,
+        combo: ComboType | null,
+        cardsData: Array<CardType>,
+        playersData: Array<PlayerType>
+      ) => {
+        return callback(round, combo, cardsData, playersData);
       }
     );
   }
