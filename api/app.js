@@ -36,9 +36,9 @@ app.get('/auth/google', passport.authenticate('google', {
   scope: ['https://www.googleapis.com/auth/userinfo.profile']
 }));
 
-app.get('/login', function(req, res){
-  res.sendFile(__dirname + '/◇◇/login.html');
-});
+// app.get('/login', function(req, res){
+//   res.sendFile(__dirname + '/◇◇/login.html');
+// });
 
 app.get('/success', function(req, res){
   res.send("ログインに成功")
