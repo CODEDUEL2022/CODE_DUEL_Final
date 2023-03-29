@@ -6,10 +6,17 @@ import { Animator } from '@arwes/animation';
 interface ButtonProps {
   children: ReactNode;
   handleClick: () => void;
+  able: boolean;
 }
 
 export const MainButton: React.FC<ButtonProps> = (props) => {
-  const { children, handleClick } = props;
+  const { children, handleClick, able } = props;
+
+  const buttonOptions = {
+    FrameComponent: FrameCorners,
+    onClick: handleClick,
+    disabled: !able,
+  };
 
   return (
     <>
@@ -18,9 +25,7 @@ export const MainButton: React.FC<ButtonProps> = (props) => {
         {/* @ts-ignore */}
         <Animator>
           {/* @ts-ignore */}
-          <Button FrameComponent={FrameCorners} onClick={handleClick}>
-            {children}
-          </Button>
+          <Button {...buttonOptions}>{children}</Button>
         </Animator>
       </ArwesThemeProvider>
     </>
