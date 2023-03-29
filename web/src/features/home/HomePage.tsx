@@ -1,44 +1,25 @@
-import React, { useContext, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Socket from '../../libs/socket/Socket';
-import { UserContext } from '../../libs/store/PlayerContext';
-import { GameIdContext } from '../../libs/store/PlayerContext';
+import React from 'react';
+import axios from 'axios';
 
 export const HomePage = () => {
-  const { setUserInfo } = useContext(UserContext);
-  const { setGameId } = useContext(GameIdContext);
-
-  useEffect(() => {
-    // TODO: ログイン時、バックから取得する
-    const user_id = Math.floor(Math.random() * 100000);
-    const user = {
-      id: user_id,
-      name: 'yusaku',
-    };
-    const dec = 2;
-
-    setUserInfo(user);
-  }, []);
-
-  const router = useRouter();
-
-  const startAutoMatching = () => {
-    Socket.setupSocketConnection();
-    router.push('/waiting/');
+  const signIn = () => {
+    axios
+      .get('http://localhost:3000/test')
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
   };
 
-  const startCustomMatch = () => {
-    const game_id = 'mockRoom';
-    setGameId(game_id);
-    Socket.setupSocketConnection();
-    router.push('/play');
+  const signUp = () => {
+    console.log('サインアップ');
   };
 
   return (
     <div>
       ホームです
-      <button onClick={startAutoMatching}>ログイン</button>
-      <button onClick={startCustomMatch}>サインアップ</button>
+      <button onClick={signIn}>ログイン</button>
+      <button onClick={signUp}>サインアップ</button>
     </div>
   );
 };
