@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       State.belongsToMany(models.Player, {
         through: "PlayerStates",
+        constraints: false,
       });
     }
   }

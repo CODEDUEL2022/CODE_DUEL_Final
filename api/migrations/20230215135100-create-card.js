@@ -12,6 +12,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      value: {
+        type: Sequelize.INTEGER,
+      },
+      type: {
+        type: Sequelize.STRING,
+      },
       cost: {
         type: Sequelize.INTEGER,
       },

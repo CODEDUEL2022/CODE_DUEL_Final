@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Game.belongsTo(models.Os, {
         foreignKey: "OsId",
         targetKey: "id",
+        constraints: false,
       });
     }
   }

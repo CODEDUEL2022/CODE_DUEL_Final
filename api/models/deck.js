@@ -12,9 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       Deck.belongsTo(models.User, {
         foreignKey: "UserId",
         targetKey: "id",
+        constraints: false,
       });
       Deck.belongsToMany(models.Card, {
         through: "CardDecks",
+        constraints: false,
       });
     }
   }

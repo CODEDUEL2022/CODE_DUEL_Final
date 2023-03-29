@@ -11,9 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Combo.belongsToMany(models.Card, {
         through: "CardCombos",
+        constraints: false,
       });
       Combo.belongsToMany(models.Bonus, {
         through: "ComboBonus",
+        constraints: false,
       });
     }
   }

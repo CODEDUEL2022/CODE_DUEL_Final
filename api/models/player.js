@@ -12,16 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       Player.belongsTo(models.User, {
         foreignKey: "UserId",
         targetKey: "id",
+        constraints: false,
       });
       Player.belongsTo(models.Game, {
         foreignKey: "GameId",
         targetKey: "id",
+        constraints: false,
       });
       Player.belongsToMany(models.Card, {
         through: "Hands",
+        constraints: false,
       });
       Player.belongsToMany(models.State, {
         through: "PlayerStates",
+        constraints: false,
       });
     }
   }

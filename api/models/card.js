@@ -12,24 +12,27 @@ module.exports = (sequelize, DataTypes) => {
       Card.belongsTo(models.Os, {
         foreignKey: "OsId",
         targetKey: "id",
+        constraints: false,
       });
       Card.belongsToMany(models.Deck, {
         through: "CardDecks",
+        constraints: false,
       });
       Card.belongsToMany(models.Combo, {
         through: "CardCombos",
-      });
-      Card.belongsToMany(models.Type, {
-        through: "CardsTypes",
+        constraints: false,
       });
       Card.belongsToMany(models.Player, {
         through: "Hands",
+        constraints: false,
       });
     }
   }
   Card.init(
     {
       name: DataTypes.STRING,
+      value: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       cost: DataTypes.INTEGER,
       file_path: DataTypes.STRING,
     },

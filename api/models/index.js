@@ -5,21 +5,39 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const process = require("process");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.js")[env];
+// const env = process.env.NODE_ENV || "development";
+// const config = require(__dirname + "/../config/config.js")[env];
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+let sequelize = new Sequelize(
+  'mysql://1l3qkx6lzvlf5qap9kfc:pscale_pw_jeXam2rF7dCw45kQRp8ReUmYicpHNUB8SZxTXPyFA3a@aws.connect.psdb.cloud/codeduel?ssl={"rejectUnauthorized":true}',
+  {
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: true,
+      },
+    },
+  }
+);
+// if (config.use_env_variable) {
+//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
+// } else {
+//   sequelize = new Sequelize(
+//     process.env.DB_URL,
+//     {
+//       dialectOptions: {
+//         ssl: {
+//           // <1>
+//           rejectUnauthorized: true,
+//         },
+//       },
+//     }
+//     // config.database,
+//     // config.username,
+//     // config.password,
+//     // config
+//   );
+// }
 
 fs.readdirSync(__dirname)
   .filter((file) => {

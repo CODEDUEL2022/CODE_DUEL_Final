@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Level.belongsTo(models.User, {
         foreignKey: "UserId",
         targetKey: "id",
+        constraints: false,
       });
     }
   }

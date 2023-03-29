@@ -13,6 +13,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASS}
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
       - TZ=${TZ}
+      - DB_URL=${DB_URL}
 
     # ホスト側のポート:コンテナのポート
     ports:
@@ -37,6 +38,10 @@ services:
       - MYSQL_DATABASE=${DB_NAME}
       - TZ=${TZ}
       - CHOKIDAR_USEPOLLING=true
+      - PROD_DB_NAME=${PROD_DB_NAME}
+      - PROD_DB_USER=${PROD_DB_USER}
+      - PROD_DB_PASS=${PROD_DB_PASS}
+      - PROD_DB_HOST=${PROD_DB_HOST}
 
     #コンテナを起動させ続けるよう設定
     tty: true
@@ -48,6 +53,7 @@ services:
     #（ホスト側の./apiをコンテナの/appにマウント）
     volumes:
       - ./api:/app
+      - "/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt"
 
     # 起動時のカレントフォルダを指定
     working_dir: /app
