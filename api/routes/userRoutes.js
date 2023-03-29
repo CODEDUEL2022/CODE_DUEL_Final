@@ -1,6 +1,6 @@
 const router = require("express").Router(),
 userController = require("../controllers/userController");
-
+const isAuthenticated = require("../authentication");
 router.get("/", function(req, res){
     userController.read(req,res)
 });

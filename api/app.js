@@ -11,13 +11,16 @@ const passport = require('passport');
 const app = express();
 const cors = require('cors')
 app.use(express.json());
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);
+// app.use(
+//   cors({
+//     origin: '*',
+//     methods: "GET, POST, PATCH, DELETE, PUT",
+//     allowedHeaders: "Content-Type, Authorization",
+//     credentials: true,
+//     optionsSuccessStatus: 200,
+//   })
+// );
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,19 +36,11 @@ const isAuthenticated = require("./authentication")
 
 
 app.get('/auth/google', passport.authenticate('google', {
-  scope: ['https://www.googleapis.com/auth/userinfo.profile']
-}));
+    scope: ['https://www.googleapis.com/auth/userinfo.profile']
+  })
+);
 
-// app.get('/login', function(req, res){
-//   res.sendFile(__dirname + '/◇◇/login.html');
-// });
-
-app.get('/success', function(req, res){
-  res.send("ログインに成功")
-})
-
-app.get('/test', isAuthenticated.isAuthenticated, function(req, res) {
-  //ここをフロントから踏んでほしい
+app.get('/api/test', isAuthenticated.isAuthenticated, function(req, res) {
   res.send("ここに来れてるってことはログイン情報が保存されてるよ")
 })
 
@@ -54,11 +49,18 @@ app.get('/auth/google/callback',
       session: true
     }),
     function(req, res){
-        res.redirect(200, '/success')
+      console.log(req.user)
+      res.cookie("id", req.user.id, {
+        httpOnly: true
+      })
+      res.cookie("name", req.user.name, {
+        httpOnly: true
+      })
+      res.redirect(200, 'http://localhost:8080/top')
 })
 
 
-app.use('/', isAuthenticated.isAuthenticated, indexRouter);
+app.use('/', indexRouter);
 app.use('/users', isAuthenticated.isAuthenticated, usersRouter);
 
 // catch 404 and forward to error handler

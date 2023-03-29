@@ -83,24 +83,26 @@ module.exports = {
     },
     createUser: async(req, res) => {
         try{
-            const user_id = req.body.user.id;
-            const user_name = req.body.user.name;
-            await db.User.count({
-                where:{
-                    name: user_name
-                }
-            }).then(count => {
-                if(count > 0){
-                    res.send("既に同じ名前のユーザーが存在します")
-                    this.login(req, res)
-                }else{
-                    const result = db.User.create({
-                        name: user_name,
-                        id: user_id
-                    });
-                    res.send(result);
-                }
-            })
+            console.log("cookie情報"+req.cookie)
+            const user_id = req.cookie.id;
+            const user_name = req.cookie.name;
+            // await db.User.count({
+            //     where:{
+            //         name: user_name
+            //     }
+            // }).then(count => {
+            //     console.log(count)
+            //     // if(count > 0){
+            //     //     res.send("既に同じ名前のユーザーが存在します")
+            //     //     this.login(req, res)
+            //     // }else{
+            //     //     const result = db.User.create({
+            //     //         name: user_name,
+            //     //         id: user_id
+            //     //     });
+            //     //     res.send(result);
+            //     // }
+            // })
         }catch(err){
             res.status(500).send(err);
         }

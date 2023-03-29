@@ -4,7 +4,7 @@ import axios from 'axios';
 export const HomePage = () => {
   const signIn = () => {
     axios
-      .get('http://localhost:3000/test')
+      .get('http://localhost:3000/auth/google')
       .then((res) => {
         console.log(res);
       })
@@ -20,6 +20,7 @@ export const HomePage = () => {
       ホームです
       <button onClick={signIn}>ログイン</button>
       <button onClick={signUp}>サインアップ</button>
+      <a href='http://localhost:3000/auth/google'>中身</a>
     </div>
   );
 };
