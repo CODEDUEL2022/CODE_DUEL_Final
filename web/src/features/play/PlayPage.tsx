@@ -349,7 +349,7 @@ export const PlayPage = () => {
           }
         }
 
-        @media screen and (min-width: 1400px) {
+        @media screen and (min-width: 1350px) {
           .main {
             padding: 48px;
             height: calc(100vh - 96px);

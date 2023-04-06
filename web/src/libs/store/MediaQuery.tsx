@@ -11,8 +11,8 @@ const MediaQueryContext = React.createContext({
 export const MediaQueryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const isMiniPhone = useMediaQuery({ query: '(max-width: 760px)' });
   const isSmartPhone = useMediaQuery({ query: '(max-width: 900px)' });
-  const isLaptopOrTablet = useMediaQuery({ query: '(max-width: 1400px)' });
-  const isBigScreen = useMediaQuery({ query: '(min-width: 1400px)' });
+  const isLaptopOrTablet = useMediaQuery({ query: '(max-width: 1350px)' });
+  const isBigScreen = useMediaQuery({ query: '(min-width: 1350px)' });
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
 
   return (

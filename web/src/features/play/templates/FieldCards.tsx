@@ -66,7 +66,7 @@ export const FieldCards: React.FC<CardProps> = (props) => {
             transform: rotate(24deg) translate(-46px, 60px);
           }
         }
-        @media screen and (min-width: 1400px) {
+        @media screen and (min-width: 1350px) {
           .card:nth-child(1) {
             transform: rotate(-24deg) translate(60px, 92px);
           }

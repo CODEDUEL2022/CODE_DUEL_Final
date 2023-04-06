@@ -59,8 +59,8 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
 
         @media screen and (min-width: 900px) {
           .button {
-            font-size: 16px;
-            width: 100px;
+            font-size: 14px;
+            width: 80px;
           }
 
           .buttons {
@@ -68,7 +68,7 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
           }
         }
 
-        @media screen and (min-width: 1400px) {
+        @media screen and (min-width: 1350px) {
           .button {
             font-size: 18px;
             width: 140px;

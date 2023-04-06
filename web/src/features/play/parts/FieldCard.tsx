@@ -23,7 +23,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
     : isSmartPhone
     ? 100
     : isLaptopOrTablet
-    ? 140
+    ? 130
     : isBigScreen
     ? 200
     : 120;
@@ -32,7 +32,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
     : isSmartPhone
     ? 80
     : isLaptopOrTablet
-    ? 110
+    ? 100
     : isBigScreen
     ? 160
     : 100;
