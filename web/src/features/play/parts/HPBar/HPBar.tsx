@@ -29,7 +29,7 @@ export const HPBar: React.FC<HPBarProps> = (props) => {
           animator={{ animate: false }}
           progress={hpPercentage}
           determinate
-          size={isSmartPhone ? 1 : isLaptopOrTablet ? 1.2 : isBigScreen ? 1.4 : 1}
+          size={isSmartPhone ? 0.8 : isLaptopOrTablet ? 1.2 : isBigScreen ? 1.4 : 1}
         ></LoadingBars>
       </ArwesThemeProvider>
     </>

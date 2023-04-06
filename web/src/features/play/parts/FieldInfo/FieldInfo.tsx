@@ -23,8 +23,8 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
     return Apple;
   };
 
-  const currentFieldSize = isSmartPhone ? 40 : isLaptopOrTablet ? 50 : isBigScreen ? 60 : 40;
-  const nextFieldSize = isSmartPhone ? 25 : isLaptopOrTablet ? 30 : isBigScreen ? 40 : 25;
+  const currentFieldSize = isSmartPhone ? 30 : isLaptopOrTablet ? 50 : isBigScreen ? 60 : 40;
+  const nextFieldSize = isSmartPhone ? 20 : isLaptopOrTablet ? 30 : isBigScreen ? 40 : 25;
 
   return (
     <>

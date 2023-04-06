@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 const MediaQueryContext = React.createContext({
+  isMiniPhone: false,
   isSmartPhone: false,
   isLaptopOrTablet: false,
   isBigScreen: false,
 });
 
 export const MediaQueryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const isMiniPhone = useMediaQuery({ query: '(max-width: 760px)' });
   const isSmartPhone = useMediaQuery({ query: '(max-width: 900px)' });
   const isLaptopOrTablet = useMediaQuery({ query: '(max-width: 1400px)' });
   const isBigScreen = useMediaQuery({ query: '(min-width: 1400px)' });
@@ -15,7 +17,9 @@ export const MediaQueryProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   return (
     <>
-      <MediaQueryContext.Provider value={{ isSmartPhone, isLaptopOrTablet, isBigScreen }}>
+      <MediaQueryContext.Provider
+        value={{ isMiniPhone, isSmartPhone, isLaptopOrTablet, isBigScreen }}
+      >
         {children}
       </MediaQueryContext.Provider>
       {isPortrait ? <div className="caution">横向きでプレイしてください</div> : null}

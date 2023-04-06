@@ -297,8 +297,8 @@ export const PlayPage = () => {
         .main {
           display: flex;
           justify-content: center;
-          padding: 24px;
-          height: calc(100vh - 48px);
+          padding: 12px;
+          height: calc(100vh - 24px);
           max-width: 1400px;
           max-height: 800px;
         }
@@ -329,7 +329,7 @@ export const PlayPage = () => {
         .inner-button {
           width: 3em;
           height: 1.5em;
-          font-size: 30px;
+          font-size: 20px;
           display: flex;
           align-items: center;
           justify-content: center;

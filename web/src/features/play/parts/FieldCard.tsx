@@ -11,15 +11,31 @@ interface CardProps {
 
 export const FieldCard: React.FC<CardProps> = (props) => {
   const { card, isActive, onClick } = props;
-  const { isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
+  const { isMiniPhone, isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
 
   const handleClick = () => {
     if (!card.is_selected && !isActive) return;
     onClick(card.id);
   };
 
-  const cardHeight = isSmartPhone ? 100 : isLaptopOrTablet ? 140 : isBigScreen ? 200 : 120;
-  const cardWidth = isSmartPhone ? 80 : isLaptopOrTablet ? 110 : isBigScreen ? 160 : 100;
+  const cardHeight = isMiniPhone
+    ? 90
+    : isSmartPhone
+    ? 100
+    : isLaptopOrTablet
+    ? 140
+    : isBigScreen
+    ? 200
+    : 120;
+  const cardWidth = isMiniPhone
+    ? 70
+    : isSmartPhone
+    ? 80
+    : isLaptopOrTablet
+    ? 110
+    : isBigScreen
+    ? 160
+    : 100;
 
   return (
     <>

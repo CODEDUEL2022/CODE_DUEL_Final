@@ -14,14 +14,14 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = (props) => {
   const { isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
 
   const nameSize = isSmartPhone
-    ? '20px'
+    ? '16px'
     : isLaptopOrTablet
     ? '24px'
     : isBigScreen
     ? '28px'
     : '20px';
 
-  const hpSize = isSmartPhone ? '16px' : isLaptopOrTablet ? '20px' : isBigScreen ? '24px' : '16px';
+  const hpSize = isSmartPhone ? '14px' : isLaptopOrTablet ? '20px' : isBigScreen ? '24px' : '16px';
 
   return (
     <>
@@ -43,7 +43,9 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = (props) => {
           </Text>
           <HPBar hp={playerData.hp} color={color}></HPBar>
           {/* @ts-ignore */}
-          <Text style={{ color: color, fontSize: hpSize }}>HP : {playerData.hp}</Text>
+          <Text style={{ color: color, fontSize: hpSize, paddingTop: '6px' }}>
+            HP : {playerData.hp}
+          </Text>
         </div>
       </div>
       <style jsx>{`

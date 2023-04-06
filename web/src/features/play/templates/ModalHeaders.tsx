@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { SubButton } from '../../../components/parts/SubButton/SubButton';
 import { FiSettings, FiFile } from 'react-icons/fi';
 import { Modal } from '../../../components/parts/Modal/Modal';
+import { useDeviceType } from 'libs/store/MediaQuery';
 
 interface ModalHeadersProps {}
 
 export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
   const {} = props;
+  const { isSmartPhone } = useDeviceType();
 
   const [isOpenCardListModal, setIsOpenCardListModal] = useState<Boolean>(false);
   const [isOpenHowToPlayModal, setIsOpenHowToPlayModal] = useState<Boolean>(false);
@@ -29,11 +31,11 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
     <>
       <div className="buttons">
         <SubButton handleClick={openCardListModal}>
-          <FiFile size={20}></FiFile>
+          <FiFile size={isSmartPhone ? 14 : 20}></FiFile>
           <div className="button">カード一覧</div>
         </SubButton>
         <SubButton handleClick={openHowToPlayModal}>
-          <FiSettings size={20}></FiSettings>
+          <FiSettings size={isSmartPhone ? 14 : 20}></FiSettings>
           <div className="button">遊び方</div>
         </SubButton>
       </div>
@@ -45,8 +47,8 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
       </Modal>
       <style jsx>{`
         .button {
-          font-size: 12px;
-          width: 80px;
+          font-size: 10px;
+          width: 50px;
         }
 
         .buttons {
