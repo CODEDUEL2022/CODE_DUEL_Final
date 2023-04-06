@@ -37,6 +37,7 @@ export const Terminal: React.FC<TerminalProps> = (props) => {
           height: 40%;
           overflow: scroll;
           text-shadow: 0 0 5px #d3fffd;
+          font-size: 14px;
         }
 
         @media screen and (min-width: 900px) {
