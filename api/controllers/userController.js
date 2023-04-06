@@ -84,25 +84,27 @@ module.exports = {
     try {
       const user_id = req.cookies.id;
       const user_name = req.cookies.name;
-      console.log(user_id);
+      const count = 0;
       db.User.count({
         where: {
           name: user_name,
         },
       }).then((dataCount) => {
+        dataCount = count;
         res.send(dataCount);
       });
-      // if(count > 0){
-      //     res.send("既に同じ名前のユーザーが存在します")
-      //     this.login(req, res)
-      // }else{
-      //     const result = db.User.create({
-      //         name: user_name,
-      //         id: user_id
-      //     });
-      //     res.send(result);
-      // }
+      if (count > 0) {
+        res.send("既に同じ名前のユーザーが存在します");
+        this.login(req, res);
+      } else {
+        const result = db.User.create({
+          name: user_name,
+          uuid: user_id,
+        });
+        res.send(result);
+      }
     } catch (err) {
+      console.log(err);
       res.status(500).send(err);
     }
   },

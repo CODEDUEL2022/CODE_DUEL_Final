@@ -41,19 +41,11 @@ export const TopPage = () => {
     router.push('/play');
   };
 
-  const testFunc = () => {
-    axios
-      .get('http://localhost:3000/test/user/create_user', { withCredentials: true })
-      .then((res) => {
-        console.log(res);
-      });
-  };
   return (
     <div>
       ホームです
       <button onClick={startAutoMatching}>オートマッチング</button>
       <button onClick={startCustomMatch}>カスタムマッチ</button>
-      <button onClick={testFunc}>TEST</button>
     </div>
   );
 };

@@ -11,14 +11,7 @@ module.exports = function (app) {
     userController.login(req, res);
   });
   app.get("/api/user/create_user", function (req, res) {
-    //これが動かないです。
-    console.log(req.cookies);
     userController.createUser(req, res);
-  });
-  app.get("/test/user/create_user", function (req, res) {
-    //これが動かないです。
-    console.log(req.cookies);
-    res.send(req.cookies.name);
   });
   app.post("/api/user/get_user_info", function (req, res) {
     userController.getUserInfo(req, res);
