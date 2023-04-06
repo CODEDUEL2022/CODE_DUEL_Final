@@ -21,8 +21,9 @@ module.exports = function (app) {
 
     passport.deserializeUser(function (user, done) {
         try {
-          const userInfo = userController.findUser(user.id)
-          done(null, { id: userInfo.id, name: userInfo.name });
+            console.log(user)
+        //   const userInfo = userController.findUser(user.id)
+            done(null, { id: user.id, name: user.name });
         } catch (error) {
           done(error, null);
         }

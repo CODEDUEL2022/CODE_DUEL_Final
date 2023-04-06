@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Socket from '../../libs/socket/Socket';
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
+import axios from 'axios';
 
 export const TopPage = () => {
   const { setUserInfo } = useContext(UserContext);
@@ -10,6 +11,12 @@ export const TopPage = () => {
 
   useEffect(() => {
     // TODO: ログイン時、バックから取得する
+    axios
+      .get('http://localhost:3000/api/user/create_user', { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
     const user_id = Math.floor(Math.random() * 100000);
     const user = {
       id: user_id,
