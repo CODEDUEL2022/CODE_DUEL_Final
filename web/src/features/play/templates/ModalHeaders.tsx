@@ -26,21 +26,57 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
   };
 
   return (
-    <div>
-      <SubButton onClick={openCardListModal}>
-        <FiFile></FiFile>
-        <div style={{ paddingLeft: '5px' }}>カード一覧</div>
-      </SubButton>
+    <>
+      <div className="buttons">
+        <SubButton handleClick={openCardListModal}>
+          <FiFile size={20}></FiFile>
+          <div className="button">カード一覧</div>
+        </SubButton>
+        <SubButton handleClick={openHowToPlayModal}>
+          <FiSettings size={20}></FiSettings>
+          <div className="button">遊び方</div>
+        </SubButton>
+      </div>
       <Modal onClick={closeCardListModal} isModalOpen={isOpenCardListModal}>
         <h1 style={{ color: '#fff' }}>カード一覧です</h1>
       </Modal>
-      <SubButton onClick={openHowToPlayModal}>
-        <FiSettings></FiSettings>
-        <div style={{ paddingLeft: '5px' }}>遊び方</div>
-      </SubButton>
       <Modal onClick={closeHowToPlayModal} isModalOpen={isOpenHowToPlayModal}>
         <h1 style={{ color: '#fff' }}>遊び方です</h1>
       </Modal>
-    </div>
+      <style jsx>{`
+        .button {
+          font-size: 12px;
+          width: 80px;
+        }
+
+        .buttons {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        @media screen and (min-width: 900px) {
+          .button {
+            font-size: 16px;
+            width: 100px;
+          }
+
+          .buttons {
+            height: 90px;
+          }
+        }
+
+        @media screen and (min-width: 1400px) {
+          .button {
+            font-size: 18px;
+            width: 140px;
+          }
+
+          .buttons {
+            height: 100px;
+          }
+        }
+      `}</style>
+    </>
   );
 };

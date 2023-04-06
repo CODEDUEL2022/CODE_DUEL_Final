@@ -320,6 +320,12 @@ export const PlayPage = () => {
           justify-content: center;
           text-transform: none;
         }
+
+        @media screen and (min-width: 900px) {
+          .inner-button {
+            font-size: 40px;
+          }
+        }
       `}</style>
     </>
   );
