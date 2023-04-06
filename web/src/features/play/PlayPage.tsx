@@ -303,7 +303,7 @@ export const PlayPage = () => {
           max-height: 800px;
         }
         .left {
-          width: 20%;
+          width: 15%;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -313,13 +313,13 @@ export const PlayPage = () => {
           margin-bottom: 4px;
         }
         .center {
-          width: 60%;
+          width: 70%;
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
         }
         .right {
-          width: 20%;
+          width: 15%;
           display: flex;
           flex-direction: column;
           align-items: end;
