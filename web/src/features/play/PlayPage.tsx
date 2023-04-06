@@ -259,36 +259,48 @@ export const PlayPage = () => {
 
   return (
     <>
-      <div className="main">
-        <Animation isShow={isAnimation}></Animation>
-        <div className="left">
-          <FieldInfo round={roundCount}></FieldInfo>
-          <div>
-            <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
-            <ModalHeaders></ModalHeaders>
+      <div className="container">
+        <div className="main">
+          <Animation isShow={isAnimation}></Animation>
+          <div className="left">
+            <FieldInfo round={roundCount}></FieldInfo>
+            <div>
+              <div className="my-info">
+                <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
+              </div>
+              <ModalHeaders></ModalHeaders>
+            </div>
           </div>
-        </div>
-        <div className="center">
-          <ComboProviders
-            handleClick={selectCard}
-            cards={myCards}
-            combos={sampleCombo}
-          ></ComboProviders>
-        </div>
-        <div className="right">
-          <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
-          <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
-            <div className="inner-button">Go</div>
-          </MainButton>
+          <div className="center">
+            <ComboProviders
+              handleClick={selectCard}
+              cards={myCards}
+              combos={sampleCombo}
+            ></ComboProviders>
+          </div>
+          <div className="right">
+            <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
+            <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
+              <div className="inner-button">Go</div>
+            </MainButton>
+          </div>
         </div>
       </div>
       <style jsx>{`
+        .container {
+          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
         .main {
           display: flex;
-          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
           justify-content: center;
           padding: 24px;
           height: calc(100vh - 48px);
+          max-width: 1400px;
+          max-height: 800px;
         }
         .left {
           width: 20%;
@@ -296,6 +308,9 @@ export const PlayPage = () => {
           flex-direction: column;
           align-items: flex-start;
           justify-content: space-between;
+        }
+        .my-info {
+          margin-bottom: 4px;
         }
         .center {
           width: 60%;
@@ -322,8 +337,22 @@ export const PlayPage = () => {
         }
 
         @media screen and (min-width: 900px) {
+          .main {
+            padding: 36px;
+            height: calc(100vh - 72px);
+          }
+          .my-info {
+            margin-bottom: 16px;
+          }
           .inner-button {
             font-size: 40px;
+          }
+        }
+
+        @media screen and (min-width: 1400px) {
+          .main {
+            padding: 48px;
+            height: calc(100vh - 96px);
           }
         }
       `}</style>
