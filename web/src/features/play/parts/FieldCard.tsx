@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CardType } from '../../../libs/types/Card';
-import { Card } from '../../../components/parts/Card/Card';
+import Image from 'next/image';
 
 interface CardProps {
   card: CardType;
@@ -19,8 +19,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
   return (
     <>
       <div className="overlay" onClick={handleClick}>
-        <Card card={card} />
-        {/* card.is_selected がfalseかつ isActiveがfalseなら表示 */}
+        <Image src={card.img_src} alt="my card" width={100} height={120}></Image>
         {!card.is_selected && !isActive && <div className="blur"></div>}
       </div>
       <style jsx>{`
