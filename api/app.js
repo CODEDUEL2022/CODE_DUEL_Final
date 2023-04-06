@@ -1,80 +1,95 @@
-require('dotenv').config();
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const passport = require('passport');
+require("dotenv").config();
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const userController = require("./controllers/userController");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const passport = require("passport");
 const app = express();
-const cors = require('cors')
+const cors = require("cors");
 app.use(express.json());
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-    optionsSuccessStatus: 200,
+// app.use(
+//   cors({
+//     origin: '*',
+//     methods: "GET, POST, PATCH, DELETE, PUT",
+//     allowedHeaders: "Content-Type, Authorization",
+//     credentials: true,
+//     optionsSuccessStatus: 200,
+//   })
+// );
+app.use(cors());
+app.use(cookieParser());
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, "public")));
+
+require("./passport")(app);
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    // 認証済
+    console.log("認証されました");
+    return next();
+  } else {
+    // 認証されていない
+    console.log(req.isAuthenticated());
+    res.redirect("/auth/google"); // ログイン画面に遷移
+  }
+}
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/userinfo.profile"],
   })
 );
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.get("/api/test", isAuthenticated, function (req, res) {
+  res.send(req.cookies.name);
+});
 
-require("./passport")(app);
-const isAuthenticated = require("./authentication")
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    session: true,
+  }),
+  function (req, res) {
+    res.cookie("id", req.user.id, {
+      secure: true,
+    });
+    res.cookie("name", req.user.name, {
+      secure: true,
+    });
+    return res.redirect("http://localhost:8080/top");
+  }
+);
 
+require("./routes/index")(app);
 
-app.get('/auth/google', passport.authenticate('google', {
-  scope: ['https://www.googleapis.com/auth/userinfo.profile']
-}));
-
-// app.get('/login', function(req, res){
-//   res.sendFile(__dirname + '/◇◇/login.html');
-// });
-
-app.get('/success', function(req, res){
-  res.send("ログインに成功")
-})
-
-app.get('/test', isAuthenticated.isAuthenticated, function(req, res) {
-  //ここをフロントから踏んでほしい
-  res.send("ここに来れてるってことはログイン情報が保存されてるよ")
-})
-
-app.get('/auth/google/callback', 
-    passport.authenticate('google',{
-      session: true
-    }),
-    function(req, res){
-        res.redirect(200, '/success')
-})
-
-
-app.use('/', isAuthenticated.isAuthenticated, indexRouter);
-app.use('/users', isAuthenticated.isAuthenticated, usersRouter);
+// app.use('/api', indexRouter);
+app.use("/users", isAuthenticated, usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;
