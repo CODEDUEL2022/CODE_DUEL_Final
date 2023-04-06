@@ -354,6 +354,10 @@ export const PlayPage = () => {
             padding: 48px;
             height: calc(100vh - 96px);
           }
+
+          .my-info {
+            margin-bottom: 32px;
+          }
         }
       `}</style>
     </>

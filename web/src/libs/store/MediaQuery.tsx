@@ -5,7 +5,6 @@ const MediaQueryContext = React.createContext({
   isSmartPhone: false,
   isLaptopOrTablet: false,
   isBigScreen: false,
-  isPortrait: false,
 });
 
 export const MediaQueryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -15,9 +14,27 @@ export const MediaQueryProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
 
   return (
-    <MediaQueryContext.Provider value={{ isSmartPhone, isLaptopOrTablet, isBigScreen, isPortrait }}>
-      {children}
-    </MediaQueryContext.Provider>
+    <>
+      <MediaQueryContext.Provider value={{ isSmartPhone, isLaptopOrTablet, isBigScreen }}>
+        {children}
+      </MediaQueryContext.Provider>
+      {isPortrait ? <div className="caution">横向きでプレイしてください</div> : null}
+      <style jsx>{`
+        .caution {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          background-color: #fff;
+          z-index: 100;
+        }
+      `}</style>
+    </>
   );
 };
 
