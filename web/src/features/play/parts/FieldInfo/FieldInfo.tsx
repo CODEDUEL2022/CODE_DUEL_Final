@@ -71,11 +71,6 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
           align-items: center;
           gap: 10px;
         }
-        @media screen and (min-width: 600px) {
-        }
-
-        @media screen and (min-width: 900px) {
-        }
       `}</style>
     </>
   );
