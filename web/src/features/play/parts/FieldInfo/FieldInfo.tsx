@@ -23,8 +23,8 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
     return Apple;
   };
 
-  const currentFieldSize = isSmartPhone ? 40 : isLaptopOrTablet ? 60 : isBigScreen ? 80 : 40;
-  const nextFieldSize = isSmartPhone ? 25 : isLaptopOrTablet ? 40 : isBigScreen ? 60 : 25;
+  const currentFieldSize = isSmartPhone ? 40 : isLaptopOrTablet ? 50 : isBigScreen ? 60 : 40;
+  const nextFieldSize = isSmartPhone ? 25 : isLaptopOrTablet ? 30 : isBigScreen ? 40 : 25;
 
   return (
     <>
@@ -70,6 +70,17 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
           justify-content: flex-start;
           align-items: center;
           gap: 10px;
+        }
+
+        @media screen and (min-width: 900px) {
+          .tern-text {
+            font-size: 20px;
+            margin-bottom: 12px;
+          }
+
+          .tern-number {
+            font-size: 26px;
+          }
         }
       `}</style>
     </>

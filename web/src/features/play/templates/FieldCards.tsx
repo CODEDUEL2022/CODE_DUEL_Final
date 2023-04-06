@@ -30,19 +30,22 @@ export const FieldCards: React.FC<CardProps> = (props) => {
           padding: 20px;
         }
         .card:nth-child(1) {
-          transform: rotate(-20deg) translate(40px, 45px);
+          transform: rotate(-20deg) translate(40px, 70px);
         }
         .card:nth-child(2) {
-          transform: rotate(-10deg) translate(20px, 12px);
+          transform: rotate(-10deg) translate(30px, 24px);
         }
         .card:nth-child(3) {
-          transform: rotate(0deg);
+          transform: rotate(-3deg) translate(10px, 0);
         }
         .card:nth-child(4) {
-          transform: rotate(10deg) translate(-20px, 12px);
+          transform: rotate(3deg) translate(-10px, 0);
         }
         .card:nth-child(5) {
-          transform: rotate(20deg) translate(-40px, 45px);
+          transform: rotate(10deg) translate(-30px, 24px);
+        }
+        .card:nth-child(6) {
+          transform: rotate(20deg) translate(-40px, 70px);
         }
       `}</style>
     </>
