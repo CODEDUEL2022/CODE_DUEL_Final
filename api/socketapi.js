@@ -19,6 +19,26 @@ const deleteWaitingUser = (user_id) => {
   console.log(`${waitingUsers.length} people are waiting...`);
 };
 
+const calculateMyHp = function (hp /* user.hp */, action_type, action_value) {
+  let newHp;
+  if (action_type === "attack") {
+    newHp = hp;
+  } else if (action_type === "recover") {
+    newHp = hp + action_value;
+  }
+  return newHp;
+};
+
+const calculateOpponentHp = function (hp /* user.hp */, action_type, action_value) {
+  let newHp;
+  if (action_type === "attack") {
+    newHp = hp - action_value;
+  } else if (action_type === "recover") {
+    newHp = hp;
+  }
+  return newHp;
+};
+
 io.on("connection", function (socket) {
   console.log("connected to socket.io !!!");
 
@@ -49,30 +69,81 @@ io.on("connection", function (socket) {
 
     if (!key) {
       const newRoomUsers = [player];
-      socket.join(player.game_id);
-      rooms[player.game_id] = newRoomUsers;
+      rooms[player.game_id] = {
+        round: 1,
+        players: newRoomUsers,
+      };
       console.log(rooms);
+
+      socket.join(player.game_id);
     } else if (rooms[key].length >= 2) {
       return console.log(`This room (${player.game_id}) is already full`);
     } else {
       // 2人集まったらスタート
-      socket.join(player.game_id);
-      rooms[key].push(player);
+      const newPlayer = { ...player, turn: true };
+      rooms[key].players.push(newPlayer);
       console.log(rooms);
-      io.to(player.game_id).emit("gameStart", ...rooms[key]);
+
+      socket.join(player.game_id);
+      io.to(player.game_id).emit("gameStart", rooms[key].round, ...rooms[key].players);
     }
   });
 
-  socket.on("sendCards", (cardsData, playersData, game_id) => {
-    const updatedPlayersData = rooms[game_id].map((user) => {
-      if (user.id === playersData["myData"].id) return { ...user, turn: false };
-      if (user.id === playersData["opponentsData"].id) return { ...user, turn: true };
-    });
-    // TODO: 発動されたコンボからHPの計算の処理を書く。
+  socket.on("sendCards", (combo, cards, playersData, game_id) => {
     console.log("attacked! change turn.");
-    console.log(updatedPlayersData);
-    rooms[game_id] = updatedPlayersData;
-    io.to(game_id).emit("updateField", cardsData, updatedPlayersData);
+    rooms[game_id].round += 1;
+
+    // カード一枚出しの場合の処理
+    if (combo === null) {
+      const sendedCard = cards[0];
+
+      const updatedPlayersData = rooms[game_id].players.map((user) => {
+        if (user.id === playersData["myData"].id) {
+          return {
+            ...user,
+            turn: false,
+            sp: user.sp - sendedCard.cost,
+            hp: calculateMyHp(user.hp, sendedCard.action_type, sendedCard.value),
+          };
+        }
+        if (user.id === playersData["opponentsData"].id)
+          return {
+            ...user,
+            turn: true,
+            sp: user.sp + 1,
+            hp: calculateOpponentHp(user.hp, sendedCard.action_type, sendedCard.value),
+          };
+      });
+      rooms[game_id].players = updatedPlayersData;
+      console.log(rooms);
+      return io
+        .to(game_id)
+        .emit("updateField", rooms[game_id].round, null, cards, updatedPlayersData);
+    }
+
+    // コンボの場合の処理
+    const updatedPlayersData = rooms[game_id].players.map((user) => {
+      if (user.id === playersData["myData"].id) {
+        return {
+          ...user,
+          turn: false,
+          sp: user.sp - combo.cost,
+          hp: calculateMyHp(user.hp, combo.action_type, combo.value),
+        };
+      }
+      if (user.id === playersData["opponentsData"].id) {
+        return {
+          ...user,
+          turn: true,
+          sp: user.sp + 1,
+          hp: calculateOpponentHp(user.hp, combo.action_type, combo.value),
+        };
+      }
+    });
+
+    rooms[game_id].players = updatedPlayersData;
+    console.log(rooms);
+    io.to(game_id).emit("updateField", rooms[game_id].round, combo, cards, updatedPlayersData);
   });
 });
 

@@ -4,5 +4,7 @@ export interface CardType {
   cost: number;
   enforce_os_id: number;
   img_src: string;
-  isSelected: boolean;
+  is_selected: boolean;
+  value: number;
+  action_type: string;
 }

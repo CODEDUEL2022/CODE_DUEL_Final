@@ -12,7 +12,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
   const { card, isActive, onClick } = props;
 
   const handleClick = () => {
-    if (!card.isSelected && !isActive) return;
+    if (!card.is_selected && !isActive) return;
     onClick(card.id);
   };
 
@@ -20,14 +20,14 @@ export const FieldCard: React.FC<CardProps> = (props) => {
     <>
       <div className="overlay" onClick={handleClick}>
         <Card card={card} />
-        {/* card.isSelected がfalseかつ isActiveがfalseなら表示 */}
-        {!card.isSelected && !isActive && <div className="blur"></div>}
+        {/* card.is_selected がfalseかつ isActiveがfalseなら表示 */}
+        {!card.is_selected && !isActive && <div className="blur"></div>}
       </div>
       <style jsx>{`
         .overlay {
           position: relative;
           transition: transform 0.2s ease;
-          transform: ${card.isSelected ? 'translateY(-10px)' : ''};
+          transform: ${card.is_selected ? 'translateY(-10px)' : ''};
           height: 120px;
         }
 
