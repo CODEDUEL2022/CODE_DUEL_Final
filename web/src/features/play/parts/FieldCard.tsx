@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CardType } from '../../../libs/types/Card';
-import { Card } from '../../../components/parts/Card/Card';
+import Image from 'next/image';
+import { useDeviceType } from 'libs/store/MediaQuery';
 
 interface CardProps {
   card: CardType;
@@ -10,17 +11,36 @@ interface CardProps {
 
 export const FieldCard: React.FC<CardProps> = (props) => {
   const { card, isActive, onClick } = props;
+  const { isMiniPhone, isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
 
   const handleClick = () => {
     if (!card.is_selected && !isActive) return;
     onClick(card.id);
   };
 
+  const cardHeight = isMiniPhone
+    ? 90
+    : isSmartPhone
+    ? 100
+    : isLaptopOrTablet
+    ? 130
+    : isBigScreen
+    ? 200
+    : 120;
+  const cardWidth = isMiniPhone
+    ? 70
+    : isSmartPhone
+    ? 80
+    : isLaptopOrTablet
+    ? 100
+    : isBigScreen
+    ? 160
+    : 100;
+
   return (
     <>
       <div className="overlay" onClick={handleClick}>
-        <Card card={card} />
-        {/* card.is_selected がfalseかつ isActiveがfalseなら表示 */}
+        <Image src={card.img_src} alt="my card" width={cardWidth} height={cardHeight}></Image>
         {!card.is_selected && !isActive && <div className="blur"></div>}
       </div>
       <style jsx>{`
@@ -28,7 +48,7 @@ export const FieldCard: React.FC<CardProps> = (props) => {
           position: relative;
           transition: transform 0.2s ease;
           transform: ${card.is_selected ? 'translateY(-10px)' : ''};
-          height: 120px;
+          height: auto;
         }
 
         .blur {

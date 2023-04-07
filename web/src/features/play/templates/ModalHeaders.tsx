@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { SubButton } from '../../../components/parts/SubButton/SubButton';
 import { FiSettings, FiFile } from 'react-icons/fi';
 import { Modal } from '../../../components/parts/Modal/Modal';
+import { useDeviceType } from 'libs/store/MediaQuery';
 
 interface ModalHeadersProps {}
 
 export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
   const {} = props;
+  const { isSmartPhone } = useDeviceType();
 
   const [isOpenCardListModal, setIsOpenCardListModal] = useState<Boolean>(false);
   const [isOpenHowToPlayModal, setIsOpenHowToPlayModal] = useState<Boolean>(false);
@@ -26,21 +28,57 @@ export const ModalHeaders: React.FC<ModalHeadersProps> = (props) => {
   };
 
   return (
-    <div>
-      <SubButton onClick={openCardListModal}>
-        <FiFile></FiFile>
-        <div style={{ paddingLeft: '5px' }}>カード一覧</div>
-      </SubButton>
+    <>
+      <div className="buttons">
+        <SubButton handleClick={openCardListModal}>
+          <FiFile size={isSmartPhone ? 14 : 20}></FiFile>
+          <div className="button">カード一覧</div>
+        </SubButton>
+        <SubButton handleClick={openHowToPlayModal}>
+          <FiSettings size={isSmartPhone ? 14 : 20}></FiSettings>
+          <div className="button">遊び方</div>
+        </SubButton>
+      </div>
       <Modal onClick={closeCardListModal} isModalOpen={isOpenCardListModal}>
         <h1 style={{ color: '#fff' }}>カード一覧です</h1>
       </Modal>
-      <SubButton onClick={openHowToPlayModal}>
-        <FiSettings></FiSettings>
-        <div style={{ paddingLeft: '5px' }}>遊び方</div>
-      </SubButton>
       <Modal onClick={closeHowToPlayModal} isModalOpen={isOpenHowToPlayModal}>
         <h1 style={{ color: '#fff' }}>遊び方です</h1>
       </Modal>
-    </div>
+      <style jsx>{`
+        .button {
+          font-size: 10px;
+          width: 50px;
+        }
+
+        .buttons {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        @media screen and (min-width: 900px) {
+          .button {
+            font-size: 14px;
+            width: 80px;
+          }
+
+          .buttons {
+            height: 90px;
+          }
+        }
+
+        @media screen and (min-width: 1350px) {
+          .button {
+            font-size: 18px;
+            width: 140px;
+          }
+
+          .buttons {
+            height: 100px;
+          }
+        }
+      `}</style>
+    </>
   );
 };

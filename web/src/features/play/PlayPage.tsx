@@ -22,55 +22,60 @@ export const PlayPage = () => {
   const sampleCards: Array<CardType> = [
     {
       id: 1,
-      name: 'vue',
+      name: 'Flutter',
       cost: 2,
       enforce_os_id: 1,
-      img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      img_src: '/Flutter.png',
       is_selected: false,
       value: 20,
       action_type: 'attack',
     },
     {
       id: 2,
-      name: 'React',
+      name: 'Go',
       cost: 2,
       enforce_os_id: 1,
-      img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672358/3cad3493e6b4c87c94b5610260a07e63.png',
+      img_src: '/Go.png',
       is_selected: false,
       value: 20,
       action_type: 'attack',
     },
     {
       id: 3,
-      name: 'React',
+      name: 'Next.js',
       cost: 2,
       enforce_os_id: 1,
-      img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      img_src: '/next-js.png',
       is_selected: false,
       value: 20,
       action_type: 'attack',
     },
     {
       id: 4,
-      name: 'React',
+      name: 'Socket.io',
       cost: 2,
       enforce_os_id: 1,
-      img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      img_src: '/socket-io.png',
       is_selected: false,
       value: 20,
       action_type: 'attack',
     },
     {
       id: 5,
-      name: 'React',
+      name: 'Swift',
       cost: 2,
       enforce_os_id: 1,
-      img_src:
-        'https://res.cloudinary.com/du3fnn01g/image/upload/v1675672552/f2eed80acb50dc3f95c9593c66bce403.svg',
+      img_src: '/swift.png',
+      is_selected: false,
+      value: 20,
+      action_type: 'attack',
+    },
+    {
+      id: 6,
+      name: 'TypeScript',
+      cost: 2,
+      enforce_os_id: 1,
+      img_src: '/TypeScript.png',
       is_selected: false,
       value: 20,
       action_type: 'attack',
@@ -254,52 +259,67 @@ export const PlayPage = () => {
 
   return (
     <>
-      <div className="main">
-        <Animation isShow={isAnimation}></Animation>
-        <div className="left">
-          <FieldInfo round={roundCount}></FieldInfo>
-          <div>
-            <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
-            <ModalHeaders></ModalHeaders>
+      <div className="container">
+        <div className="main">
+          <Animation isShow={isAnimation}></Animation>
+          <div className="left">
+            <FieldInfo round={roundCount}></FieldInfo>
+            <div>
+              <div className="my-info">
+                <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
+              </div>
+              <ModalHeaders></ModalHeaders>
+            </div>
           </div>
-        </div>
-        <div className="center">
-          <ComboProviders
-            handleClick={selectCard}
-            cards={myCards}
-            combos={sampleCombo}
-          ></ComboProviders>
-        </div>
-        <div className="right">
-          <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
-          <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
-            <div className="inner-button">Go</div>
-          </MainButton>
+          <div className="center">
+            <ComboProviders
+              handleClick={selectCard}
+              cards={myCards}
+              combos={sampleCombo}
+            ></ComboProviders>
+          </div>
+          <div className="right">
+            <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
+            <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
+              <div className="inner-button">Go</div>
+            </MainButton>
+          </div>
         </div>
       </div>
       <style jsx>{`
+        .container {
+          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
         .main {
           display: flex;
-          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
           justify-content: center;
-          padding: 24px;
-          height: calc(100vh - 48px);
+          padding: 12px;
+          height: calc(100vh - 24px);
+          max-width: 1400px;
+          max-height: 800px;
         }
         .left {
-          width: 20%;
+          width: 15%;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           justify-content: space-between;
         }
+        .my-info {
+          margin-bottom: 4px;
+        }
         .center {
-          width: 60%;
+          width: 70%;
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
         }
         .right {
-          width: 20%;
+          width: 15%;
           display: flex;
           flex-direction: column;
           align-items: end;
@@ -309,11 +329,35 @@ export const PlayPage = () => {
         .inner-button {
           width: 3em;
           height: 1.5em;
-          font-size: 30px;
+          font-size: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
           text-transform: none;
+        }
+
+        @media screen and (min-width: 900px) {
+          .main {
+            padding: 36px;
+            height: calc(100vh - 72px);
+          }
+          .my-info {
+            margin-bottom: 16px;
+          }
+          .inner-button {
+            font-size: 40px;
+          }
+        }
+
+        @media screen and (min-width: 1350px) {
+          .main {
+            padding: 48px;
+            height: calc(100vh - 96px);
+          }
+
+          .my-info {
+            margin-bottom: 32px;
+          }
         }
       `}</style>
     </>
