@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArwesThemeProvider, LoadingBars } from '@arwes/core';
+import { useDeviceType } from 'libs/store/MediaQuery';
 interface HPBarProps {
   hp: number;
   color: string;
@@ -7,6 +8,7 @@ interface HPBarProps {
 
 export const HPBar: React.FC<HPBarProps> = (props) => {
   const { hp, color } = props;
+  const { isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
 
   const themeSettings = {
     palette: {
@@ -27,6 +29,7 @@ export const HPBar: React.FC<HPBarProps> = (props) => {
           animator={{ animate: false }}
           progress={hpPercentage}
           determinate
+          size={isSmartPhone ? 0.8 : isLaptopOrTablet ? 1.2 : isBigScreen ? 1.4 : 1}
         ></LoadingBars>
       </ArwesThemeProvider>
     </>

@@ -1,11 +1,17 @@
 import { io, Socket } from 'socket.io-client';
 import { CardType } from '../types/Card';
 import { PlayerType } from '../types/Player';
+import { ComboType } from '../types/Combo';
 
 interface ServerToClientEvents {
   successRandomMatching: (game_id: string, user1_id: number, user2_id: number) => void; //FullRoom
-  updateField: (cardsData: Array<CardType>, playersData: Array<PlayerType>) => void; //HPinfo
-  gameStart: (user1: PlayerType, user: PlayerType) => void; // gameStart
+  updateField: (
+    round: number,
+    combo: ComboType | null,
+    cardsData: Array<CardType>,
+    playersData: Array<PlayerType>
+  ) => void; //HPinfo
+  gameStart: (round: number, user1: PlayerType, user2: PlayerType) => void; // gameStart
 }
 
 interface ClientToServerEvents {
@@ -14,7 +20,8 @@ interface ClientToServerEvents {
   readyGameStart: (user: PlayerType) => void; //login
   joinRoom: (game_id: string, opponent_id: number) => void; // roomJoin
   sendCards: (
-    cardsData: Array<CardType>,
+    combo: ComboType | null,
+    cards: Array<CardType>,
     playersData: { [key: string]: PlayerType },
     game_id: string | undefined
   ) => void; //cardValue
@@ -55,24 +62,40 @@ class SocketIo {
     this.socket?.emit('joinRoom', game_id, opponent_id);
   }
 
-  gameStart(callback: (user1: PlayerType, user: PlayerType) => void) {
-    this.socket?.on('gameStart', (user1: PlayerType, user2: PlayerType) => {
-      return callback(user1, user2);
+  gameStart(callback: (round: number, user1: PlayerType, user2: PlayerType) => void) {
+    this.socket?.on('gameStart', (round: number, user1: PlayerType, user2: PlayerType) => {
+      return callback(round, user1, user2);
     });
   }
 
   sendCards(
-    cardsData: Array<CardType>,
+    combo: ComboType | null,
+    cards: Array<CardType>,
     playersData: { [key: string]: PlayerType },
     game_id: string | undefined
   ) {
-    this.socket?.emit('sendCards', cardsData, playersData, game_id);
+    this.socket?.emit('sendCards', combo, cards, playersData, game_id);
   }
 
-  updateField(callback: (cardsData: Array<CardType>, playersData: Array<PlayerType>) => void) {
-    this.socket?.on('updateField', (cardsData: Array<CardType>, playersData: Array<PlayerType>) => {
-      return callback(cardsData, playersData);
-    });
+  updateField(
+    callback: (
+      round: number,
+      combo: ComboType | null,
+      cardsData: Array<CardType>,
+      playersData: Array<PlayerType>
+    ) => void
+  ) {
+    this.socket?.on(
+      'updateField',
+      (
+        round: number,
+        combo: ComboType | null,
+        cardsData: Array<CardType>,
+        playersData: Array<PlayerType>
+      ) => {
+        return callback(round, combo, cardsData, playersData);
+      }
+    );
   }
 }
 

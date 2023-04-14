@@ -3,6 +3,7 @@ import Android from '../../../../assets/Android.png';
 import Apple from '../../../../assets/Apple.png';
 import Linux from '../../../../assets/Linux.png';
 import Windows from '../../../../assets/Windows.png';
+import { useDeviceType } from '../../../../libs/store/MediaQuery';
 
 import Image from 'next/image';
 
@@ -11,6 +12,7 @@ interface FieldInfoProps {
 }
 
 export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
+  const { isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
   const { round } = props;
 
   const decideOS = function (num: number) {
@@ -21,6 +23,9 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
     return Apple;
   };
 
+  const currentFieldSize = isSmartPhone ? 30 : isLaptopOrTablet ? 50 : isBigScreen ? 60 : 40;
+  const nextFieldSize = isSmartPhone ? 20 : isLaptopOrTablet ? 30 : isBigScreen ? 40 : 25;
+
   return (
     <>
       <div className="tern">
@@ -28,9 +33,19 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
           Round<span className="tern-number">{round}</span>
         </div>
         <div className="fields">
-          <Image src={decideOS(round)} alt="current field" width={40} height={40} />
+          <Image
+            src={decideOS(round)}
+            alt="current field"
+            width={currentFieldSize}
+            height={currentFieldSize}
+          />
           <div>&gt;&gt;</div>
-          <Image src={decideOS(round + 1)} alt="next field" width={25} height={25} />
+          <Image
+            src={decideOS(round + 1)}
+            alt="next field"
+            width={nextFieldSize}
+            height={nextFieldSize}
+          />
         </div>
       </div>
       <style jsx>{`
@@ -55,6 +70,17 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
           justify-content: flex-start;
           align-items: center;
           gap: 10px;
+        }
+
+        @media screen and (min-width: 900px) {
+          .tern-text {
+            font-size: 20px;
+            margin-bottom: 12px;
+          }
+
+          .tern-number {
+            font-size: 26px;
+          }
         }
       `}</style>
     </>

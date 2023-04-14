@@ -28,7 +28,7 @@ export const ComboProviders: React.FC<ComboProvidersProps> = (props) => {
     const ableComboIds = Array.from(tmp);
     // 自分が選択しているカードと同じカードを消さないといけない。
     const selectedCardsIds = cards
-      .filter((card) => card.isSelected === true)
+      .filter((card) => card.is_selected === true)
       .map((card) => card.id);
     ableUseCardIds = ableComboIds.filter((id) => !selectedCardsIds.includes(id));
   }

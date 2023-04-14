@@ -1,13 +1,14 @@
 import React, { ReactNode } from 'react';
-import { ArwesThemeProvider, Button, Text } from '@arwes/core';
+import { ArwesThemeProvider, Button } from '@arwes/core';
+import { Animator } from '@arwes/animation';
 
 interface SubButtonProps {
   children: ReactNode;
-  onClick: () => void;
+  handleClick: () => void;
 }
 
 export const SubButton: React.FC<SubButtonProps> = (props) => {
-  const { children, onClick } = props;
+  const { children, handleClick } = props;
 
   const themeSettings = {
     palette: {
@@ -20,9 +21,12 @@ export const SubButton: React.FC<SubButtonProps> = (props) => {
       {/* @ts-ignore */}
       <ArwesThemeProvider themeSettings={themeSettings}>
         {/* @ts-ignore */}
-        <Button onClick={onClick} style={{ width: '130px' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>{children}</div>
-        </Button>
+        <Animator animator={{ animate: false }}>
+          {/* @ts-ignore */}
+          <Button onClick={handleClick}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>{children}</div>
+          </Button>
+        </Animator>
       </ArwesThemeProvider>
     </div>
   );
