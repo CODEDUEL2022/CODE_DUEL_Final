@@ -7,18 +7,19 @@ export const HomePage = () => {
     const canvas = canvasRef.current;
     const canvasContext = canvas.getContext('2d');
     canvas.width = 1000;
-    canvas.height = 1000;
-    const matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789#$%^&*()*&^%'.split('');
+    canvas.height = 600;
 
-    const fontSize = 20;
+    const matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789#$%^&*()*&^%'.split('');
+    const fontSize = 16;
     const columns = canvas.width / fontSize;
+
     const drops = [];
     for (let i = 0; i < columns; i++) {
       drops[i] = 1;
     }
 
     function draw() {
-      canvasContext.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      canvasContext.fillStyle = 'rgb(20, 44, 51, 10%)';
       canvasContext.fillRect(0, 0, 1000, 1000);
       canvasContext.fillStyle = '#0F0';
       canvasContext.font = fontSize + 'px arial';
@@ -33,13 +34,13 @@ export const HomePage = () => {
       }
     }
 
-    const interval = setInterval(draw, 35);
-
+    const interval = setInterval(draw, 40);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <>
+      <canvas ref={canvasRef} className="canvas" />
       <div className="container">
         <div className="titles">
           <div className="subtitle">programming card battle</div>
@@ -50,13 +51,20 @@ export const HomePage = () => {
             &gt; TAP to PLAY
           </a>
         </div>
-        <canvas ref={canvasRef} />
       </div>
       <style jsx>{`
+        .canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+        }
         .container {
-          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
+          position: relative;
           height: 100svh;
           width: 100%;
+          z-index: 100;
           .titles {
             text-align: center;
             height: 50%;
