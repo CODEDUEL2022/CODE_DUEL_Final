@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export const HomePage = () => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const canvasContext = canvas.getContext('2d');
+    canvas.width = 1000;
+    canvas.height = 1000;
+    const matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789#$%^&*()*&^%'.split('');
+
+    const fontSize = 20;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+      drops[i] = 1;
+    }
+
+    function draw() {
+      canvasContext.fillStyle = 'rgba(0, 0, 0, 0.04)';
+      canvasContext.fillRect(0, 0, 1000, 1000);
+      canvasContext.fillStyle = '#0F0';
+      canvasContext.font = fontSize + 'px arial';
+
+      for (let i = 0; i < columns; i++) {
+        let text = matrix[Math.floor(Math.random() * matrix.length)];
+        canvasContext.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    const interval = setInterval(draw, 35);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <div className="container">
@@ -13,6 +50,7 @@ export const HomePage = () => {
             &gt; TAP to PLAY
           </a>
         </div>
+        <canvas ref={canvasRef} />
       </div>
       <style jsx>{`
         .container {
@@ -21,7 +59,7 @@ export const HomePage = () => {
           width: 100%;
           .titles {
             text-align: center;
-            height: 60%;
+            height: 50%;
             .subtitle {
               color: #fff;
               font-size: 1.5cqw;
@@ -42,7 +80,7 @@ export const HomePage = () => {
             }
           }
           .auth {
-            height: 40%;
+            height: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
