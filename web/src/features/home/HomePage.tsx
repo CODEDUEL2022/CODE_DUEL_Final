@@ -5,7 +5,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     // マトリックスみたいなコードシェーダーを降らす 参考:https://on-ze.com/archives/6987
-    const canvas = canvasRef.current;
+    const canvas: any = canvasRef.current;
     const canvasContext = canvas.getContext('2d');
     canvas.width = 1000;
     canvas.height = 600;
@@ -14,7 +14,7 @@ export const HomePage = () => {
     const fontSize = 16;
     const columns = canvas.width / fontSize;
 
-    const drops = [];
+    const drops = [] as number[];
     for (let i = 0; i < columns; i++) {
       drops[i] = 1;
     }
