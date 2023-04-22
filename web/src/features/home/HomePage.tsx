@@ -7,11 +7,11 @@ export const HomePage = () => {
     // マトリックスみたいなコードシェーダーを降らす 参考:https://on-ze.com/archives/6987
     const canvas: any = canvasRef.current;
     const canvasContext = canvas.getContext('2d');
-    canvas.width = 1000;
-    canvas.height = 600;
+    canvas.width = 600;
+    canvas.height = 400;
 
     const matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789#$%^&*()*&^%'.split('');
-    const fontSize = 16;
+    const fontSize = 14;
     const columns = canvas.width / fontSize;
 
     const drops = [] as number[];
@@ -22,9 +22,9 @@ export const HomePage = () => {
     const draw = function () {
       // 背景の設定
       canvasContext.fillStyle = 'rgb(3, 40, 56, 15%)';
-      canvasContext.fillRect(0, 0, 1000, 600);
+      canvasContext.fillRect(0, 0, 600, 400);
       // テキストの設定
-      canvasContext.fillStyle = '#48e148';
+      canvasContext.fillStyle = '#189589';
       canvasContext.font = fontSize + 'px arial';
 
       for (let i = 0; i < columns; i++) {
@@ -43,7 +43,7 @@ export const HomePage = () => {
     };
 
     // setintervalで定期的にdraw()が実行され、文字の塗りつぶし、描画がされる
-    const interval = setInterval(draw, 48);
+    const interval = setInterval(draw, 52);
     return () => clearInterval(interval);
   }, []);
 
@@ -78,23 +78,27 @@ export const HomePage = () => {
             background: linear-gradient(180deg, rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.1));
             text-align: center;
             height: 50%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-evenly;
             .subtitle {
               color: #fff;
-              font-size: 1.5cqw;
+              font-size: 1.8cqw;
               font-weight: 100;
-              letter-spacing: 0.1cqw;
+              letter-spacing: 0.2cqw;
               font-family: Gill Sans, sans-serif;
-              padding-top: 8%;
-              padding-bottom: 4%;
               text-shadow: 0 0 5px #d3fffd;
+              transform: scale(0.9, 1);
             }
             .title {
               color: #fff;
-              font-size: 5cqw;
-              letter-spacing: 1cqw;
+              font-size: 5.5cqw;
+              letter-spacing: 0.9cqw;
               font-weight: 100;
               font-family: Gill Sans, sans-serif;
               text-shadow: 0 0 10px #d3fffd;
+              transform: scale(0.9, 1);
             }
           }
           .auth {
@@ -105,12 +109,13 @@ export const HomePage = () => {
             .signin {
               color: #fff;
               font-size: 2.5cqw;
-              letter-spacing: 0.3cqw;
+              letter-spacing: 0.4cqw;
               text-decoration: none;
               font-weight: 100;
               font-family: Gill Sans, sans-serif;
               text-shadow: 0 0 5px #d3fffd;
               transition: all 0.4s;
+              transform: scale(0.9, 1);
             }
             .signin:hover {
               text-shadow: 0 0 20px #d3fffd;
