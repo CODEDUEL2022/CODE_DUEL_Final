@@ -33,6 +33,7 @@
     "eslint-config-next": "13.1.1",
     "howler": "^2.2.3",
     "hygen": "^6.2.11",
+    "immer": "^10.0.2",
     "next": "13.1.1",
     "polished": "4",
     "react": "18.2.0",
