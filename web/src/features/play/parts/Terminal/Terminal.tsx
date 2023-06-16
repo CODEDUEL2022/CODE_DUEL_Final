@@ -12,12 +12,12 @@ export const Terminal: React.FC<TerminalProps> = (props) => {
     <>
       <div className="container">
         {combos.map((combo) => (
-          <>
+          <div key={combo.id}>
             <div>&gt; action : {combo.name}</div>
             <div>
               &gt; combo : &#91;
-              {combo.combo.map((num) => (
-                <span>
+              {combo.combo.map((num, index) => (
+                <span key={index}>
                   {num}
                   &#044;
                 </span>
@@ -25,7 +25,7 @@ export const Terminal: React.FC<TerminalProps> = (props) => {
               &#93;
             </div>
             <br />
-          </>
+          </div>
         ))}
       </div>
       <style jsx>{`
