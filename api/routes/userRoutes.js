@@ -20,14 +20,11 @@ router.get("/login", function(req, res){
 router.get("/create_user", function(req, res, next){
     userController.createUser(req,res)
 });
-router.post("/get_user_info", function(req, res){
+router.get("/get_user_info", function(req, res){
     userController.getUserInfo(req,res)
 });
 router.post("/delete_user", function(req, res){
     userController.deleteUser(req,res)
 });
-router.get("/test/user/create", function(req, res){
-    userController.testUserCreate(req,res)
-    console.log("userController.testUser")
-})
+
 module.exports = router;

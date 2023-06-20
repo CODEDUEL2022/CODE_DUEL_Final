@@ -1,5 +1,5 @@
 /*
-現在このファイルは使用していない
+ERR: 現在このファイルは使用していない
 */
 const cookieParser = require("cookie-parser");
 const express = require("express");
