@@ -12,17 +12,23 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
+      value: {
+        type: Sequelize.INTEGER,
+      },
+      type: {
+        type: Sequelize.STRING,
+      },
       cost: {
         type: Sequelize.INTEGER,
       },
-      OsId: {
+      osId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "Os",
-            key: "id",
-          },
-        },
+        // references: {
+        //   model: {
+        //     tableName: "Os",
+        //     key: "id",
+        //   },
+        // },
       },
       filePath: {
         type: Sequelize.STRING,

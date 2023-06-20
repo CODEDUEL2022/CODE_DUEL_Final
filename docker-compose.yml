@@ -62,7 +62,6 @@ services:
 
     # 起動後に実行するコマンドを指定
     command: npm run dev
-
     networks:
       - backend
 
