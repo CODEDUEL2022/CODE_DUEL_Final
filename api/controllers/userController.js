@@ -55,11 +55,11 @@ module.exports = {
   },
   login: async (req, res) => {
     try {
-      const user_name = req.body.user.name;
+      const user_name = req.cookies.name;
       let user_id = 0;
       let user_level = 0;
       let user_exp = 0;
-      const is_success = await db.User.findOne({
+      await db.User.findOne({
         where: {
           name: user_name,
         },
@@ -68,13 +68,13 @@ module.exports = {
       });
       await db.Level.findOne({
         where: {
-          user_id: user_id,
+          UserId: user_id,
         },
       }).then((user) => {
         user_level = user.level;
         user_exp = user.exp;
       });
-      const result = [is_success, user_id, user_level, user_exp];
+      const result = [user_id, user_name, user_level, user_exp];
       res.send(result);
     } catch (err) {
       res.status(500).send(err);
@@ -84,23 +84,40 @@ module.exports = {
     try {
       const user_id = req.cookies.id;
       const user_name = req.cookies.name;
-      const count = 0;
-      db.User.count({
+      let count = 0;
+      let user_level = 0;
+      let user_exp = 0;
+      let user_primary_id = 0;
+      await db.User.count({
         where: {
           name: user_name,
         },
       }).then((dataCount) => {
-        dataCount = count;
-        res.send(dataCount);
+        console.log("dataCount: ",dataCount)
+        count = dataCount;
       });
+
       if (count > 0) {
-        res.send("既に同じ名前のユーザーが存在します");
-        this.login(req, res);
+        console.log("既にユーザー作成済み");
+        res.send("already exists");
       } else {
-        const result = db.User.create({
+        await db.User.create({
           name: user_name,
           uuid: user_id,
         });
+        await db.User.findOne({
+          where: {
+            name: user_name,
+          },
+        }).then((user) => {
+          user_primary_id = user.id;
+        });
+        await db.Level.create({
+          UserId: user_primary_id,
+          level: 0,
+          exp: 0
+        })
+        const result = [user_id, user_name, user_level, user_exp]
         res.send(result);
       }
     } catch (err) {

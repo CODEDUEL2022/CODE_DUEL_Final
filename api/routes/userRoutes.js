@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const userController = require("../controllers/userController");
-const isAuthenticated = require("../authentication");
+
 router.get("/", function(req, res){
     userController.read(req,res)
 });
@@ -14,12 +14,11 @@ router.delete("/:id/delete", function(req, res){
     userController.delete(req,res)
 });
 
-router.post("/login", function(req, res){
+router.get("/login", function(req, res){
     userController.login(req,res)
 });
 router.get("/create_user", function(req, res, next){
-    console.log(req.cookies)
-    //userController.createUser(req,res)
+    userController.createUser(req,res)
 });
 router.post("/get_user_info", function(req, res){
     userController.getUserInfo(req,res)

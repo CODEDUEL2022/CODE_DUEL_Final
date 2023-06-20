@@ -8,37 +8,29 @@ module.exports = function (app) {
     app.use(session({
         secret: secret,
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: { secure: true }
     }));
     app.use(passport.initialize());
     app.use(passport.session());
+
+    passport.use(new GoogleStrategy({
+        clientID: process.env.CLIANT_ID,
+        clientSecret: process.env.CLIANT_SECRET,
+        callbackURL: "http://localhost:3000/auth/google/callback"
+    }, function(request, accessToken, refreshToken, profile, done){
+            console.log("プロファイル情報",profile);
+            return done(null, { id:profile.id, name:profile.displayName });
+        }
+    ));
+
     passport.serializeUser(function (user, done) {
-        //ここにログイン処理を書くべきか否か
-        //フロントでuserの情報を取得出来るなら、フロントでやった方が絶対に良い
-        //呼ぶべきはcreateUser
         done(null, { id: user.id, name: user.name });
     });
 
     passport.deserializeUser(function (user, done) {
-        try {
-            console.log(user)
-        //   const userInfo = userController.findUser(user.id)
-            done(null, { id: user.id, name: user.name });
-        } catch (error) {
-          done(error, null);
-        }
+        done(null, user);
     });
 
-    passport.use(new GoogleStrategy({
-            clientID: process.env.CLIANT_ID,
-            clientSecret: process.env.CLIANT_SECRET,
-            callbackURL: "http://localhost:3000/auth/google/callback"
-        }, function(accessToken, refreshToken, profile, done){
-            if(profile){
-                return done(null, { id:profile.id, name:profile.displayName });
-            }else{
-                return done(null, null);
-            }
-        }
-    ));
+    
 };

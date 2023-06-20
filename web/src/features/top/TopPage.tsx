@@ -10,17 +10,26 @@ export const TopPage = () => {
   const { setGameId } = useContext(GameIdContext);
 
   useEffect(() => {
-    // TODO: ログイン時、バックから取得する
+    let user_id = 0;
+    let user_name = "";
     axios
       .get('http://localhost:3000/api/user/create_user', { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        //既にアカウント作成済みの場合
+        if (res.data == "already exists"){
+          axios.get('http://localhost:3000/api/user/login', { withCredentials: true })
+          .then((res) => {
+            user_id = res.data[0] //userのid情報
+            user_name = res.data[1] //userの名前情報
+          })
+        }
+        user_id = res.data[0] //userのid情報
+        user_name = res.data[1] //userの名前情報
       })
       .catch((err) => console.log(err));
-    const user_id = Math.floor(Math.random() * 100000);
     const user = {
       id: user_id,
-      name: 'yusaku',
+      name: user_name,
     };
     const dec = 2;
 
