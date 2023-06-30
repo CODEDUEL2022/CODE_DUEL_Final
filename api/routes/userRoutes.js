@@ -13,12 +13,8 @@ router.put("/:id", function(req, res){
 router.delete("/:id/delete", function(req, res){
     userController.delete(req,res)
 });
-
-router.get("/login", function(req, res){
-    userController.login(req,res)
-});
-router.get("/create_user", function(req, res, next){
-    userController.createUser(req,res)
+router.get("/user_login", function(req, res){
+    userController.userLogin(req,res)
 });
 router.get("/get_user_info", function(req, res){
     userController.getUserInfo(req,res)
