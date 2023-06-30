@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import Socket from '../../libs/socket/Socket';
 import { CardType } from '../../libs/types/Card';
 import { PlayerType } from '../../libs/types/Player';
@@ -144,7 +144,7 @@ export const PlayPage = () => {
   const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
   const [roundCount, setRoundCount] = useState<number>(0);
 
-  const selectCard = function (id: number) {
+  const selectCard = useCallback(function (id: number) {
     judgeIsAbleSend();
     const updatedMyCards = myCards.map((card) => {
       if (card.id === id) {
@@ -154,7 +154,7 @@ export const PlayPage = () => {
       return card;
     });
     setMyCards(updatedMyCards);
-  };
+  }, []);
 
   const judgeIsAbleSend = function () {
     if (!playersData['myData'].turn) return false;

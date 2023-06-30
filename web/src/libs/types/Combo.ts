@@ -1,4 +1,5 @@
 export interface ComboType {
+  id: number;
   name: string;
   combo: Array<number>;
   names: Array<string>;

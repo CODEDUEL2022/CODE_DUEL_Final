@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import { CardType } from '../../../libs/types/Card';
 import Image from 'next/image';
 import { useDeviceType } from 'libs/store/MediaQuery';
@@ -9,7 +9,7 @@ interface CardProps {
   onClick: (id: number) => void;
 }
 
-export const FieldCard: React.FC<CardProps> = (props) => {
+export const FieldCard: React.FC<CardProps> = memo((props) => {
   const { card, isActive, onClick } = props;
   const { isMiniPhone, isSmartPhone, isLaptopOrTablet, isBigScreen } = useDeviceType();
 
@@ -63,4 +63,4 @@ export const FieldCard: React.FC<CardProps> = (props) => {
       `}</style>
     </>
   );
-};
+});
