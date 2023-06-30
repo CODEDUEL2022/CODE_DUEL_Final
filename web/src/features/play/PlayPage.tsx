@@ -1,18 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import Socket from '../../libs/socket/Socket';
-
 import { CardType } from '../../libs/types/Card';
 import { PlayerType } from '../../libs/types/Player';
-
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
-
 import { ModalHeaders } from './templates/ModalHeaders';
 import { PlayerStatus } from './templates/PlayerStatus/PlayerStatus';
 import { MainButton } from '../../components/parts/Button/MainButton';
 import { FieldInfo } from './parts/FieldInfo/FieldInfo';
 import { ComboProviders } from './providers/ComboProviders';
 import { Animation } from './parts/Animation/Animation';
+import { produce } from 'immer';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
@@ -146,7 +144,7 @@ export const PlayPage = () => {
   const [myCards, setMyCards] = useState<Array<CardType>>(sampleCards);
   const [roundCount, setRoundCount] = useState<number>(0);
 
-  const selectCard = function (id: number) {
+  const selectCard = useCallback(function (id: number) {
     judgeIsAbleSend();
     const updatedMyCards = myCards.map((card) => {
       if (card.id === id) {
@@ -156,7 +154,7 @@ export const PlayPage = () => {
       return card;
     });
     setMyCards(updatedMyCards);
-  };
+  }, []);
 
   const judgeIsAbleSend = function () {
     if (!playersData['myData'].turn) return false;
@@ -195,10 +193,20 @@ export const PlayPage = () => {
     setRoundCount(round);
     // socketから送られてきたplayersの情報をセット。
     if (userInfo?.id === user1.id) {
-      setPlayersData((players) => ({ ...players, myData: user1, opponentsData: user2 }));
+      setPlayersData(
+        produce((draft) => {
+          draft.myData = user1;
+          draft.opponentsData = user2;
+        })
+      );
     }
     if (userInfo?.id === user2.id) {
-      setPlayersData((players) => ({ ...players, myData: user2, opponentsData: user1 }));
+      setPlayersData(
+        produce((draft) => {
+          draft.myData = user2;
+          draft.opponentsData = user1;
+        })
+      );
     }
   });
 
@@ -241,18 +249,20 @@ export const PlayPage = () => {
       setTimeout(() => {
         setIsAnimation(false);
         if (updatedPlayersData[0].id === userInfo?.id) {
-          return setPlayersData((players) => ({
-            ...players,
-            myData: updatedPlayersData[0],
-            opponentsData: updatedPlayersData[1],
-          }));
+          return setPlayersData(
+            produce((draft) => {
+              draft.myData = updatedPlayersData[0];
+              draft.opponentsData = updatedPlayersData[1];
+            })
+          );
         }
 
-        setPlayersData((players) => ({
-          ...players,
-          myData: updatedPlayersData[1],
-          opponentsData: updatedPlayersData[0],
-        }));
+        setPlayersData(
+          produce((draft) => {
+            draft.myData = updatedPlayersData[1];
+            draft.opponentsData = updatedPlayersData[0];
+          })
+        );
       }, 2000);
     });
   }, []);

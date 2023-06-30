@@ -10,21 +10,25 @@ export const TopPage = () => {
   const { setGameId } = useContext(GameIdContext);
 
   useEffect(() => {
-    // TODO: ログイン時、バックから取得する
+    //COMMENT: 初期化
+    let user_id;
+    let user_name;
+    let user;
     axios
-      .get('http://localhost:3000/api/user/create_user', { withCredentials: true })
-      .then((res) => {
-        console.log(res);
-      })
+      .get('http://localhost:3000/api/user/user_login', { withCredentials: true })
+        .then((res) => {
+          console.log(res.data)
+          user_id = res.data.id
+          user_name = res.data.name
+          user = {
+            id: user_id,
+            name: user_name,
+          };
+          setUserInfo(user);
+        })
       .catch((err) => console.log(err));
-    const user_id = Math.floor(Math.random() * 100000);
-    const user = {
-      id: user_id,
-      name: 'yusaku',
-    };
+    
     const dec = 2;
-
-    setUserInfo(user);
   }, []);
 
   const router = useRouter();
@@ -41,11 +45,26 @@ export const TopPage = () => {
     router.push('/play');
   };
 
+  const testButton = () => {
+    //COMMENT: 機能テスト用関数
+    axios
+      .post('http://localhost:3000/api/match/after/send_result',{
+        result: 1
+      }, { 
+        withCredentials: true 
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div>
       ホームです
       <button onClick={startAutoMatching}>オートマッチング</button>
       <button onClick={startCustomMatch}>カスタムマッチ</button>
+      <button onClick={testButton}>機能テストボタン</button>
     </div>
   );
 };

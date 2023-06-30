@@ -53,54 +53,73 @@ module.exports = {
       res.status(500).send(err);
     }
   },
-  login: async (req, res) => {
+  userLogin: async (req, res) => {
     try {
-      const user_name = req.body.user.name;
-      let user_id = 0;
-      let user_level = 0;
-      let user_exp = 0;
-      const is_success = await db.User.findOne({
-        where: {
-          name: user_name,
-        },
-      }).then((user) => {
-        user_id = user.id;
-      });
-      await db.Level.findOne({
-        where: {
-          user_id: user_id,
-        },
-      }).then((user) => {
-        user_level = user.level;
-        user_exp = user.exp;
-      });
-      const result = [is_success, user_id, user_level, user_exp];
-      res.send(result);
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  },
-  createUser: async (req, res) => {
-    try {
+      //COMMENT: 初期化
       const user_id = req.cookies.id;
       const user_name = req.cookies.name;
-      const count = 0;
-      db.User.count({
+      let count = 0;
+      let user_level = 0;
+      let user_exp = 0;
+      let user_primary_id = 0;
+
+      await db.User.count({
         where: {
-          name: user_name,
+          uuid: user_id,
         },
       }).then((dataCount) => {
-        dataCount = count;
-        res.send(dataCount);
+        console.log("dataCount: ",dataCount)
+        count = dataCount;
       });
       if (count > 0) {
-        res.send("既に同じ名前のユーザーが存在します");
-        this.login(req, res);
+        // ユーザーの情報をバックエンドから取得する。
+        await db.User.findOne({
+          where: {
+            name: user_name
+          },
+        }).then((user) => {
+          user_primary_id = user.id;
+        });
+        await db.Level.findOne({
+          where: {
+            UserId: user_primary_id,
+          },
+        }).then((user) => {
+          user_level = user.level;
+          user_exp = user.exp;
+        });
+        const result = {
+          id: user_primary_id,
+          name: user_name,
+          level: user_level,
+          exp: user_exp,
+        }
+        res.send(result);
+
       } else {
-        const result = db.User.create({
+        //ユーザーの情報をバックエンドに登録
+        await db.User.create({
           name: user_name,
           uuid: user_id,
         });
+        await db.User.findOne({
+          where: {
+            name: user_name,
+          },
+        }).then((user) => {
+          user_primary_id = user.id;
+        });
+        await db.Level.create({
+          UserId: user_primary_id,
+          level: 0,
+          exp: 0
+        })
+        const result = {
+          id: user_id,
+          name: user_name,
+          level: user_level,
+          exp: user_exp,
+        }
         res.send(result);
       }
     } catch (err) {
@@ -111,32 +130,35 @@ module.exports = {
 
   getUserInfo: async (req, res) => {
     try {
-      const user_name = req.body.user.name;
-      let user_id = 0;
+      //COMMENT: 初期化
+      const user_id = req.cookies.id;
+      let user_primary_id = 0;
       let user_exp = 0;
       let user_level = 0;
 
-      const is_success = await db.User.findOne({
+      await db.User.findOne({
         where: {
-          name: user_name,
+          uuid: user_id
         },
       }).then((user) => {
-        user_id = user.id;
+        user_primary_id = user.id;
       });
       await db.Level.findOne({
         where: {
-          id: user_id,
+          UserId: user_primary_id,
         },
       }).then((user) => {
         user_exp = user.exp;
         user_level = user.level;
       });
+
       const result = [user_id, [user_exp, user_level]];
       res.send(result);
     } catch (err) {
       res.status(500).send(err);
     }
   },
+
   deleteUser: async (req, res) => {
     try {
       await db.User.findOne({
@@ -167,32 +189,12 @@ module.exports = {
       res.status(500).send(err);
     }
   },
-  testUserCreate: async (req, res) => {
-    try {
-      const user_name = "user";
-      const user_password = "password";
-
-      const result = await db.Task.create({
-        name: user_name,
-        password: user_password,
-      });
-
-      res.send(result);
-      const is_success = await db.Task.findOne({
-        where: {
-          name: user_name,
-        },
-      }).then((user) => {
-        console.log(user.id);
-      });
-    } catch (err) {
-      res.status(500).send(err);
-    }
-    // const rows = await db.Task.findAll();
-    // rows.forEach(row => {
-    //     const id = row.id
-    //     const name = row.name
-    //     console.log(`${id}: ${name}`)
-    //  })
-  },
+  /*COMMENT: 使えそうな技術があったのでコメントアウトにて残しておく
+    const rows = await db.Task.findAll();
+    rows.forEach(row => {
+        const id = row.id
+        const name = row.name
+        console.log(`${id}: ${name}`)
+    })
+  */
 };

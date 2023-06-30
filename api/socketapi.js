@@ -1,7 +1,8 @@
 // 参考: https://stackoverflow.com/questions/24609991/using-socket-io-in-express-4-and-express-generators-bin-www
 const io = require("socket.io")({
   cors: {
-    origins: ["http://localhost:8080"],
+    // origins: ["http://localhost:8080"],
+    origins: true,
     credentials: true,
     methods: ["GET", "POST"],
   },
@@ -43,9 +44,11 @@ io.on("connection", function (socket) {
   console.log("connected to socket.io !!!");
 
   socket.on("enterWaitingRoom", (user_id, user_name) => {
-    if (waitingUsers.find((user) => user.id === user_id) !== undefined)
+    console.log(user_name)
+    if (waitingUsers.find((user) => user.id === user_id) !== undefined){
+      console.log("user情報",user)
       return console.log("もういるよ");
-
+    }
     const newUser = { id: user_id, name: user_name, hp: 200, turn: false };
     waitingUsers.push(newUser);
     console.log(`${waitingUsers.length} people are waiting...`);
@@ -116,9 +119,7 @@ io.on("connection", function (socket) {
       });
       rooms[game_id].players = updatedPlayersData;
       console.log(rooms);
-      return io
-        .to(game_id)
-        .emit("updateField", rooms[game_id].round, null, cards, updatedPlayersData);
+      return io.to(game_id).emit("updateField", rooms[game_id].round, null, cards, updatedPlayersData);
     }
 
     // コンボの場合の処理

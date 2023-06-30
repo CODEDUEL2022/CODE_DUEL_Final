@@ -1,10 +1,5 @@
 import React from 'react';
-import Android from '../../../../assets/Android.png';
-import Apple from '../../../../assets/Apple.png';
-import Linux from '../../../../assets/Linux.png';
-import Windows from '../../../../assets/Windows.png';
 import { useDeviceType } from '../../../../libs/store/MediaQuery';
-
 import Image from 'next/image';
 
 interface FieldInfoProps {
@@ -16,11 +11,11 @@ export const FieldInfo: React.FC<FieldInfoProps> = (props) => {
   const { round } = props;
 
   const decideOS = function (num: number) {
-    if (num % 4 === 0) return Android;
-    if (num % 4 === 1) return Apple;
-    if (num % 4 === 2) return Linux;
-    if (num % 4 === 3) return Windows;
-    return Apple;
+    if (num % 4 === 0) return '/Android.png';
+    if (num % 4 === 1) return '/Apple.png';
+    if (num % 4 === 2) return '/Linux.png';
+    if (num % 4 === 3) return '/Windows.png';
+    return '/Windows.png';
   };
 
   const currentFieldSize = isSmartPhone ? 30 : isLaptopOrTablet ? 50 : isBigScreen ? 60 : 40;

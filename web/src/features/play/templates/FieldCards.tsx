@@ -15,7 +15,7 @@ export const FieldCards: React.FC<CardProps> = (props) => {
     <>
       <div className="card-container">
         {cards?.map((card) => (
-          <div className="card">
+          <div className="card" key={card.id}>
             <FieldCard
               card={card}
               isActive={ableUseCardIds.some((id) => id === card.id)}
