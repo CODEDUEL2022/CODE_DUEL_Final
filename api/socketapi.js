@@ -44,9 +44,11 @@ io.on("connection", function (socket) {
   console.log("connected to socket.io !!!");
 
   socket.on("enterWaitingRoom", (user_id, user_name) => {
-    if (waitingUsers.find((user) => user.id === user_id) !== undefined)
+    console.log(user_name)
+    if (waitingUsers.find((user) => user.id === user_id) !== undefined){
+      console.log("user情報",user)
       return console.log("もういるよ");
-
+    }
     const newUser = { id: user_id, name: user_name, hp: 200, turn: false };
     waitingUsers.push(newUser);
     console.log(`${waitingUsers.length} people are waiting...`);
@@ -117,9 +119,7 @@ io.on("connection", function (socket) {
       });
       rooms[game_id].players = updatedPlayersData;
       console.log(rooms);
-      return io
-        .to(game_id)
-        .emit("updateField", rooms[game_id].round, null, cards, updatedPlayersData);
+      return io.to(game_id).emit("updateField", rooms[game_id].round, null, cards, updatedPlayersData);
     }
 
     // コンボの場合の処理

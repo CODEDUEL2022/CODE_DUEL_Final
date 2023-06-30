@@ -10,36 +10,25 @@ export const TopPage = () => {
   const { setGameId } = useContext(GameIdContext);
 
   useEffect(() => {
-    let user_id = 0;
-    let user_name = "";
+    //COMMENT: 初期化
+    let user_id;
+    let user_name;
+    let user;
     axios
-      .get('http://localhost:3000/api/user/create_user', { withCredentials: true })
-      .then((res) => {
-        if (res.data == "already exists"){
-          axios.get('http://localhost:3000/api/user/login', { withCredentials: true })
-          .then((res) => {
-            console.log(res.data)
-            user_id = res.data[0] //COMMENT: userのid情報
-            user_name = res.data[1] //COMMENT: userの名前情報
-          })
-        }
-        user_id = res.data[0] //COMMENT: userのid情報
-        user_name = res.data[1] //COMMENT: userの名前情報
-        console.log("情報取得完了")
-        /*
-        COMMENT: ゆってぃーへの無茶ぶり
-        この"情報取得完了"が出るまで、バックが処理をしているんだよね
-        このログが出るまでの間、ローディング画面的なもの作ることってできる？
-        */
-      })
+      .get('http://localhost:3000/api/user/user_login', { withCredentials: true })
+        .then((res) => {
+          console.log(res.data)
+          user_id = res.data.id
+          user_name = res.data.name
+          user = {
+            id: user_id,
+            name: user_name,
+          };
+          setUserInfo(user);
+        })
       .catch((err) => console.log(err));
-    const user = {
-      id: user_id,
-      name: user_name,
-    };
+    
     const dec = 2;
-
-    setUserInfo(user);
   }, []);
 
   const router = useRouter();
