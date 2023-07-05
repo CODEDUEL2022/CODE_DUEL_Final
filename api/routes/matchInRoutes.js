@@ -18,4 +18,8 @@ router.post("/send_attack_info", function(req, res){
     matchInController.sendAttackInfo(req, res)
 });
 
+router.post("/draw_card", function(req, res){
+    matchInController.drawCard(req, res)
+});
+
 module.exports = router;
