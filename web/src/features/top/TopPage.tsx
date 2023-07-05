@@ -48,8 +48,8 @@ export const TopPage = () => {
   const testButton = () => {
     //COMMENT: 機能テスト用関数
     axios
-      .post('http://localhost:3000/api/match/after/send_result',{
-        result: 1
+      .post('http://localhost:3000/api/match/in/draw_card',{
+        card: 2
       }, { 
         withCredentials: true 
       })

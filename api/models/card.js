@@ -9,18 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Card.belongsTo(models.Os, {
-        foreignKey: "OsId",
-        targetKey: "id",
-      });
       Card.belongsToMany(models.Deck, {
         through: "CardDecks",
       });
       Card.belongsToMany(models.Combo, {
         through: "CardCombos",
-      });
-      Card.belongsToMany(models.Type, {
-        through: "CardsTypes",
       });
       Card.belongsToMany(models.Player, {
         through: "Hands",
@@ -30,8 +23,11 @@ module.exports = (sequelize, DataTypes) => {
   Card.init(
     {
       name: DataTypes.STRING,
+      value: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       cost: DataTypes.INTEGER,
-      file_path: DataTypes.STRING,
+      osId: DataTypes.INTEGER,
+      filePath: DataTypes.STRING,
     },
     {
       sequelize,
