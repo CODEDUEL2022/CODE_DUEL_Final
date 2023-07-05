@@ -68,7 +68,6 @@ module.exports = {
             console.log(number_of_cards);
             const result = [];
             for(let i = number_of_cards; i <= 5; i++){
-                //TODO: カード情報をDBからランダムに取得
                 //COMMENT: idが1~57番まで存在
                 const rand_card_id = Math.floor(Math.random() * 57) + 1;
                 await db.Card.findOne({
@@ -89,7 +88,6 @@ module.exports = {
                     result.push(card_info);
                 });
             }
-            //TODO: 引いたカード情報をresultに格納
             res.send(result);
         }catch(err){
             res.status(500).send(err);
