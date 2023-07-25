@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Combo.belongsToMany(models.Card, {
-        through: "CardCombos",
+        through: models.CardCombo,
       });
       Combo.belongsToMany(models.Bonus, {
         through: "ComboBonus",
