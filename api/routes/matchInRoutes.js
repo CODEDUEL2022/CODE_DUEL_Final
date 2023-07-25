@@ -22,4 +22,8 @@ router.post("/draw_card", function(req, res){
     matchInController.drawCard(req, res)
 });
 
+router.post("/send_combo_data", function(req, res){
+    matchInController.sendComboData(req, res);
+});
+
 module.exports = router;
