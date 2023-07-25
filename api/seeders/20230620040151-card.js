@@ -8,7 +8,8 @@ module.exports = {
      *
      * Example:
      * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
+     *
+     * name: 'John Doe',
      *   isBetaMember: false
      * }], {});
      */
@@ -17,6 +18,7 @@ module.exports = {
       "Cards",
       [
         {
+          id: 1,
           name: "actix_web",
           value: 10,
           type: "attack",
@@ -27,6 +29,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 2,
           name: "Angular",
           value: 20,
           type: "attack",
@@ -37,6 +40,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 3,
           name: "ASP.NET Core",
           value: 20,
           type: "attack",
@@ -47,6 +51,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 4,
           name: "Bootstrap",
           value: 10,
           type: "attack",
@@ -57,6 +62,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 5,
           name: "C",
           value: 40,
           type: "attack",
@@ -67,6 +73,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 6,
           name: "C#",
           value: 50,
           type: "attack",
@@ -77,6 +84,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 7,
           name: "C++",
           value: 50,
           type: "attack",
@@ -87,6 +95,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 8,
           name: "cakePHP",
           value: 10,
           type: "attack",
@@ -97,6 +106,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 9,
           name: "cobol",
           value: 10,
           type: "attack",
@@ -107,6 +117,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 10,
           name: "CSS",
           value: 10,
           type: "attack",
@@ -117,6 +128,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 11,
           name: "dart",
           value: 20,
           type: "attack",
@@ -127,6 +139,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 12,
           name: "Django",
           value: 20,
           type: "attack",
@@ -137,6 +150,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 13,
           name: "Echo",
           value: 20,
           type: "attack",
@@ -147,6 +161,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 14,
           name: "Electron",
           value: 20,
           type: "attack",
@@ -157,6 +172,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 15,
           name: "Elixir",
           value: 10,
           type: "attack",
@@ -167,6 +183,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 16,
           name: "FastAPI",
           value: 10,
           type: "attack",
@@ -177,6 +194,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 17,
           name: "Flask",
           value: 10,
           type: "attack",
@@ -187,6 +205,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 18,
           name: "Flutter",
           value: 30,
           type: "attack",
@@ -197,6 +216,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 19,
           name: "Fortran",
           value: 20,
           type: "attack",
@@ -207,6 +227,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 20,
           name: "Gatby",
           value: 10,
           type: "attack",
@@ -217,6 +238,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 21,
           name: "Go",
           value: 40,
           type: "attack",
@@ -227,6 +249,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 22,
           name: "Haskell",
           value: 20,
           type: "attack",
@@ -237,6 +260,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 23,
           name: "HTML",
           value: 10,
           type: "attack",
@@ -247,6 +271,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 24,
           name: "Java",
           value: 50,
           type: "attack",
@@ -257,6 +282,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 25,
           name: "JavaScript",
           value: 10,
           type: "attack",
@@ -267,6 +293,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 26,
           name: "JQuery",
           value: 10,
           type: "attack",
@@ -277,6 +304,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 27,
           name: "Julia",
           value: 20,
           type: "attack",
@@ -287,6 +315,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 28,
           name: "Kotlin",
           value: 20,
           type: "attack",
@@ -297,6 +326,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 29,
           name: "Ktor",
           value: 10,
           type: "attack",
@@ -307,6 +337,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 30,
           name: "Laravel",
           value: 10,
           type: "attack",
@@ -317,6 +348,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 31,
           name: "MaterialUI",
           value: 10,
           type: "attack",
@@ -327,6 +359,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 32,
           name: "matlab",
           value: 20,
           type: "attack",
@@ -337,6 +370,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 33,
           name: "Next.js",
           value: 20,
           type: "attack",
@@ -347,6 +381,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 34,
           name: "Node.js",
           value: 30,
           type: "attack",
@@ -357,6 +392,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 35,
           name: "Nuxt.js",
           value: 20,
           type: "attack",
@@ -367,6 +403,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 36,
           name: "Objective-C",
           value: 30,
           type: "attack",
@@ -377,6 +414,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 37,
           name: "Perl",
           value: 20,
           type: "attack",
@@ -387,6 +425,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 38,
           name: "phoenix",
           value: 10,
           type: "attack",
@@ -397,6 +436,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 39,
           name: "PHP",
           value: 30,
           type: "attack",
@@ -407,6 +447,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 40,
           name: "Python",
           value: 20,
           type: "attack",
@@ -417,6 +458,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 41,
           name: "R",
           value: 20,
           type: "attack",
@@ -427,6 +469,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 42,
           name: "React",
           value: 30,
           type: "attack",
@@ -437,6 +480,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 43,
           name: "Ruby",
           value: 20,
           type: "attack",
@@ -447,6 +491,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 44,
           name: "Rust",
           value: 40,
           type: "attack",
@@ -457,6 +502,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 45,
           name: "Sass",
           value: 10,
           type: "attack",
@@ -467,6 +513,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 46,
           name: "Scala",
           value: 20,
           type: "attack",
@@ -477,6 +524,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 47,
           name: "Scratch",
           value: 20,
           type: "attack",
@@ -487,6 +535,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 48,
           name: "Spring",
           value: 20,
           type: "attack",
@@ -497,6 +546,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 49,
           name: "SQL",
           value: 40,
           type: "attack",
@@ -507,6 +557,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 50,
           name: "Svelte",
           value: 10,
           type: "attack",
@@ -517,6 +568,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 51,
           name: "Swift",
           value: 30,
           type: "attack",
@@ -527,6 +579,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 52,
           name: "SwiftUI",
           value: 10,
           type: "attack",
@@ -537,6 +590,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 53,
           name: "tailwind",
           value: 10,
           type: "attack",
@@ -547,6 +601,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 54,
           name: "tauri",
           value: 20,
           type: "attack",
@@ -557,6 +612,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 55,
           name: "TypeScript",
           value: 20,
           type: "attack",
@@ -567,6 +623,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 56,
           name: "Vue.js",
           value: 20,
           type: "attack",
@@ -577,6 +634,7 @@ module.exports = {
           updatedAt: now,
         },
         {
+          id: 57,
           name: "Vuetify",
           value: 10,
           type: "attack",
