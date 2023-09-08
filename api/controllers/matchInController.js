@@ -100,12 +100,6 @@ module.exports = {
             const combo_name_list = [];
             const card_combo_id_list = [];
             const result = [];
-            /*
-                TODO
-                カードのidを使用して中間テーブルにて全検索
-                該当するコンボidを取得、リストにまとめる
-                その後、まとめてあったid情報をコンボテーブルで検索、取得、送信
-            */
             await db.CardCombo.findAll({
                 where: {
                     CardId: cards_id,
@@ -113,7 +107,7 @@ module.exports = {
             }).then((card) => {
                 card_combo_list.push(card)
             });
-            const combo_id_list = card_combo_list[0].map(item => item.ComboId);
+            const combo_id_list = card_combo_list[0].map(item => item.ComboId); //idのみのリストを取得
             
             for(let i = 0; i < combo_id_list.length; i++) {
                 await db.CardCombo.findAll({
@@ -121,7 +115,7 @@ module.exports = {
                         ComboId: combo_id_list[i]
                     },
                 }).then((item)=>{
-                    card_combo_id_list.push(item.map(item => item.CardId))
+                    card_combo_id_list.push(item.map(item => item.CardId)) //所持しているカードが関係するコンボのidを取得
                 })
             }
 
@@ -131,7 +125,7 @@ module.exports = {
                         id: combo_id_list[i]
                     },
                 }).then((item) => {
-                    combo_name_list.push(item.name)
+                    combo_name_list.push(item.name) //コンボ名を取得
                 })
             }
 
@@ -140,7 +134,7 @@ module.exports = {
                     name: combo_name_list[i],
                     id: card_combo_id_list[i]
                 }
-                result.push(combo_info)
+                result.push(combo_info) //フロント側の要請に合うようなobjectを生成
             }
 
             res.send(result);
