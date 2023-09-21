@@ -298,7 +298,6 @@ export const PlayPage = () => {
       </div>
       <style jsx>{`
         .container {
-          background: linear-gradient(180deg, rgb(2, 5, 8, 100%), rgb(20, 79, 97, 100%));
           display: flex;
           justify-content: center;
           align-items: center;
