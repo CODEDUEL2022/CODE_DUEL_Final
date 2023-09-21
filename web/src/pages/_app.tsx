@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const draw = function () {
       // 背景の設定
-      canvasContext.fillStyle = 'rgb(3, 40, 56, 15%)';
+      canvasContext.fillStyle = 'rgb(3, 40, 56, 30%)';
       canvasContext.fillRect(0, 0, 600, 400);
       // テキストの設定
       canvasContext.fillStyle = '#189589';
@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         文字が一番下までいった場合に、2.5%の確率で文字を降らせている。
         dropsは画面には表示されていないがずっと下まで降っており、確率を満たした場合にリセットされる。
          */
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
           drops[i] = 0;
         }
         drops[i]++;
