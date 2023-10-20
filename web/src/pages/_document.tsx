@@ -11,7 +11,6 @@ export default function Document() {
           color: '#fff',
           fontFamily: 'Gill Sans, sans-serif',
           textShadow: '0 0 5px #d3fffd',
-          transform: 'scale(0.9, 1)',
         }}
       >
         <Main />

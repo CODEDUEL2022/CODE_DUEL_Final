@@ -11,117 +11,14 @@ import { FieldInfo } from './parts/FieldInfo/FieldInfo';
 import { ComboProviders } from './providers/ComboProviders';
 import { Animation } from './parts/Animation/Animation';
 import { produce } from 'immer';
+// TODO：バックから受け取る
+import { sampleCards } from 'libs/mocks/cards';
+import { sampleCombos } from 'libs/mocks/combos';
 
 export const PlayPage = () => {
   const { userInfo } = useContext(UserContext);
   const { gameId } = useContext(GameIdContext);
 
-  // TODO: バックから取得する
-  const sampleCards: Array<CardType> = [
-    {
-      id: 1,
-      name: 'Flutter',
-      cost: 2,
-      enforce_os_id: 1,
-      img_src: '/Flutter.png',
-      is_selected: false,
-      value: 20,
-      action_type: 'attack',
-    },
-    {
-      id: 2,
-      name: 'Go',
-      cost: 2,
-      enforce_os_id: 1,
-      img_src: '/Go.png',
-      is_selected: false,
-      value: 20,
-      action_type: 'attack',
-    },
-    {
-      id: 3,
-      name: 'Next.js',
-      cost: 2,
-      enforce_os_id: 1,
-      img_src: '/next-js.png',
-      is_selected: false,
-      value: 20,
-      action_type: 'attack',
-    },
-    {
-      id: 4,
-      name: 'Socket.io',
-      cost: 2,
-      enforce_os_id: 1,
-      img_src: '/socket-io.png',
-      is_selected: false,
-      value: 20,
-      action_type: 'attack',
-    },
-    {
-      id: 5,
-      name: 'Swift',
-      cost: 2,
-      enforce_os_id: 1,
-      img_src: '/swift.png',
-      is_selected: false,
-      value: 20,
-      action_type: 'attack',
-    },
-    {
-      id: 6,
-      name: 'TypeScript',
-      cost: 2,
-      enforce_os_id: 1,
-      img_src: '/TypeScript.png',
-      is_selected: false,
-      value: 20,
-      action_type: 'attack',
-    },
-  ];
-  // selectedCardsIdに対してuseEffectしてcomboAPI叩く。返ってきた値のモック。
-  const sampleCombo = [
-    {
-      id: 1,
-      name: 'hoge',
-      combo: [1, 2, 3],
-      names: ['vue', 'react', 'angular'],
-      value: 60,
-      action_type: 'attack',
-      enforce_os_id: 3,
-      cost: 4,
-    },
-    {
-      id: 2,
-      name: 'huga',
-      combo: [1, 3],
-      names: ['vue', 'react'],
-      value: 60,
-      action_type: 'attack',
-      enforce_os_id: 3,
-      cost: 4,
-    },
-    {
-      id: 3,
-      name: 'piyo',
-      combo: [1, 4],
-      names: ['vue', 'react'],
-      value: 60,
-      action_type: 'attack',
-      enforce_os_id: 3,
-      cost: 4,
-    },
-    {
-      id: 4,
-      name: 'humu',
-      combo: [1, 4, 8],
-      names: ['vue', 'react', 'angular'],
-      value: 60,
-      action_type: 'attack',
-      enforce_os_id: 3,
-      cost: 4,
-    },
-  ];
   const [playersData, setPlayersData] = useState<{ [key: string]: PlayerType }>({
     myData: {
       id: userInfo?.id,
@@ -165,7 +62,7 @@ export const PlayPage = () => {
     if (selectedCardsIds.length === 0) return false;
     if (selectedCardsIds.length === 1) return true;
 
-    const tmpCombos = sampleCombo.map((combo) => combo.combo);
+    const tmpCombos = sampleCombos.map((combo) => combo.combo);
     const result = tmpCombos.some((combo) => {
       return (
         combo.length === selectedCardsIds.length &&
@@ -222,7 +119,7 @@ export const PlayPage = () => {
 
     const selectedCardsIds = tmpIds.sort((a, b) => a - b); // 降順に並び替え
 
-    const filteredCombos = sampleCombo.filter((combo) => {
+    const filteredCombos = sampleCombos.filter((combo) => {
       return (
         combo.combo.length === selectedCardsIds.length &&
         combo.combo.every((id) => selectedCardsIds.includes(id))
@@ -271,25 +168,21 @@ export const PlayPage = () => {
     <>
       <div className="container">
         <div className="main">
-          <Animation isShow={isAnimation}></Animation>
+          <Animation isShow={isAnimation} />
           <div className="left">
-            <FieldInfo round={roundCount}></FieldInfo>
+            <FieldInfo round={roundCount} />
             <div>
               <div className="my-info">
                 <PlayerStatus playerData={playersData.myData} color="#FAFF00"></PlayerStatus>
               </div>
-              <ModalHeaders></ModalHeaders>
+              <ModalHeaders />
             </div>
           </div>
           <div className="center">
-            <ComboProviders
-              handleClick={selectCard}
-              cards={myCards}
-              combos={sampleCombo}
-            ></ComboProviders>
+            <ComboProviders handleClick={selectCard} cards={myCards} combos={sampleCombos} />
           </div>
           <div className="right">
-            <PlayerStatus playerData={playersData.opponentsData} color="#FF9900"></PlayerStatus>
+            <PlayerStatus playerData={playersData.opponentsData} color="#FF9900" />
             <MainButton handleClick={handleSendCards} able={judgeIsAbleSend()}>
               <div className="inner-button">Go</div>
             </MainButton>
