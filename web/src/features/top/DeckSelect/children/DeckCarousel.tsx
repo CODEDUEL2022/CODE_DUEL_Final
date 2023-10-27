@@ -33,6 +33,7 @@ export const DeckCarousel: React.FC<DeckCarouselProps> = (props) => {
           align-items: center;
           flex-direction: column;
           gap: 4px;
+          width: 500px;
         }
 
         .deck-title {
@@ -47,11 +48,10 @@ export const DeckCarousel: React.FC<DeckCarouselProps> = (props) => {
         .card-wrapper {
           display: grid;
           gap: 16px 8px;
-          justify-content: center;
-          align-items: center;
-          grid-template-columns: repeat(12, 1fr);
+          grid-template-columns: repeat(5, 1fr);
+          border: 1px solid white;
+          padding: 8px;
         }
-
         .deck-description {
           margin: 0;
           font-size: 10px;
