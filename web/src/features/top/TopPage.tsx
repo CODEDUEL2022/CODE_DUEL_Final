@@ -4,6 +4,9 @@ import Socket from '../../libs/socket/Socket';
 import { UserContext } from '../../libs/store/PlayerContext';
 import { GameIdContext } from '../../libs/store/PlayerContext';
 import axios from 'axios';
+import { PlayerInformation } from './PlayerInformation';
+import { PlayButtons } from './PlayButtons';
+import { DeckSelect } from './DeckSelect';
 
 export const TopPage = () => {
   const { setUserInfo } = useContext(UserContext);
@@ -60,11 +63,29 @@ export const TopPage = () => {
   }
 
   return (
-    <div>
-      ホームです
-      <button onClick={startAutoMatching}>オートマッチング</button>
-      <button onClick={startCustomMatch}>カスタムマッチ</button>
-      <button onClick={testButton}>機能テストボタン</button>
+    <>
+    <div className='container'>
+      <DeckSelect />
+      <div className='side-menu'>
+        <PlayerInformation />
+        <PlayButtons />
+      </div>
     </div>
+    <style jsx>{`
+      .container {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        padding: 8px 16px;
+        height: calc(100vh - 16px);
+      }
+      .side-menu {
+        display: flex;
+        flex-direction: column;
+        min-width: 140px;
+        gap: 24px;
+      }
+    `}</style>
+    </>
   );
 };

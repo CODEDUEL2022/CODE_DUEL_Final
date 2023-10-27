@@ -6,12 +6,12 @@ interface PlayerInformationProps {
   rate: number;
 }
 
-export const PlayerInformation: React.FC<PlayerInformationProps> = ({ name, rate }) => {
+export const PlayerInformationPresentation: React.FC<PlayerInformationProps> = ({ name, rate }) => {
   return (
     <>
       <div className="container">
         <div className="name-container">
-          <BsFillPersonFill size="12" />
+          <BsFillPersonFill size={16} />
           <span>{name}</span>
         </div>
         <div className="rate-container">
@@ -32,7 +32,7 @@ export const PlayerInformation: React.FC<PlayerInformationProps> = ({ name, rate
           gap: 2px;
           padding-bottom: 2px;
           border-bottom: solid 1px #00fff2;
-          font-size: 10px;
+          font-size: 12px;
         }
 
         .rate-container {
@@ -40,7 +40,8 @@ export const PlayerInformation: React.FC<PlayerInformationProps> = ({ name, rate
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
-          font-size: 8px;
+          font-size: 12px;
+          padding-top: 2px;
         }
       `}</style>
     </>

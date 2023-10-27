@@ -3,7 +3,7 @@ import { MatchButton } from './children/MatchButton';
 
 interface PlayButtonsProps {}
 
-export const PlayButtons: React.FC<PlayButtonsProps> = (props) => {
+export const PlayButtonsPresentation: React.FC<PlayButtonsProps> = (props) => {
   const {} = props;
 
   return (
@@ -20,7 +20,7 @@ export const PlayButtons: React.FC<PlayButtonsProps> = (props) => {
             flex-direction: column;
             justify-content: center;
             gap: 8px;
-            width: fit-content;
+            width: 100%;
           }
         `}
       </style>

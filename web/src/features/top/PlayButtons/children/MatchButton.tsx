@@ -14,17 +14,17 @@ export const MatchButton: React.FC<MatchButtonProps> = ({ matchType }) => {
       <button className="button">
         {matchType === 'random_match' ? (
           <>
-            <AiOutlineGlobal size={16} />
+            <AiOutlineGlobal size={20} />
             <span className="label">Random match</span>
           </>
         ) : matchType === 'custom_match' ? (
           <>
-            <BsFillPeopleFill size={16} />
+            <BsFillPeopleFill size={20} />
             <span className="label">Custom match</span>
           </>
         ) : (
           <>
-            <BsRobot size={16} />
+            <BsRobot size={20} />
             <span className="label">CPU match</span>
           </>
         )}
@@ -41,6 +41,7 @@ export const MatchButton: React.FC<MatchButtonProps> = ({ matchType }) => {
             color: #fff;
             border: none;
             padding: 4px 8px;
+            width: 100%;
             &:hover {
               background-color: #144f61;
               cursor: pointer;

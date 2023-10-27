@@ -1,16 +1,16 @@
 
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { PlayButtons } from './PlayButtons';
+import { PlayButtonsPresentation } from './PlayButtonsPresentation';
 
 export default {
     title: 'PlayButtons',
-    component: PlayButtons,
-} as ComponentMeta<typeof PlayButtons>
+    component: PlayButtonsPresentation,
+} as ComponentMeta<typeof PlayButtonsPresentation>
 
-const Template: ComponentStory<typeof PlayButtons> = (args) => <PlayButtons {...args} />;
+const Template: ComponentStory<typeof PlayButtonsPresentation> = (args) => <PlayButtonsPresentation {...args} />;
 
-export const Default: ComponentStory<typeof PlayButtons> = Template.bind({});
+export const Default: ComponentStory<typeof PlayButtonsPresentation> = Template.bind({});
 
 Default.args = {
 

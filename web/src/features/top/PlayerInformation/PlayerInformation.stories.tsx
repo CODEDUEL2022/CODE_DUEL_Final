@@ -1,19 +1,19 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { PlayerInformation } from './PlayerInformation';
+import { PlayerInformationPresentation } from './PlayerInformationPresentation';
 
 export default {
   title: 'PlayerInformation',
-  component: PlayerInformation,
-} as ComponentMeta<typeof PlayerInformation>;
+  component: PlayerInformationPresentation,
+} as ComponentMeta<typeof PlayerInformationPresentation>;
 
-const Template: ComponentStory<typeof PlayerInformation> = (args) => (
+const Template: ComponentStory<typeof PlayerInformationPresentation> = (args) => (
   <div style={{ width: '100px' }}>
-    <PlayerInformation {...args} />
+    <PlayerInformationPresentation {...args} />
   </div>
 );
 
-export const Default: ComponentStory<typeof PlayerInformation> = Template.bind({});
+export const Default: ComponentStory<typeof PlayerInformationPresentation> = Template.bind({});
 
 Default.args = {
   name: 'テストユーザー',
