@@ -6,12 +6,13 @@ type MatchType = 'random_match' | 'custom_match' | 'cpu_match';
 
 interface MatchButtonProps {
   matchType: MatchType;
+  handleClick: () => void;
 }
 
-export const MatchButton: React.FC<MatchButtonProps> = ({ matchType }) => {
+export const MatchButton: React.FC<MatchButtonProps> = ({ matchType, handleClick }) => {
   return (
     <>
-      <button className="button">
+      <button className="button" onClick={handleClick}>
         {matchType === 'random_match' ? (
           <>
             <AiOutlineGlobal size={20} />

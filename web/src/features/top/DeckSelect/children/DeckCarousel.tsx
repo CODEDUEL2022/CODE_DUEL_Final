@@ -21,7 +21,7 @@ export const DeckCarousel: React.FC<DeckCarouselProps> = (props) => {
           <span>{name} Deck</span>
         </div>
         <p className="deck-description">{description}</p>
-        <div className="card-wrapper">
+        <div className="cards-wrapper">
           {cards.map((card) => (
             <Image src={card.img_src} width="87" height="100" key={card.id} alt={card.name} />
           ))}
@@ -46,7 +46,7 @@ export const DeckCarousel: React.FC<DeckCarouselProps> = (props) => {
           font-weight: 100;
         }
 
-        .card-wrapper {
+        .cards-wrapper {
           display: grid;
           grid-template-columns: repeat(6, 0fr);
           justify-content: center;

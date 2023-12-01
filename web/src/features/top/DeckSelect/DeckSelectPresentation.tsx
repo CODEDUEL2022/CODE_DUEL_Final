@@ -23,8 +23,7 @@ export const DeckSelectPresentation: React.FC<DeckSelectProps> = (props) => {
       width: 100%;
       height: calc(100% - 32px);
     }
-      `}
-    </style>
+    `}</style>
     </>
   );
 };
