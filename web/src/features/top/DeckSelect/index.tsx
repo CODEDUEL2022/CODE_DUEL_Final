@@ -1,13 +1,9 @@
 import { DeckSelectPresentation } from './DeckSelectPresentation';
 import { sampleCards } from 'libs/mocks/cards';
-import { CardType } from 'libs/types/Card';
+import { DeckType } from 'libs/types/Deck';
+import { useState } from 'react';
 
 export const DeckSelect = () => {
-  type DeckType = {
-    name: string;
-    description: string;
-    cards: Array<CardType>;
-  };
 
   const sampleDecks: Array<DeckType> = [
     {
@@ -27,9 +23,11 @@ export const DeckSelect = () => {
     },
   ];
 
+  const [deck, setDeck] = useState(sampleDecks[0]);
+
   return (
     <>
-      <DeckSelectPresentation cards={sampleCards} name="デッキ名" description="デッキの説明" />
+      <DeckSelectPresentation deck={deck} />
     </>
   );
 };
