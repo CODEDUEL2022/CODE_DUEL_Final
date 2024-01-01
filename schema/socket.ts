@@ -12,6 +12,7 @@ interface ServerToClientEvents {
     playersData: Array<PlayerType>
   ) => void;
   gameStart: (turn: number, user1: PlayerType, user2: PlayerType) => void;
+  gameFinish: (winner: number, loser: number) => void;
 }
 
 interface ClientToServerEvents {
