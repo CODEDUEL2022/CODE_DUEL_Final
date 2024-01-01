@@ -11,22 +11,17 @@ interface ServerToClientEvents {
     cardsData: Array<CardType>,
     playersData: Array<PlayerType>
   ) => void;
-  gameStart: (turn: number, user1: PlayerType, user2: PlayerType) => void;
-  gameFinish: (winner: number, loser: number) => void;
+  startGame: (turn: number, user1: PlayerType, user2: PlayerType) => void;
+  finishGame: (winner: number, loser: number) => void;
 }
 
 interface ClientToServerEvents {
-  enterWaitingRoom: (
-    user_id: number | undefined,
-    user_name: string | undefined
-  ) => void;
-  exitWaitingRoom: (
-    user_id: number | undefined,
-    user_name: string | undefined
-  ) => void;
-  enterPlayingRoom: (user: PlayerType) => void;
+  enterWaitingRoom: (user_id: number, user_name: string) => void;
+  exitWaitingRoom: (user_id: number, user_name: string) => void;
+  enterPlayingRoom: (room_id: number, user: PlayerType) => void;
+  exitPlayingRoom: (room_id: number, user: PlayerType) => void;
   sendCards: (
-    game_id: string | undefined,
+    room_id: number,
     combo: ComboType | null,
     cards: Array<CardType>
   ) => void;
