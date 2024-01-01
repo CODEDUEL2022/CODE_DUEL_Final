@@ -24,8 +24,7 @@ interface ClientToServerEvents {
     user_id: number | undefined,
     user_name: string | undefined
   ) => void;
-  readyGameStart: (user: PlayerType) => void;
-  joinRoom: (game_id: string, opponent_id: number) => void;
+  enterPlayingRoom: (user: PlayerType) => void;
   sendCards: (
     game_id: string | undefined,
     combo: ComboType | null,
