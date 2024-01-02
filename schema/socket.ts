@@ -23,6 +23,7 @@ interface ClientToServerEvents {
   exitPlayingRoom: (room_id: number, user: PlayerType) => void;
   sendCards: (
     room_id: number,
+    user_id: number,
     combo: ComboType | null,
     cards: Array<CardType>
   ) => void;
