@@ -1,0 +1,144 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: CODE_DUEL API
+  description: CODE_DUELのAPI仕様書です。
+  contact:
+    name: CODE_DUEL
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /deck:
+    get:
+      tags:
+        - decks
+      summary: デッキ一覧を取得する
+      description: デッキ一覧を取得する
+      operationId: getDecks
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Deck"
+  /draw:
+    get:
+      tags:
+        - cards
+      summary: カードを引く
+      description: 必要な枚数だけカードを引く
+      operationId: drawCard
+      parameters:
+        - name: count
+          in: query
+          description: 必要なカードの枚数
+          required: true
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/card"
+  /cards:
+    get:
+      tags:
+        - cards
+      summary: カード一覧を取得する
+      description: カード一覧を取得する
+      operationId: getCards
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/cards"
+  /cards/{id}:
+    get:
+      tags:
+        - cards
+      summary: カードを取得する
+      description: カードを取得する
+      operationId: getCard
+      parameters:
+        - name: id
+          in: path
+          description: カードのID
+          required: true
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/card"
+  /combo:
+    get:
+      tags:
+        - combos
+      summary: コンボを取得する
+      description: コンボを取得する
+      operationId: getCombo
+      parameters:
+        - name: cards
+          in: query
+          description: カードのID
+          required: true
+          type: array
+          items:
+            type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/combo"
+
+definitions:
+  Deck:
+    title: Deck
+    type: object
+    properties:
+      name:
+        type: string
+      cards:
+        type: array
+        items:
+          $ref: "#/definitions/card"
+  card:
+    title: card
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: integer
+      type:
+        type: string
+        enum: [attack, heal, absorption]
+      combo:
+        type: array
+  cards:
+    title: cards
+    type: array
+    items:
+      $ref: "#/definitions/card"
+  combo:
+    title: combo
+    type: object
+    properties:
+      name:
+        type: string
+      cards:
+        type: array
+        items:
+          $ref: "#/definitions/card"
+
+tags:
+  - name: cards
+  - name: decks
+  - name: combos
+responses: {}
