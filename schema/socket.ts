@@ -5,14 +5,15 @@ interface ServerToClientEvents {
     user2_id: number
   ) => void;
   updateField: (
-    turn: number,
+    round: number,
+    turn: number, // player id
     os: osType,
     combo: ComboType | null,
     cardsData: Array<CardType>,
     playersData: Array<PlayerType>
   ) => void;
   startGame: (turn: number, user1: PlayerType, user2: PlayerType) => void;
-  finishGame: (winner: number, loser: number) => void;
+  finishGame: (winner: number, loser: number /* player id **/) => void;
 }
 
 interface ClientToServerEvents {
