@@ -5,12 +5,14 @@ interface ServerToClientEvents {
     player2_id: number
   ) => void;
   updateField: (
+    // 攻撃を受けてゲームの情報が更新されたときに呼ばれる
     round: number,
     turn: number, // player id
     os: osType,
     combo: ComboType | null,
     cardsData: Array<CardType>,
-    playersData: Array<PlayerType>
+    myPlayerData: MyPlayerType, // ここでカードのドローを行う。
+    opponentPlayerData: PlayerType
   ) => void;
   startGame: (turn: number, player1: PlayerType, player2: PlayerType) => void;
   finishGame: (winner: number, loser: number /* player id **/) => void;
@@ -32,22 +34,27 @@ interface ClientToServerEvents {
 type attackType = "attack" | "heal" | "absorption";
 type osType = "windows" | "mac" | "linux";
 
-interface ComboType {
+type ComboType = {
   id: number;
   name: string;
   type: attackType;
   value: number;
-}
+};
 
-interface CardType {
+type CardType = {
   id: number;
   name: string;
   type: attackType;
   value: number;
-}
+};
 
-interface PlayerType {
+type PlayerType = {
   id: number;
   name: string;
   hp: number;
-}
+  deck: number;
+};
+// 相手のカードが見えないようにするために、MyPlayerTypeを定義
+type MyPlayerType = PlayerType & {
+  hand: Array<CardType>;
+};

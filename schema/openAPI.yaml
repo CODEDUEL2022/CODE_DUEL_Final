@@ -64,31 +64,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Deck"
-  /draw:
-    get:
-      tags:
-        - cards
-      summary: カードを引く
-      description: 必要な枚数だけカードを引く
-      operationId: drawCard
-      parameters:
-        - name: deck_id
-          in: query
-          description: デッキのID
-          required: true
-          type: number
-        - name: card_count
-          in: query
-          description: 必要なカードの枚数
-          required: true
-          type: number
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/card"
   /cards:
     get:
       tags:
