@@ -6,4 +6,4 @@
 ### 環境構築-db
 1. docker compose up
 2. docker compose exec db bash
-3. pgsql -h localhost -U user
+3. psql -h localhost -U user
