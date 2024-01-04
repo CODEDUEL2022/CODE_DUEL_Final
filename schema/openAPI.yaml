@@ -1,4 +1,4 @@
-swagger: "2.0"
+swagger: "3.0"
 info:
   version: "1.0"
   title: CODE_DUEL API
@@ -12,6 +12,44 @@ consumes:
 produces:
   - application/json
 paths:
+  /signUp:
+    post:
+      tags:
+        - user
+      summary: ユーザー登録
+      description: ユーザーの登録を行う。初回アクセス時のみフロントからリクエストが送られる。
+      operationId: signUp
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: number
+  /signIn:
+    post:
+      tags:
+        - user
+      summary: ユーザーログイン
+      description: ログインを行う。ブラウザにidが保存されている場合にリクエストが送られる。
+      operationId: signIn
+      requestBody:
+        content: application/json
+        schema:
+          type: object
+          properties:
+            user_id:
+              type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: number
+
   /deck:
     get:
       tags:
@@ -34,7 +72,12 @@ paths:
       description: 必要な枚数だけカードを引く
       operationId: drawCard
       parameters:
-        - name: count
+        - name: deck_id
+          in: query
+          description: デッキのID
+          required: true
+          type: number
+        - name: card_count
           in: query
           description: 必要なカードの枚数
           required: true
@@ -119,8 +162,6 @@ definitions:
       type:
         type: string
         enum: [attack, heal, absorption]
-      combo:
-        type: array
   cards:
     title: cards
     type: array
@@ -136,8 +177,14 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/card"
+      type:
+        type: string
+        enum: [attack, heal, absorption]
+      value:
+        type: integer
 
 tags:
+  - name: user
   - name: cards
   - name: decks
   - name: combos
