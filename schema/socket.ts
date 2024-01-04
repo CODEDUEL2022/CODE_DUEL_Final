@@ -5,15 +5,15 @@ interface ServerToClientEvents {
     player2_id: number
   ) => void;
   updateField: (
-    // 攻撃を受けてゲームの情報が更新されたときに呼ばれる
+    // 攻撃を受けてゲームの情報が更新されたときに、ルーム全体に対して呼ばれる
     round: number,
     turn: number, // player id
     os: osType,
     combo: ComboType | null,
     cardsData: Array<CardType>,
-    myPlayerData: MyPlayerType, // ここでカードのドローを行う。
-    opponentPlayerData: PlayerType
+    playersData: Array<PlayerType>
   ) => void;
+  drawCards: (cards: Array<CardType>) => void; // 新しく自分のターンになった時に、自分のターンになった人に対して呼ばれる
   startGame: (turn: number, player1: PlayerType, player2: PlayerType) => void;
   finishGame: (winner: number, loser: number /* player id **/) => void;
 }
@@ -53,8 +53,4 @@ type PlayerType = {
   name: string;
   hp: number;
   deck: number;
-};
-// 相手のカードが見えないようにするために、MyPlayerTypeを定義
-type MyPlayerType = PlayerType & {
-  hand: Array<CardType>;
 };
