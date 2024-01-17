@@ -11,6 +11,16 @@ paths:
       summary: ユーザー登録
       description: ユーザーの登録を行う。初回アクセス時のみフロントからリクエストが送られる。
       operationId: signUp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: number
+                user_name:
+                  type: string
       responses:
         200:
           description: OK
@@ -33,6 +43,8 @@ paths:
               properties:
                 user_id:
                   type: number
+                user_name:
+                  type: string
       responses:
         200:
           description: OK
