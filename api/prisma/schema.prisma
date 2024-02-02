@@ -15,40 +15,10 @@ model User{
   name                    String
 }
 
-model Player{
-  id                      Int   @id @default(autoincrement())
-  name                    String
-  deck_id                 Deck  @relation(fields: [deck], references: [id], name: "player_deck_id")
-  deck                    Int
-  hp                      Int
-  hand                    Int[]
-  game_player1            Game? @relation("game_player1")
-  game_player2            Game? @relation("game_player2")
-  game_winner_player      Game? @relation("game_winner_player")
-  game_loser_player       Game? @relation("game_loser_player")
-  game_turn_player        Game? @relation("game_turn_player")
-  
-}
-
-model Game{
-  uid                     Int     @id @default(autoincrement())
-  game_player1_id         Player  @relation(fields: [player1], references: [id], name: "game_player1")
-  player1                 Int     @unique
-  game_player2_id         Player  @relation(fields: [player2], references: [id], name: "game_player2")
-  player2                 Int     @unique
-  round                   Int
-  game_os_id              Os      @relation(fields: [os], references: [id], name: "game_os_id")
-  os                      Int
-  game_turn_id            Player  @relation(fields: [turn], references: [id], name: "game_turn_player")
-  turn                    Int     @unique
-  game_winner_id          Player  @relation(fields: [winner], references: [id], name: "game_winner_player")
-  winner                  Int     @unique
-  game_loser_id           Player  @relation(fields: [loser], references: [id], name: "game_loser_player")
-  loser                   Int     @unique 
-}
-
 enum CardType{
   ATTACK
+  HEAL
+  ABSORPTION
 }
 
 model Card{
@@ -75,7 +45,6 @@ model CardDeck{
 model Deck{
   id                      Int         @id @default(autoincrement())
   name                    String
-  player_deck_id          Player[]    @relation("player_deck_id")
   card_deck_deck_id       CardDeck[]  @relation("card_deck_deck_id")
 }
 
@@ -92,11 +61,12 @@ model Os{
   name                    String
   path                    String
   card_os_id              Card[]  @relation("card_os_id")
-  game_os_id              Game[]  @relation("game_os_id")
 }
 
 enum ComboType{
   ATTACK
+  HEAL
+  ABSORPTION
 }
 
 model Combo{
