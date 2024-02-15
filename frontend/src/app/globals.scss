@@ -1,0 +1,9 @@
+@use "../styles/colors" as *;
+@use "../styles/typography" as *;
+
+body {
+  background-color: $background;
+
+  color: $white;
+  text-shadow: 0 0 10px #d3fffd;
+}
