@@ -23,7 +23,7 @@ enum CardType{
 
 model Card{
   id                      Int         @id @default(autoincrement())
-  card_os_id              Os          @relation(fields: [os_id], references: [id], name: "card_os_id")
+  card_os_id              OS          @relation(fields: [os_id], references: [id], name: "card_os_id")
   os_id                   Int
   name                    String
   value                   Int
@@ -56,7 +56,7 @@ model CardCombo{
   combo_id                Int
 }
 
-model Os{
+model OS{
   id                      Int     @id @default(autoincrement())
   name                    String
   path                    String
