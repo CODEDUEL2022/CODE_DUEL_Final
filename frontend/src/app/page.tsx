@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { TextInput } from '@/ui/TextInput';
 
 export default function Home() {
   return (
@@ -21,6 +22,10 @@ export default function Home() {
 
       <div>
         <Image src="/next.svg" alt="Next.js Logo" width={180} height={37} priority />
+      </div>
+
+      <div>
+        <TextInput label="Email" placeholder="Enter your email" />
       </div>
 
       <div>
