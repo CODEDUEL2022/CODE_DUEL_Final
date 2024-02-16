@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className={styled.matrix}>
-          {Array.from({ length: 1000 }).map((_, i) => (
+          {Array.from({ length: 100 }).map((_, i) => (
             <div key={i}></div>
           ))}
         </div>
