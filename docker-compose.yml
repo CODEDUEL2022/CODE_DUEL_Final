@@ -14,6 +14,8 @@ services:
     ports:
       - '3000:3000'
       - '5555:5555'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
   db:
     container_name: db
     image: postgres:14.5-bullseye
@@ -23,7 +25,9 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
       - TZ=${TZ}
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./db/init:/docker-entrypoint-initdb.d
     ports:
       - '5432:5432'
+      

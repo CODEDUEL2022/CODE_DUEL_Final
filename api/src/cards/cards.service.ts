@@ -8,7 +8,8 @@ export class CardsService {
         const testValue: GetCardInterface = {
             name: "testCard",
             value: 100,
-            type: 'attack'
+            type: 'ATTACK',
+            path: 'test'
         }
         return new Promise(resolve => {
             resolve(testValue)
@@ -18,7 +19,8 @@ export class CardsService {
         const testValue: GetCardInterface = {
             name: "testCard",
             value: 100,
-            type: 'attack'
+            type: 'ATTACK',
+            path: 'test'
         }
         return new Promise(resolve => {
             resolve([testValue])

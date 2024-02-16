@@ -1,5 +1,6 @@
 export interface GetCardInterface{
     name: string
     value: number
-    type: 'attack' | 'heal' | 'absorption'
+    type: 'ATTACK' | 'HEAL' | 'ABSORPTION'
+    path: string
 }
