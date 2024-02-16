@@ -7,5 +7,10 @@
     "Vuetify",
     "actix",
     "tauri"
+  ],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint"
   ]
 }
