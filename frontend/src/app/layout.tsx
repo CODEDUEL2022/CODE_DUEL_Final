@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import '@/styles/globals.scss';
+import styled from './layout.module.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className={styled.matrix}>
+          {Array.from({ length: 1000 }).map((_, i) => (
+            <div key={i}></div>
+          ))}
+        </div>
+        <main className={styled.main}>{children}</main>
+      </body>
     </html>
   );
 }
