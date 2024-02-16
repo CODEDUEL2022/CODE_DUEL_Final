@@ -1,5 +1,4 @@
-@use "../styles/colors" as *;
-@use "../styles/typography" as *;
+@use '../styles/variable' as *;
 
 body {
   background-color: $background;

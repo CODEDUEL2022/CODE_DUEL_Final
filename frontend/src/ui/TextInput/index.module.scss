@@ -1,5 +1,4 @@
-@use '../../styles/typography' as *;
-@use '../../styles/colors' as *;
+@use '@/styles/variable' as *;
 
 .wrapper {
   display: flex;
