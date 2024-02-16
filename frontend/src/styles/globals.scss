@@ -1,0 +1,6 @@
+@use './variable' as *;
+
+body {
+  background-color: $background;
+  color: $white;
+}
