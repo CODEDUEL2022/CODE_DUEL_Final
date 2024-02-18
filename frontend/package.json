@@ -18,7 +18,7 @@
     "plop": "^4.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "the-new-css-reset": "^1.11.2"
+    "ress": "^5.0.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.16",
