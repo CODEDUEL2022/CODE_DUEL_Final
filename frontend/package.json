@@ -13,6 +13,7 @@
     "plop": "plop"
   },
   "dependencies": {
+    "compass-mixins": "^0.12.12",
     "next": "14.1.0",
     "plop": "^4.0.1",
     "react": "^18",
