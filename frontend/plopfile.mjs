@@ -24,8 +24,8 @@ export default function (
       },
       {
         type: 'add',
-        path: 'src/features/{{pascalCase name}}/index.module.scss',
-        templateFile: 'plop-templates/feature/feature.module.scss.hbs',
+        path: 'src/features/{{pascalCase name}}/presentations/index.module.scss',
+        templateFile: 'plop-templates/feature/presentations/feature.module.scss.hbs',
       },
       {
         type: 'add',

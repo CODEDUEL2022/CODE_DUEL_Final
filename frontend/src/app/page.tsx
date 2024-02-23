@@ -1,9 +1,5 @@
-import Image from 'next/image';
+import { TopPageScreen } from '@/screens/TopPageScreen';
 
 export default function Home() {
-  return (
-    <main>
-      <h1>CODE_DUEL</h1>
-    </main>
-  );
+  return <TopPageScreen />;
 }
