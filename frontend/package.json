@@ -20,8 +20,8 @@
     "plop": "^4.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "swr": "^2.2.5",
-    "the-new-css-reset": "^1.11.2"
+    "ress": "^5.0.2",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
