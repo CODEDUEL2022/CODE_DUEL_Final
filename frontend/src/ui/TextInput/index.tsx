@@ -18,12 +18,15 @@ export const TextInput: React.FC<Props> = ({
   handleChange,
   error,
 }) => {
+  const isError = error !== undefined && error !== '';
+
   return (
     <div className={styled.wrapper}>
       {label && (
         <label
+          htmlFor={placeholder}
           style={{
-            color: error !== undefined ? `${variable.error}` : `${variable.white}`,
+            color: isError ? `${variable.error}` : `${variable.white}`,
           }}
         >
           {label} {required && <span className={styled.required}>(必須)</span>}
@@ -31,15 +34,16 @@ export const TextInput: React.FC<Props> = ({
       )}
       <input
         type="text"
+        id={placeholder}
         placeholder={placeholder}
         className={styled.input}
         required={required}
         value={value}
         onChange={handleChange}
-        aria-invalid={error !== undefined}
-        aria-describedby="error-message"
+        aria-invalid={isError}
+        aria-describedby={isError ? 'error-message' : undefined}
         style={{
-          borderColor: error !== undefined ? `${variable.error}` : `${variable.white}`,
+          borderColor: isError ? `${variable.error}` : `${variable.white}`,
         }}
       />
       {error && (
