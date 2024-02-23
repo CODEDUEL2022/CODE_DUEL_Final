@@ -7,8 +7,8 @@
   font-size: $text-sm;
   width: 180px;
 
-  .label {
-    color: $white;
+  .required {
+    color: $error;
   }
 
   .input {
@@ -32,5 +32,10 @@
     &:focus {
       background-color: $hover;
     }
+  }
+
+  .error {
+    color: $error;
+    font-size: $text-xs;
   }
 }

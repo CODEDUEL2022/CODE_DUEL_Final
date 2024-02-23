@@ -8,7 +8,7 @@ export const TopPageScreen: React.FC = () => {
     <main className={styled.container}>
       <TopTitle />
       <div className={styled.formAndLink}>
-        <TextInput label="name" placeholder="ユーザーネームを入力" />
+        <TextInput label="name" placeholder="ユーザーネームを入力" error="入力して" />
         <TopLink />
       </div>
     </main>
