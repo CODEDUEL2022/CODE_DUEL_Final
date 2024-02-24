@@ -18,7 +18,6 @@ export type SignInBody = {
 };
 
 export type SignUpBody = {
-  user_id?: number;
   user_name?: string;
 };
 

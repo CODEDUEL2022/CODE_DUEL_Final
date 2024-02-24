@@ -17,8 +17,6 @@ paths:
             schema:
               type: object
               properties:
-                user_id:
-                  type: number
                 user_name:
                   type: string
       responses:
