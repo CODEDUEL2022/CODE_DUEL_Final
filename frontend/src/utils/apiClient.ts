@@ -6,7 +6,7 @@ const fetchConfig = {
   next: {
     revalidate: 10, // 10秒間キャッシュ
   },
-  baseURL: 'https://example.com/api',
+  baseURL: 'http://127.0.0.1:4010/',
   throwHttpErrors: true, // throw an error on 4xx/5xx, default is false
 } as any;
 
