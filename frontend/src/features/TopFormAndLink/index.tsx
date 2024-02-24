@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { TopFormAndLinkPresentation } from './presentations/';
 import { useRouter } from 'next/navigation';
+import { apiClient } from '@/utils/apiClient';
 
 type Props = {};
 
@@ -23,7 +24,14 @@ export const TopFormAndLink: React.FC<Props> = (props) => {
       return;
     }
 
-    router.push('/rooms');
+    apiClient.signUp
+      .$post({ body: { user_name: value } })
+      .then(() => {
+        router.push('/rooms');
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   return (
