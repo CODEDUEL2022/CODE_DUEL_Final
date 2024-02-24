@@ -14,6 +14,8 @@
     "orval": "orval --config ./orval.config.ts"
   },
   "dependencies": {
+    "@aspida/axios": "^1.14.0",
+    "@aspida/swr": "^1.14.0",
     "axios": "^1.6.7",
     "compass-mixins": "^0.12.12",
     "next": "14.1.0",
@@ -24,7 +26,6 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
     "@storybook/addon-essentials": "^7.6.16",
     "@storybook/addon-interactions": "^7.6.16",
     "@storybook/addon-links": "^7.6.16",
@@ -41,8 +42,6 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-storybook": "^0.6.15",
-    "msw": "^2.2.1",
-    "orval": "^6.25.0",
     "prettier": "3.2.5",
     "sass": "^1.70.0",
     "storybook": "^7.6.16",
