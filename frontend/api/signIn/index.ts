@@ -9,7 +9,7 @@ export type Methods = {
     resBody: Types.User
 
     reqBody: {
-      user_id?: number | undefined
+      user_id?: string | undefined
       user_name?: string | undefined
     }
   }

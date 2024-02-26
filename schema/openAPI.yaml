@@ -40,7 +40,7 @@ paths:
               type: object
               properties:
                 user_id:
-                  type: number
+                  type: string
                 user_name:
                   type: string
       responses:
@@ -136,7 +136,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         name:
           type: string
     deck:
