@@ -22,7 +22,7 @@ export class DecksService {
             }
         })
 
-        decks.map((i) => {
+        decks.forEach((i) => {
             const deckName = i.card_deck_deck_id.name
             if(!deckName){return;}
             if(!deckIdObject[deckName])deckIdObject[deckName] = [i.card_deck_card_id]
