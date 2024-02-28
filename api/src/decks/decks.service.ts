@@ -29,10 +29,10 @@ export class DecksService {
             else deckIdObject[deckName].push(i.card_deck_card_id)
         })
 
-        for(const i in deckIdObject){
+        for(const key in deckIdObject){
             const deck = {
-                "name": i,
-                "cards": deckIdObject[i]
+                "name": key,
+                "cards": deckIdObject[key]
             }
             result.push(deck)
         }
