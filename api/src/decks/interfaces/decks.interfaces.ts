@@ -1,7 +1,9 @@
+export type cardType = 'ATTACK' | 'HEAL' | 'ABSORPTION'
+
 export interface CardProps{
     name: string
     value: number
-    type: 'ATTACK' | 'HEAL' | 'ABSORPTION'
+    type: cardType
 }
 
 export type DeckIdProps =  Record<string, CardProps[]>
