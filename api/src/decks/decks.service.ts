@@ -7,8 +7,8 @@ const prisma = new PrismaClient({})
 @Injectable()
 export class DecksService {
     async findAll(): Promise<any>{
-        var deckIdObject: DeckIdProps = {} //COMMENT: データの整形を1回でうまくできなかったので、整形途中のものを保存する
-        var result: GetDeckInterface[] = [] // COMMENT: 返り値
+        let deckIdObject: DeckIdProps = {} //COMMENT: データの整形を1回でうまくできなかったので、整形途中のものを保存する
+        let result: GetDeckInterface[] = [] // COMMENT: 返り値
         const decks = await prisma.cardDeck.findMany({
             include: {
                 card_deck_card_id: {
