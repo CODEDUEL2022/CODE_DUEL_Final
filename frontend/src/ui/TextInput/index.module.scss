@@ -5,10 +5,10 @@
   flex-direction: column;
   gap: 8px;
   font-size: $text-sm;
-  width: 180px;
+  width: 200px;
 
-  .label {
-    color: $white;
+  .required {
+    color: $error;
   }
 
   .input {
@@ -32,5 +32,10 @@
     &:focus {
       background-color: $hover;
     }
+  }
+
+  .error {
+    color: $error;
+    font-size: $text-xs;
   }
 }
