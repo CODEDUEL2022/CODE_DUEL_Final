@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { {{pascalCase name}}Presentation } from './presentations';
+import { TopFormAndLinkPresentation } from './presentations';
 
-type T = typeof {{pascalCase name}}Presentation;
+type T = typeof TopFormAndLinkPresentation;
 
 const meta: Meta<T> = {
-  title: 'features/{{pascalCase name}}',
-  component: {{pascalCase name}}Presentation,
+  title: 'features/TopFormAndLink',
+  component: TopFormAndLinkPresentation,
   parameters: {
     layout: 'centered',
   },
