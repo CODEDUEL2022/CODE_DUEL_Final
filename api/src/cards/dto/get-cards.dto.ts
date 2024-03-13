@@ -1,3 +1,3 @@
 export class GetCardsDTO {
-    id: string
+  id: string;
 }
