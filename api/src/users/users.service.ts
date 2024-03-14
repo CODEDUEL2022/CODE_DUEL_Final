@@ -4,7 +4,7 @@ import { User } from './interfaces/user.interfaces';
 // import { v4 as uuidv4 } from 'uuid';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-const prisma = new PrismaClient({});
+const prisma = new PrismaClient();
 @Injectable()
 export class UsersService {
   async createUser(userName: string): Promise<User> {
