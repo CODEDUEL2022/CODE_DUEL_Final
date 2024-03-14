@@ -2,22 +2,18 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './interfaces/user.interfaces';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UUID } from 'crypto';
-@Controller('users')
+@Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post('/signUp')
   async createUser(@Body('user_name') userName: string): Promise<User> {
     return this.usersService.createUser(userName);
   }
 
-  @Post('update')
-  async updateUser(
-    @Body() requestBody: { user_id: UUID; user_name: string },
-  ): Promise<User> {
-    const { user_id, user_name } = requestBody;
-    const updateUserDto: UpdateUserDto = { id: user_id, name: user_name }; // DTOに合わせて変換
+  @Post('/signIn')
+  async updateUser(@Body() updateUserDto: UpdateUserDto): Promise<User> {
+    console.log(updateUserDto);
     return this.usersService.updateUser(updateUserDto);
   }
 }

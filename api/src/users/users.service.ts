@@ -16,10 +16,10 @@ export class UsersService {
   }
 
   async updateUser(updateUserDto: UpdateUserDto): Promise<User> {
+    console.log(updateUserDto);
     const { id, name } = updateUserDto;
-
     const existingUser = await prisma.user.findUnique({
-      where: { id },
+      where: { id: id },
     });
 
     if (!existingUser) {
@@ -28,8 +28,8 @@ export class UsersService {
 
     if (existingUser.name !== name) {
       const updatedUser = await prisma.user.update({
-        where: { id },
-        data: { name },
+        where: { id: id },
+        data: { name: name },
       });
 
       return updatedUser;
