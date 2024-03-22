@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { GetCardInterface } from './interfaces/cards.interfaces';
-import { resolve } from 'path';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient({});

@@ -1,15 +1,12 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { GetDeckInterface } from './interfaces/decks.interfaces';
 import { DecksService } from './decks.service';
-@Controller("/decks")
+@Controller('/decks')
 export class DecksController {
-    constructor(
-        private decksService: DecksService
-    ) {}
+  constructor(private decksService: DecksService) {}
 
-    @Get()
-    async getCardAll(): Promise<GetDeckInterface>{
-        return await this.decksService.findAll()
-    }
-    
+  @Get()
+  async getCardAll(): Promise<GetDeckInterface> {
+    return await this.decksService.findAll();
+  }
 }
