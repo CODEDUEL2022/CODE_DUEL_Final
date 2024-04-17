@@ -10,9 +10,10 @@ type Props = {
   disabled?: boolean;
 };
 
-export const IconButton: React.FC<Props> = ({ icon: Icon, handleClick, text }) => {
+export const IconButton: React.FC<Props> = ({ icon: Icon, handleClick, text, error, disabled }) => {
+  const buttonStyle = error ? styles.error : disabled ? styles.disabled : styles.button;
   return (
-    <button onClick={handleClick} className={styles.button}>
+    <button onClick={handleClick} className={buttonStyle}>
       <Icon size={24} className={styles.icon} />
       <span className={styles.text}>{text}</span>
     </button>

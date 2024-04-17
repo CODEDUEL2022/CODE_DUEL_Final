@@ -1,13 +1,26 @@
 @use '@/styles/variable' as *;
 
-.button {
-  border: solid 1px $white;
+.common-styles {
   padding: 8px 16px;
   background-color: $background;
   display: flex;
   gap: 8px;
   align-items: center;
   justify-content: center;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .text {
+    font-size: $text-sm;
+  }
+}
+
+.button {
+  @extend .common-styles;
+  border: solid 1px $white;
   box-shadow: 0 2px 15px rgba(211, 255, 253, 0.25);
   transition: all 0.3s;
 
@@ -18,12 +31,35 @@
 
   .icon {
     color: $white;
-    width: 24px;
-    height: 24px;
   }
 
   .text {
     color: $white;
-    font-size: $text-sm;
+  }
+}
+
+.error {
+  @extend .common-styles;
+  border: solid 1px $error;
+
+  .icon {
+    color: $error;
+  }
+
+  .text {
+    color: $error;
+  }
+}
+
+.disabled {
+  @extend .common-styles;
+  border: solid 1px $disabled;
+
+  .icon {
+    color: $disabled;
+  }
+
+  .text {
+    color: $disabled;
   }
 }
