@@ -1,0 +1,126 @@
+@use '@/styles/variable' as *;
+
+.common-styles {
+  padding: 16px 24px;
+  border: solid 3px $white;
+  color: $white;
+  background-color: $background;
+  position: relative;
+
+  &::before {
+    content: '';
+    background-color: $background;
+    display: block;
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: 8px;
+    right: 8px;
+    width: calc(100% - 16px);
+    height: calc(100% + 4px);
+    transition: all 0.3s;
+  }
+
+  &::after {
+    content: '';
+    background-color: $background;
+    display: block;
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: -2px;
+    right: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% - 16px);
+    transition: all 0.3s;
+  }
+}
+
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.button {
+  @extend .common-styles;
+  box-shadow: 0 2px 15px rgba(211, 255, 253, 0.25);
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: $hover;
+    box-shadow: 0 -2px 20px rgba(211, 255, 253, 0.3);
+
+    &::before {
+      background-color: $hover;
+    }
+
+    &::after {
+      background-color: $hover;
+    }
+  }
+}
+
+.error {
+  @extend .common-styles;
+  border-color: $error;
+  color: $error;
+}
+
+.disabled {
+  @extend .common-styles;
+  border-color: $disabled;
+  color: $disabled;
+}
+
+.sm {
+  @extend .common-styles;
+  border-width: 2px;
+  padding: 8px 16px;
+  font-size: $text-sm;
+
+  &::before {
+    top: -1px;
+    bottom: -1px;
+    left: 6px;
+    right: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% + 2px);
+  }
+
+  &::after {
+    top: 6px;
+    bottom: 6px;
+    left: -1px;
+    right: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% - 12px);
+  }
+}
+
+.lg {
+  @extend .common-styles;
+  border-width: 4px;
+  padding: 24px 32px;
+  font-size: $text-xl;
+
+  &::before {
+    top: -3px;
+    bottom: -3px;
+    left: 12px;
+    right: 12px;
+    width: calc(100% - 24px);
+    height: calc(100% + 6px);
+  }
+
+  &::after {
+    top: 12px;
+    bottom: 12px;
+    left: -3px;
+    right: -3px;
+    width: calc(100% + 6px);
+    height: calc(100% - 24px);
+  }
+}
