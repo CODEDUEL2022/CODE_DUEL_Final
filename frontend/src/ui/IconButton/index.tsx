@@ -1,11 +1,20 @@
 import React from 'react';
+import { IconType } from 'react-icons';
+import styles from './index.module.scss';
 
-type Props = {};
+type Props = {
+  icon: IconType;
+  handleClick: () => void;
+  text: string;
+  error?: boolean;
+  disabled?: boolean;
+};
 
-export const IconButton: React.FC<Props> = (props) => {
+export const IconButton: React.FC<Props> = ({ icon: Icon, handleClick, text }) => {
   return (
-    <div>
-      <h1>Component</h1>
-    </div>
+    <button onClick={handleClick} className={styles.button}>
+      <Icon size={24} className={styles.icon} />
+      <span className={styles.text}>{text}</span>
+    </button>
   );
 };

@@ -1,1 +1,29 @@
 @use '@/styles/variable' as *;
+
+.button {
+  border: solid 1px $white;
+  padding: 8px 16px;
+  background-color: $background;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 15px rgba(211, 255, 253, 0.25);
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: $hover;
+    box-shadow: 0 -2px 20px rgba(211, 255, 253, 0.3);
+  }
+
+  .icon {
+    color: $white;
+    width: 24px;
+    height: 24px;
+  }
+
+  .text {
+    color: $white;
+    font-size: $text-sm;
+  }
+}

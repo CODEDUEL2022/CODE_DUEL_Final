@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconButton } from '.';
+import { BiWorld } from 'react-icons/bi';
 
 type T = typeof IconButton;
 
@@ -10,12 +11,18 @@ const meta: Meta<T> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    handleClick: { action: 'clicked' },
+    text: { control: 'text' },
+  },
 };
 
 export default meta;
 type Story = StoryObj<T>;
 
-export const Default: Story = {
-  args: {},
+export const RandomMatch: Story = {
+  args: {
+    icon: BiWorld,
+    text: 'Random Match',
+  },
 };
