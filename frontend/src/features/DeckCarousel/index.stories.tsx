@@ -22,7 +22,7 @@ const meta: Meta<T> = {
 export default meta;
 type Story = StoryObj<T>;
 
-const sampleCards = Array.from({ length: 20 }, (_, i) => ({
+const sampleCards = Array.from({ length: 10 }, (_, i) => ({
   name: `card${i}`,
   image_src: 'https://via.placeholder.com/32x48',
   value: i,
@@ -31,7 +31,7 @@ const sampleCards = Array.from({ length: 20 }, (_, i) => ({
 
 export const Default: Story = {
   args: {
-    deckName: 'deckName',
+    deckName: 'JS Deck',
     cards: sampleCards as Cards,
   },
 };
