@@ -4,10 +4,11 @@ import { MdNavigateBefore } from 'react-icons/md';
 import { MdNavigateNext } from 'react-icons/md';
 import { Button } from '@/ui/Button';
 import { Cards } from '../../../../api/@types';
+import Image from 'next/image';
 
 type Props = {
-  deckName?: string;
-  cards?: Cards;
+  deckName: string;
+  cards: Cards;
   handlePrevDeck: () => void;
   handleNextDeck: () => void;
 };
@@ -30,69 +31,16 @@ export const DeckCarouselPresentation: React.FC<Props> = ({
         </button>
       </div>
       <div className={styled.deckList}>
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
-        <img
-          src="https://via.placeholder.com/32x48"
-          alt="JS Deck"
-          className={styled.deckItem}
-          width={32}
-          height={48}
-        />
+        {cards.map((card) => (
+          <Image
+            key={card.name}
+            src={card.image_src}
+            alt={card.name}
+            width={32}
+            height={48}
+            className={styled.deckItem}
+          />
+        ))}
       </div>
       <Button size="sm" text={`${deckName}を選択`} />
     </div>
