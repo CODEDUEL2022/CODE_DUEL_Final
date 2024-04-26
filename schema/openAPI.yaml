@@ -139,9 +139,12 @@ components:
           type: string
         name:
           type: string
+        rate:
+          type: integer
       required:
         - id
         - name
+        - rate
     deck:
       title: deck
       type: object
