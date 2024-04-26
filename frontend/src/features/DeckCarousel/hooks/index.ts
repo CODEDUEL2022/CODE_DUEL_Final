@@ -12,6 +12,7 @@ export const useDeckCarousel = () => {
     apiClient.deck
       .$get()
       .then((res) => {
+        console.log(res);
         setDecks(res);
       })
       .catch((e) => {
