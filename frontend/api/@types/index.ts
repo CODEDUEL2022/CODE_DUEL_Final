@@ -2,6 +2,7 @@
 export type User = {
   id: string
   name: string
+  rate: number
 }
 
 export type Deck = {
