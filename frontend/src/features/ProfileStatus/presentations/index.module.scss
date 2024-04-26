@@ -1,0 +1,16 @@
+@use '@/styles/variable' as *;
+
+.container {
+  width: 100%;
+  height: fit-content;
+}
+
+.name {
+  font-size: $text-sm;
+  border-bottom: solid 1px $accent;
+  width: 100%;
+}
+
+.rate {
+  font-size: $text-xs;
+}
