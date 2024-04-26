@@ -4,8 +4,8 @@ import styles from './index.module.scss';
 type Props = {
   text: string;
   size: 'sm' | 'md' | 'lg';
-  error: boolean;
-  disabled: boolean;
+  error?: boolean;
+  disabled?: boolean;
 };
 
 export const Button: React.FC<Props> = ({ text, size = 'md', error, disabled }) => {

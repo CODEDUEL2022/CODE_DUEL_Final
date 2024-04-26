@@ -6,6 +6,8 @@
   color: $white;
   background-color: $background;
   position: relative;
+  width: fit-content;
+  white-space: nowrap;
 
   &::before {
     content: '';
