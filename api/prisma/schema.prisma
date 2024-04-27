@@ -10,69 +10,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id                      Int @id @default(autoincrement())
-  name                    String
+model User {
+  id   Int    @id @default(autoincrement())
+  name String
 }
 
-enum CardType{
+enum CardType {
   ATTACK
   HEAL
   ABSORPTION
 }
 
-model Card{
-  id                      Int         @id @default(autoincrement())
-  card_os_id              OS          @relation(fields: [os_id], references: [id], name: "card_os_id")
-  os_id                   Int
-  name                    String
-  value                   Int
-  type                    CardType
-  path                    String
-  card_deck_card_id       CardDeck[]  @relation("card_deck_card_id")
-  card_combo_card_id      CardCombo[] @relation("card_combo_card_id")
-  
+model Card {
+  id                 Int         @id @default(autoincrement())
+  card_os_id         OS          @relation(fields: [os_id], references: [id], name: "card_os_id")
+  os_id              Int         @default(0)
+  name               String
+  value              Int
+  type               CardType
+  path               String
+  card_deck_card_id  CardDeck[]  @relation("card_deck_card_id")
+  card_combo_card_id CardCombo[] @relation("card_combo_card_id")
 }
 
-model CardDeck{
-  id                      Int   @id @default(autoincrement())
-  card_deck_card_id       Card  @relation(fields: [card_id], references: [id], name: "card_deck_card_id")
-  card_id                 Int
-  card_deck_deck_id       Deck  @relation(fields: [deck_id], references: [id], name: "card_deck_deck_id")
-  deck_id                 Int
+model CardDeck {
+  id                Int  @id @default(autoincrement())
+  card_deck_card_id Card @relation(fields: [card_id], references: [id], name: "card_deck_card_id")
+  card_id           Int
+  card_deck_deck_id Deck @relation(fields: [deck_id], references: [id], name: "card_deck_deck_id")
+  deck_id           Int
 }
 
-model Deck{
-  id                      Int         @id @default(autoincrement())
-  name                    String
-  card_deck_deck_id       CardDeck[]  @relation("card_deck_deck_id")
+model Deck {
+  id                Int        @id @default(autoincrement())
+  name              String
+  card_deck_deck_id CardDeck[] @relation("card_deck_deck_id")
 }
 
-model CardCombo{
-  id                      Int     @id @default(autoincrement())
-  card_combo_card_id      Card    @relation(fields: [card_id], references: [id], name: "card_combo_card_id")
-  card_id                 Int
-  card_combo_combo_id     Combo   @relation(fields: [combo_id], references: [id], name: "card_combo_combo_id")
-  combo_id                Int
+model CardCombo {
+  id                  Int   @id @default(autoincrement())
+  card_combo_card_id  Card  @relation(fields: [card_id], references: [id], name: "card_combo_card_id")
+  card_id             Int
+  card_combo_combo_id Combo @relation(fields: [combo_id], references: [id], name: "card_combo_combo_id")
+  combo_id            Int
 }
 
-model OS{
-  id                      Int     @id @default(autoincrement())
-  name                    String
-  path                    String
-  card_os_id              Card[]  @relation("card_os_id")
+model OS {
+  id         Int    @id @default(autoincrement())
+  name       String
+  path       String
+  card_os_id Card[] @relation("card_os_id")
 }
 
-enum ComboType{
+enum ComboType {
   ATTACK
   HEAL
   ABSORPTION
 }
 
-model Combo{
-  id                      Int          @id @default(autoincrement())
-  name                    String
-  type                    ComboType
-  value                   Int
-  card_combo_combo_id     CardCombo[]  @relation("card_combo_combo_id")
+model Combo {
+  id                  Int         @id @default(autoincrement())
+  name                String
+  type                ComboType
+  value               Int
+  card_combo_combo_id CardCombo[] @relation("card_combo_combo_id")
 }
