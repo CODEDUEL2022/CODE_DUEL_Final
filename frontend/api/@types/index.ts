@@ -1,25 +1,27 @@
 /* eslint-disable */
 export type User = {
-  id?: string | undefined
-  name?: string | undefined
+  id: string
+  name: string
+  rate: number
 }
 
 export type Deck = {
-  name?: string | undefined
-  cards?: Card[] | undefined
+  name: string
+  cards: Card[]
 }
 
 export type Card = {
-  name?: string | undefined
-  value?: number | undefined
-  type?: 'attack' | 'heal' | 'absorption' | undefined
+  name: string
+  value: number
+  type: 'attack' | 'heal' | 'absorption'
+  image_src: string
 }
 
 export type Cards = Card[]
 
 export type Combo = {
-  name?: string | undefined
-  cards?: Card[] | undefined
-  type?: 'attack' | 'heal' | 'absorption' | undefined
-  value?: number | undefined
+  name: string
+  cards: Card[]
+  type: 'attack' | 'heal' | 'absorption'
+  value: number
 }

@@ -27,10 +27,11 @@ export const useTopFormAndLink = () => {
     apiClient.signIn
       .$post({ body: { user_name: name } })
       .then((res) => {
-        const { id, name } = res;
+        const { id, name, rate } = res;
         if (id && name) {
           localStorage.setItem('user_id', id);
           localStorage.setItem('user_name', name);
+          localStorage.setItem('rate', rate.toString());
           router.push('/home');
         }
       })

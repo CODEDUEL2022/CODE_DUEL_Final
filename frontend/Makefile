@@ -13,3 +13,7 @@ mock:
 .PHONY: gen
 gen:
 	rm -rf ./api && npx openapi2aspida -i ../schema/openAPI.yaml
+
+.PHONY: plop
+plop:
+	npm run plop
