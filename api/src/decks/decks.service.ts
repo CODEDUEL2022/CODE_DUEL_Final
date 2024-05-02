@@ -10,25 +10,24 @@ export class DecksService {
     const result: GetDeckInterface[] = []; // COMMENT: 返り値
     const decks = await prisma.cardDeck.findMany({
       include: {
-        card_deck_card_id: {
+        card: {
           select: {
             name: true,
             value: true,
             type: true,
           },
         },
-        card_deck_deck_id: true,
+        deck: true,
       },
     });
 
     decks.forEach((i) => {
-      const deckName = i.card_deck_deck_id.name;
+      const deckName = i.deck.name;
       if (!deckName) {
         return;
       }
-      if (!deckIdObject[deckName])
-        deckIdObject[deckName] = [i.card_deck_card_id];
-      else deckIdObject[deckName].push(i.card_deck_card_id);
+      if (!deckIdObject[deckName]) deckIdObject[deckName] = [i.card];
+      else deckIdObject[deckName].push(i.card);
     });
 
     for (const key in deckIdObject) {

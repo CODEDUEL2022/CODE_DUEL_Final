@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { GetCardInterface } from './interfaces/cards.interfaces';
+import { Card } from './interfaces/cards.interfaces';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient({});
 @Injectable()
 export class CardsService {
-  findOne(id: number): Promise<GetCardInterface[]> {
+  findOne(id: number): Promise<Card[]> {
     const card = prisma.card.findMany({
       where: { id: Number(id) },
     });
@@ -13,7 +13,7 @@ export class CardsService {
       resolve(card);
     });
   }
-  findAll(): Promise<GetCardInterface[]> {
+  findAll(): Promise<Card[]> {
     const cards = prisma.card.findMany({});
     return new Promise((resolve) => {
       resolve(cards);
