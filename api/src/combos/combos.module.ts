@@ -6,4 +6,4 @@ import { CombosService } from './combos.service';
   controllers: [CombosController],
   providers: [CombosService],
 })
-export class ComboModule {}
+export class CombosModule {}
