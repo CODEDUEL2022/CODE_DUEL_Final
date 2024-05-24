@@ -1,4 +1,4 @@
-export interface GetCardInterface {
+export interface Card {
   id: number;
   os_id: number;
   name: string;

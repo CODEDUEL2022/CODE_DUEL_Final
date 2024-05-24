@@ -23,43 +23,43 @@ enum CardType {
 
 model Card {
   id                 Int         @id @default(autoincrement())
-  card_os_id         OS          @relation(fields: [os_id], references: [id], name: "card_os_id")
+  os                 OS          @relation(fields: [os_id], references: [id])
   os_id              Int         @default(0)
   name               String
   value              Int
   type               CardType
   path               String
-  card_deck_card_id  CardDeck[]  @relation("card_deck_card_id")
-  card_combo_card_id CardCombo[] @relation("card_combo_card_id")
+  decks              CardDeck[]
+  combos             CardCombo[]
 }
 
 model CardDeck {
   id                Int  @id @default(autoincrement())
-  card_deck_card_id Card @relation(fields: [card_id], references: [id], name: "card_deck_card_id")
   card_id           Int
-  card_deck_deck_id Deck @relation(fields: [deck_id], references: [id], name: "card_deck_deck_id")
+  card              Card @relation(fields: [card_id], references: [id])
   deck_id           Int
+  deck              Deck @relation(fields: [deck_id], references: [id])
 }
 
 model Deck {
   id                Int        @id @default(autoincrement())
   name              String
-  card_deck_deck_id CardDeck[] @relation("card_deck_deck_id")
+  card              CardDeck[]
 }
 
 model CardCombo {
   id                  Int   @id @default(autoincrement())
-  card_combo_card_id  Card  @relation(fields: [card_id], references: [id], name: "card_combo_card_id")
   card_id             Int
-  card_combo_combo_id Combo @relation(fields: [combo_id], references: [id], name: "card_combo_combo_id")
+  card                Card  @relation(fields: [card_id], references: [id])
   combo_id            Int
+  combo               Combo @relation(fields: [combo_id], references: [id])
 }
 
 model OS {
   id         Int    @id @default(autoincrement())
   name       String
   path       String
-  card_os_id Card[] @relation("card_os_id")
+  cards      Card[]
 }
 
 enum ComboType {
@@ -73,5 +73,5 @@ model Combo {
   name                String
   type                ComboType
   value               Int
-  card_combo_combo_id CardCombo[] @relation("card_combo_combo_id")
+  cards               CardCombo[]
 }
