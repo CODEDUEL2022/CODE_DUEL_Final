@@ -3,7 +3,7 @@ import styled from './index.module.scss';
 
 type Props = {};
 
-export const TopTitlePresentation: React.FC<Props> = (props) => {
+export const TopTitle: React.FC<Props> = (props) => {
   return (
     <div className={styled.titles}>
       <span className={styled.description}>programming card battle</span>

@@ -4,7 +4,7 @@ import { Button } from '.';
 type T = typeof Button;
 
 const meta: Meta<T> = {
-  title: 'ui/Button',
+  title: 'commons/Button',
   component: Button,
   parameters: {
     layout: 'centered',

@@ -1,4 +1,4 @@
-import { TopTitle } from '@/features/TopTitle';
+import { TopTitle } from '@/ui/TopTitle';
 import styled from './index.module.scss';
 import { TopFormAndLink } from '@/features/TopFormAndLink';
 

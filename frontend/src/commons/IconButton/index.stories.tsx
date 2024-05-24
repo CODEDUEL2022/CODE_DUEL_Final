@@ -5,7 +5,7 @@ import { BiWorld } from 'react-icons/bi';
 type T = typeof IconButton;
 
 const meta: Meta<T> = {
-  title: 'ui/IconButton',
+  title: 'commons/IconButton',
   component: IconButton,
   parameters: {
     layout: 'centered',
