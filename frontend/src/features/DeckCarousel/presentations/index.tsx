@@ -31,16 +31,17 @@ export const DeckCarouselPresentation: React.FC<Props> = ({
         </button>
       </div>
       <div className={styled.deckList}>
-        {cards.map((card) => (
-          <Image
-            key={card.name}
-            src={card.image_src}
-            alt={card.name}
-            width={32}
-            height={48}
-            className={styled.deckItem}
-          />
-        ))}
+        {cards &&
+          cards.map((card) => (
+            <Image
+              key={card.name}
+              src={`/${card.image_src}`}
+              alt={card.name}
+              width={32}
+              height={48}
+              className={styled.deckItem}
+            />
+          ))}
       </div>
       <Button size="sm" text={`${deckName}を選択`} />
     </div>

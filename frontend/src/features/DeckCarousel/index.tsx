@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { DeckCarouselPresentation } from './presentations/';
 import { useDeckCarousel } from './hooks/';
