@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from './index.module.scss';
-import { IconButton } from '@/ui/IconButton';
+import { IconButton } from '@/commons/IconButton';
 import { BiWorld } from 'react-icons/bi';
 import { IoMdPeople } from 'react-icons/io';
 import { RiRobot2Line } from 'react-icons/ri';

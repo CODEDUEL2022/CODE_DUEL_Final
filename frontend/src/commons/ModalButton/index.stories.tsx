@@ -14,6 +14,8 @@ const meta: Meta<T> = {
   argTypes: {
     text: { control: 'text' },
     isOpen: { control: 'boolean' },
+    modalLabel: { control: 'text' },
+    children: { control: 'text' },
   },
 };
 
@@ -24,6 +26,9 @@ export const Default: Story = {
   args: {
     icon: BsFile,
     text: 'カード一覧',
+    isOpen: false,
+    modalLabel: 'カード一覧',
+    children: 'カード一覧の内容',
   },
 };
 
@@ -32,5 +37,7 @@ export const Open: Story = {
     icon: BsFile,
     text: 'カード一覧',
     isOpen: true,
+    modalLabel: 'カード一覧',
+    children: 'カード一覧の内容',
   },
 };
