@@ -5,7 +5,7 @@ import { BsFile } from 'react-icons/bs';
 type T = typeof ModalButtonPresentation;
 
 const meta: Meta<T> = {
-  title: 'features/ModalButton',
+  title: 'commons/ModalButton',
   component: ModalButtonPresentation,
   parameters: {
     layout: 'centered',
@@ -13,6 +13,7 @@ const meta: Meta<T> = {
   tags: ['autodocs'],
   argTypes: {
     text: { control: 'text' },
+    isOpen: { control: 'boolean' },
   },
 };
 
@@ -23,5 +24,13 @@ export const Default: Story = {
   args: {
     icon: BsFile,
     text: 'カード一覧',
+  },
+};
+
+export const Open: Story = {
+  args: {
+    icon: BsFile,
+    text: 'カード一覧',
+    isOpen: true,
   },
 };
