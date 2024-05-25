@@ -7,10 +7,11 @@ type Props = {
   text: string;
   icon: IconType;
   children: React.ReactNode;
+  modalLabel: string;
 };
 
-export const ModalButton: React.FC<Props> = ({ text, icon, children }) => {
-  const { isOpen, handleOpenModal, handleCloseModal } = useModalButton();
+export const ModalButton: React.FC<Props> = ({ text, icon, children, modalLabel }) => {
+  const { isOpen, handleOpenModal, handleCloseModal, closeButtonRef } = useModalButton();
   return (
     <ModalButtonPresentation
       icon={icon}
@@ -18,6 +19,8 @@ export const ModalButton: React.FC<Props> = ({ text, icon, children }) => {
       isOpen={isOpen}
       handleOpen={handleOpenModal}
       handleClose={handleCloseModal}
+      modalLabel={modalLabel}
+      closeButtonRef={closeButtonRef}
     >
       {children}
     </ModalButtonPresentation>

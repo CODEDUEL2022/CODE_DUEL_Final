@@ -10,6 +10,8 @@ type Props = {
   handleOpen: () => void;
   handleClose: () => void;
   children: React.ReactNode;
+  modalLabel: string;
+  closeButtonRef?: React.RefObject<HTMLButtonElement>;
 };
 
 export const ModalButtonPresentation: React.FC<Props> = ({
@@ -19,6 +21,8 @@ export const ModalButtonPresentation: React.FC<Props> = ({
   handleOpen,
   handleClose,
   children,
+  modalLabel,
+  closeButtonRef,
 }) => {
   return (
     <div>
@@ -28,12 +32,20 @@ export const ModalButtonPresentation: React.FC<Props> = ({
       </button>
       {isOpen && (
         <div className={styled.modal}>
-          <div className={styled.modalContent}>
+          <div
+            className={styled.modalContent}
+            role="dialog"
+            aria-modal
+            aria-label={modalLabel}
+            id="modalContent"
+          >
             <button
               type="button"
               className={styled.closeButton}
               aria-label={`${text}ダイアログを閉じる`}
               onClick={handleClose}
+              ref={closeButtonRef}
+              tabIndex={-1}
             >
               <IoMdClose size={24} />
             </button>
