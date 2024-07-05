@@ -1,0 +1,30 @@
+@use '@/styles/variable' as *;
+
+.wrapper {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  width: 100%;
+
+  .list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .listItem {
+      list-style: none;
+
+      .button {
+        background-color: $white;
+
+        .image {
+          display: block;
+          width: 100%;
+          height: auto;
+          aspect-ratio: 4 / 5;
+        }
+      }
+    }
+  }
+}

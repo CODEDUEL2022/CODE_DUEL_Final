@@ -49,7 +49,7 @@ export const ModalButtonPresentation: React.FC<Props> = ({
             >
               <IoMdClose size={24} />
             </button>
-            <div className={styled.modalBody}>{children}</div>
+            <div className={styled.mainContent}>{children}</div>
           </div>
         </div>
       )}

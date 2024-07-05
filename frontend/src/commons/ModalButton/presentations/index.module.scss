@@ -11,6 +11,7 @@
   transition: background-color 0.3s;
   height: 33px;
   position: relative;
+  width: 100%;
 
   &:hover {
     background-color: $hover;
@@ -32,15 +33,16 @@
   .modalContent {
     position: relative;
     background-color: $background;
-    padding: 32px;
     box-shadow: 0 0 10px #d3fffd;
     width: 80%;
     height: 90%;
+    overflow-y: scroll;
 
     .closeButton {
-      position: absolute;
-      top: 16px;
-      right: 16px;
+      position: sticky;
+      top: 8px;
+      right: 8px;
+      margin-left: auto;
       color: $white;
       border-radius: 50%;
       width: 32px;
@@ -53,6 +55,9 @@
       &:hover {
         background-color: rgba(255, 255, 255, 0.3);
       }
+    }
+    .mainContent {
+      padding: 0 32px;
     }
   }
 }
