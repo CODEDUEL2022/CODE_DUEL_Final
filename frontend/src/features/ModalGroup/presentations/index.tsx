@@ -4,25 +4,56 @@ import { ModalButton } from '@/commons/ModalButton';
 import { BsFile } from 'react-icons/bs';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import { Cards } from '../../../../api/@types';
+import { Card } from '../../../../api/@types';
+import { useState } from 'react';
+import { IconButton } from '@/commons/IconButton';
+import { IoArrowBack } from 'react-icons/io5';
 
 type Props = {
   cards: Cards;
 };
 
 export const ModalGroupPresentation: React.FC<Props> = ({ cards }) => {
+  const [selectedCard, setSelectedCard] = useState<Card | null>(null);
+
+  const handleSelectCard = (card: Card) => {
+    setSelectedCard(card);
+  };
+
+  const handleBack = () => {
+    setSelectedCard(null);
+  };
+
   return (
     <div className={styled.wrapper}>
       <ModalButton icon={BsFile} text="カード一覧" modalLabel="カード一覧">
-        <h1>カード一覧</h1>
-        <ul className={styled.list}>
-          {cards.map((card) => (
-            <li key={card.name} className={styled.listItem}>
-              <button className={styled.button}>
-                <img src={card.image_src} alt={card.name} className={styled.image} />
-              </button>
-            </li>
-          ))}
-        </ul>
+        {selectedCard ? (
+          <div className={styled.cardDetail}>
+            <img src={selectedCard.image_src} className={styled.image} />
+            <div className={styled.right}>
+              <div>
+                <p>{selectedCard.name}</p>
+                <p>
+                  {selectedCard.type} {selectedCard.value}pt
+                </p>
+              </div>
+              <IconButton icon={IoArrowBack} handleClick={handleBack} text="back" />
+            </div>
+          </div>
+        ) : (
+          <>
+            <h1>カード一覧</h1>
+            <ul className={styled.list}>
+              {cards.map((card) => (
+                <li key={card.name} className={styled.listItem}>
+                  <button className={styled.button} onClick={() => handleSelectCard(card)}>
+                    <img src={card.image_src} alt={card.name} className={styled.image} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </ModalButton>
       <ModalButton
         icon={IoIosInformationCircleOutline}

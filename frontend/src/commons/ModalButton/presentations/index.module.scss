@@ -30,6 +30,25 @@
   align-items: center;
   z-index: 100;
 
+  .closeButton {
+    position: fixed;
+    top: calc(5% + 16px);
+    right: calc(10% + 16px);
+    margin-left: auto;
+    color: $white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    z-index: 150;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
   .modalContent {
     position: relative;
     background-color: $background;
@@ -37,27 +56,6 @@
     width: 80%;
     height: 90%;
     overflow-y: scroll;
-
-    .closeButton {
-      position: sticky;
-      top: 8px;
-      right: 8px;
-      margin-left: auto;
-      color: $white;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-    .mainContent {
-      padding: 0 32px;
-    }
+    padding: 32px;
   }
 }

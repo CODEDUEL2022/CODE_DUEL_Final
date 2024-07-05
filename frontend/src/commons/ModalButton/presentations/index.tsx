@@ -32,6 +32,16 @@ export const ModalButtonPresentation: React.FC<Props> = ({
       </button>
       {isOpen && (
         <div className={styled.modal}>
+          <button
+            type="button"
+            className={styled.closeButton}
+            aria-label={`${text}ダイアログを閉じる`}
+            onClick={handleClose}
+            ref={closeButtonRef}
+            tabIndex={-1}
+          >
+            <IoMdClose size={24} />
+          </button>
           <div
             className={styled.modalContent}
             role="dialog"
@@ -39,17 +49,7 @@ export const ModalButtonPresentation: React.FC<Props> = ({
             aria-label={modalLabel}
             id="modalContent"
           >
-            <button
-              type="button"
-              className={styled.closeButton}
-              aria-label={`${text}ダイアログを閉じる`}
-              onClick={handleClose}
-              ref={closeButtonRef}
-              tabIndex={-1}
-            >
-              <IoMdClose size={24} />
-            </button>
-            <div className={styled.mainContent}>{children}</div>
+            {children}
           </div>
         </div>
       )}
