@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from './index.module.scss';
-import { TextInput } from '@/ui/TextInput';
+import { TextInput } from '@/commons/TextInput';
 
 type Props = {
   value: string;

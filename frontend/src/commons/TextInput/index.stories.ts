@@ -4,7 +4,7 @@ import { TextInput } from '.';
 type T = typeof TextInput;
 
 const meta: Meta<T> = {
-  title: 'ui/TextInput',
+  title: 'commons/TextInput',
   component: TextInput,
   parameters: {
     layout: 'centered',

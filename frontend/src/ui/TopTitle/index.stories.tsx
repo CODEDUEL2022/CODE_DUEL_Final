@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TopTitlePresentation } from './presentations';
+import { TopTitle } from '.';
 
-type T = typeof TopTitlePresentation;
+type T = typeof TopTitle;
 
 const meta: Meta<T> = {
-  title: 'features/TopTitle',
-  component: TopTitlePresentation,
+  title: 'ui/TopTitle',
+  component: TopTitle,
   parameters: {
     layout: 'centered',
   },

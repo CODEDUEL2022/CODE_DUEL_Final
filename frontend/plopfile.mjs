@@ -66,4 +66,68 @@ export default function (
       },
     ],
   });
+  plop.setGenerator('common/feature', {
+    description: 'Create a new common component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the common component?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/feature/feature.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/index.stories.tsx',
+        templateFile: 'plop-templates/feature/feature.stories.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/presentations/index.module.scss',
+        templateFile: 'plop-templates/feature/presentations/feature.module.scss.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/presentations/index.tsx',
+        templateFile: 'plop-templates/feature/presentations/feature.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/hooks/index.ts',
+        templateFile: 'plop-templates/feature/hooks/feature.ts.hbs',
+      },
+    ],
+  });
+  plop.setGenerator('common/ui', {
+    description: 'Create a new common component',
+    prompts: [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the common component?',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/index.tsx',
+        templateFile: 'plop-templates/ui/ui.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/index.stories.tsx',
+        templateFile: 'plop-templates/ui/ui.stories.tsx.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/commons/{{pascalCase name}}/index.module.scss',
+        templateFile: 'plop-templates/ui/ui.module.scss.hbs',
+      },
+    ],
+  });
 }

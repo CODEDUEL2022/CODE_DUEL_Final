@@ -2,7 +2,7 @@ import React from 'react';
 import styled from './index.module.scss';
 import { MdNavigateBefore } from 'react-icons/md';
 import { MdNavigateNext } from 'react-icons/md';
-import { Button } from '@/ui/Button';
+import { Button } from '@/commons/Button';
 import { Cards } from '../../../../api/@types';
 import Image from 'next/image';
 
