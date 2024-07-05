@@ -31,7 +31,7 @@ export const ModalButtonPresentation: React.FC<Props> = ({
         <span className={styled.text}>{text}</span>
       </button>
       {isOpen && (
-        <div className={styled.modal}>
+        <div className={styled.modal} id="modal">
           <button
             type="button"
             className={styled.closeButton}
@@ -42,13 +42,7 @@ export const ModalButtonPresentation: React.FC<Props> = ({
           >
             <IoMdClose size={24} />
           </button>
-          <div
-            className={styled.modalContent}
-            role="dialog"
-            aria-modal
-            aria-label={modalLabel}
-            id="modalContent"
-          >
+          <div className={styled.modalContent} role="dialog" aria-modal aria-label={modalLabel}>
             {children}
           </div>
         </div>

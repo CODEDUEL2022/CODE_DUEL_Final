@@ -6,4 +6,10 @@
   align-items: center;
   justify-content: space-evenly;
   height: 100vh;
+
+  .modals {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+  }
 }

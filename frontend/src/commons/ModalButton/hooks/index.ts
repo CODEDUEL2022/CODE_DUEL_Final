@@ -23,7 +23,7 @@ export const useModalButton: UseModalButton = () => {
   // modalContent内でフォーカストラップを実装
   useEffect(() => {
     if (isOpen) {
-      const modalContent = document.getElementById('modalContent');
+      const modalContent = document.getElementById('modal');
       const focusableElements = modalContent?.querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       ) as NodeListOf<HTMLElement>;
