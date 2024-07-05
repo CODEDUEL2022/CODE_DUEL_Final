@@ -29,23 +29,41 @@
     }
   }
 
-  .list {
+  .container {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 24px;
     width: 100%;
 
-    .listItem {
-      list-style: none;
+    .title {
+      font-size: $text-2xl;
+      font-weight: 100;
+      text-shadow: 0 0 10px $accent;
+    }
 
-      .button {
-        background-color: $white;
+    .list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      width: 100%;
 
-        .image {
-          display: block;
-          width: 100%;
-          height: auto;
-          aspect-ratio: 4 / 5;
+      .listItem {
+        list-style: none;
+
+        .button {
+          background-color: $white;
+          transition: box-shadow 0.3s;
+
+          &:hover {
+            box-shadow: 0 0 10px $accent;
+          }
+
+          .image {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 5;
+          }
         }
       }
     }
