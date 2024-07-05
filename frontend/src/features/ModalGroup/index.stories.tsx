@@ -19,13 +19,37 @@ const meta: Meta<T> = {
         },
       },
     },
+    selectedCard: {
+      description: '選択されたカードの情報',
+      table: {
+        type: {
+          summary: 'Card',
+        },
+      },
+    },
+    handleSelectCard: {
+      description: 'カードを選択した時の処理',
+      action: 'handleSelectCard',
+    },
+    handleBack: {
+      description: '戻るボタンを押した時の処理',
+      action: 'handleBack',
+    },
+    cardDetailTexts: {
+      description: '選択されたカードの詳細情報',
+      table: {
+        type: {
+          summary: 'string[]',
+        },
+      },
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<T>;
 
-export const Default: Story = {
+export const List: Story = {
   args: {
     cards: [
       {
@@ -89,5 +113,31 @@ export const Default: Story = {
         image_src: 'https://via.placeholder.com/150',
       },
     ],
+    selectedCard: null,
+    handleSelectCard: () => {},
+    handleBack: () => {},
+    cardDetailTexts: ['カード1', 'attack 1pt'],
+  },
+};
+
+export const Detail: Story = {
+  args: {
+    cards: [
+      {
+        name: 'カード1',
+        value: 1,
+        type: 'attack',
+        image_src: 'https://via.placeholder.com/150',
+      },
+    ],
+    selectedCard: {
+      name: 'カード1',
+      value: 1,
+      type: 'attack',
+      image_src: 'https://via.placeholder.com/150',
+    },
+    handleSelectCard: () => {},
+    handleBack: () => {},
+    cardDetailTexts: ['カード1', 'attack 1pt'],
   },
 };
