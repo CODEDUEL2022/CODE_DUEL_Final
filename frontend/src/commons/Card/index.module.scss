@@ -1,0 +1,14 @@
+@use '@/styles/variable' as *;
+
+.cover {
+  width: 100%;
+  aspect-ratio: 58 / 89;
+  height: auto;
+  border-radius: 0.5rem;
+  background-color: $white;
+
+  .image {
+    object-fit: cover;
+    border-radius: 0.5rem;
+  }
+}
