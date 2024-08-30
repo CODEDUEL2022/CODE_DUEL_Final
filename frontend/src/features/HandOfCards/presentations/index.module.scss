@@ -22,6 +22,10 @@
       translate: 0 -1rem;
     }
 
+    .active {
+      transform: translateY(-1rem);
+    }
+
     .card {
       width: 6rem;
 
@@ -29,5 +33,9 @@
       rotate: var(--degree);
       translate: 0 calc((1 - cos(var(--degree))) * 300%);
     }
+  }
+
+  .head {
+    order: -1;
   }
 }
