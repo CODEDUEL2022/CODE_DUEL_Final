@@ -1,0 +1,8 @@
+@use './variable' as *;
+@use 'ress';
+
+body {
+  background-color: $background;
+  color: $white;
+  font-family: Inter;
+}

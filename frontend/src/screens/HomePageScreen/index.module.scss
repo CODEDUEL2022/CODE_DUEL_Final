@@ -1,0 +1,29 @@
+@use '@/styles/variable' as *;
+
+.container {
+  display: flex;
+  gap: 32px;
+  padding: 16px;
+  height: 100svh;
+
+  .deckContainer {
+    width: 80%;
+  }
+
+  .sidebar {
+    width: 20%;
+    min-width: 168px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: end;
+
+    .profileAndButtons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+  }
+}

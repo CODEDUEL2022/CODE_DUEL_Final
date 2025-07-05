@@ -1,0 +1,41 @@
+@use '@/styles/variable' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: $text-sm;
+  width: 200px;
+
+  .required {
+    color: $error;
+  }
+
+  .input {
+    border-top: 1px solid $white;
+    border-bottom: 1px solid $white;
+    border-left: none;
+    border-right: none;
+    background-color: $background;
+    padding: 8px;
+    color: $white;
+    transition: background-color 0.2s;
+
+    &::placeholder {
+      color: $placeholder;
+    }
+
+    &:hover {
+      background-color: $hover;
+    }
+
+    &:focus {
+      background-color: $hover;
+    }
+  }
+
+  .error {
+    color: $error;
+    font-size: $text-xs;
+  }
+}

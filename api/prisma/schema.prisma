@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id                      String @id @default(uuid())
+  name                    String
+}
+
+enum CardType {
+  ATTACK
+  HEAL
+  ABSORPTION
+}
+
+model Card {
+  id                 Int         @id @default(autoincrement())
+  os                 OS          @relation(fields: [os_id], references: [id])
+  os_id              Int         @default(0)
+  name               String
+  value              Int
+  type               CardType
+  path               String
+  decks              CardDeck[]
+  combos             CardCombo[]
+}
+
+model CardDeck {
+  id                Int  @id @default(autoincrement())
+  card_id           Int
+  card              Card @relation(fields: [card_id], references: [id])
+  deck_id           Int
+  deck              Deck @relation(fields: [deck_id], references: [id])
+}
+
+model Deck {
+  id                Int        @id @default(autoincrement())
+  name              String
+  card              CardDeck[]
+}
+
+model CardCombo {
+  id                  Int   @id @default(autoincrement())
+  card_id             Int
+  card                Card  @relation(fields: [card_id], references: [id])
+  combo_id            Int
+  combo               Combo @relation(fields: [combo_id], references: [id])
+}
+
+model OS {
+  id         Int    @id @default(autoincrement())
+  name       String
+  path       String
+  cards      Card[]
+}
+
+enum ComboType {
+  ATTACK
+  HEAL
+  ABSORPTION
+}
+
+model Combo {
+  id                  Int         @id @default(autoincrement())
+  name                String
+  type                ComboType
+  value               Int
+  cards               CardCombo[]
+}

@@ -1,0 +1,61 @@
+@use '@/styles/variable' as *;
+
+.button {
+  font-size: $text-sm;
+  color: $white;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-bottom: 1px solid $white;
+  transition: background-color 0.3s;
+  height: 33px;
+  position: relative;
+  width: 100%;
+
+  &:hover {
+    background-color: $hover;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+
+  .closeButton {
+    position: fixed;
+    top: calc(5% + 4px);
+    right: calc(10% + 4px);
+    margin-left: auto;
+    color: $white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    z-index: 150;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+  .modalContent {
+    position: relative;
+    background-color: $background;
+    box-shadow: 0 0 10px #d3fffd;
+    width: 80%;
+    height: 90%;
+    overflow-y: scroll;
+    padding: 32px;
+  }
+}
